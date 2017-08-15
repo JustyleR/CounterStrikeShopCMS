@@ -6,17 +6,37 @@ if (!defined('file_access')) {
 
 $get = query("SELECT * FROM flag_history");
 if(num_rows($get) > 0) {
-    $date = strtotime(core_date());
-    while($row = fetch_assoc($get)) {
-        $expireDate = strtotime($row['dateExpire']);
-        if($date >= $expireDate) {
-            $getFlags = query("SELECT flags FROM admins WHERE nickname='". $row['nickname'] ."' AND server='". $row['server'] ."'");
-            if(num_rows($getFlags) > 0) {
-                $row2 = fetch_assoc($getFlags);
-                $flags = str_replace($row['flag'], '', $row2['flags']);
-                query("UPDATE admins SET flags='$flags' WHERE nickname='". $row['nickname'] ."' AND server='". $row['server'] ."'");
-                query("DELETE FROM flag_history WHERE flag_id='". $row['flag_id'] ."'");
-            }
-        }
-    }
+	
+	$date = strtotime(core_date());
+	while($row = fetch_assoc($get)) {
+		
+		$expireDate = strtotime($row['dateExpire']);
+		if($date >= $expireDate) {
+			
+			$getServer = query("SELECT * FROM servers WHERE shortname='". $row['server'] ."'");
+			if(num_rows($getServer) > 0) {
+				
+				$row2 = fetch_assoc($getServer);
+				$serverID = $row2['csbans_id'];
+				$admins = csbans_all_admins("WHERE nickname='". $row['nickname'] ."'");
+				foreach($admins as $admin) {
+					
+					$check = query("SELECT * FROM ". prefix ."admins_servers WHERE server_id='$serverID' AND admin_id='". $admin['id'] ."'");
+					if(num_rows($check) > 0) {
+						
+						$row3 = fetch_assoc($getFlags);
+						$flags = str_replace($row['flag'], '', $row3['flags']);
+						query("UPDATE ". prefix ."amxadmins SET access='$flags' WHERE id='". $admin['id'] ."'");
+						query("DELETE FROM flag_history WHERE flag_id='". $row['flag_id'] ."'");
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
 }
