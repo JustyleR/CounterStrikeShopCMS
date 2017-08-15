@@ -31,4 +31,14 @@ define('template', 'default'); Template folder name
 
 define('default_language', 'bg'); Language folder name
 
-**The rest is not that important.**
+
+
+After that make an registration in the sms system and log in.
+Go to phpmyadmin -> database -> users.table and edit the type filed to 2 (This will give you access to the Admin Panel)
+
+When you open the Admin panel it will check the currently added servers to the CSBans and add them to the SMS System's table.
+
+Then the system is completly installed.
+You can add and manage the flags from the Admin Panel.
+
+There is no installation because the system is not ready for public release (To be able to use it properly).
