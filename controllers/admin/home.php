@@ -11,4 +11,7 @@ function main_info() {
 function main() {
 	// Include the template file
     template('admin/home');
+	
+	// Check the servers
+	csbans_checkServers();
 }
