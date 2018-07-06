@@ -41,3 +41,28 @@ function fetch_assoc($query) {
 function fetch_array($query) {
     return mysqli_fetch_array($query);
 }
+
+function get_site_settings() {
+	$get = query("SELECT * FROM settings");
+	if(num_rows($get) > 0) {
+		
+		$arary = array();
+		$row = fetch_assoc($get);
+		
+		return array(
+			"template" => $row['template'],
+			"language" => $row['language'],
+			"md5_enc" => $row['md5_enc'],
+			"reloadadmins" => $row['reloadadmins'],
+			"servID1" => $row['servID1'],
+			"servID2" => $row['servID2'],
+			"servID3" => $row['servID3'],
+			"servID4" => $row['servID4'],
+			"balance1" => $row['balance1'],
+			"balance2" => $row['balance2'],
+			"balance3" => $row['balance3'],
+			"balance4" => $row['balance4'],
+		);
+		
+	} else { die("The settings table is empty! Please reinstall the system!"); }
+}

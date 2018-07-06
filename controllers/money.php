@@ -50,6 +50,7 @@ function money() {
 				query("DELETE FROM sms_codes WHERE code='$code'");
 			}
             query("UPDATE users SET balance='$balance' WHERE email='" . $user['email'] . "'");
+			addLog($user['email'], language('logs', 'SUCCESSFULLY_ADDED_BALANCE') . ' - ' . $pay);
 			// Set the output message
             core_message_set('money', language('messages', 'SUCCESSFULLY_REDEEMED_MONEY'));
 			// Redirect to a page

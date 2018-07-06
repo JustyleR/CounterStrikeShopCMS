@@ -11,7 +11,6 @@ if (!defined('file_access')) {
 function user_info($email) {
     $checkUser = query("SELECT * FROM users WHERE email='" . $email . "'");
     if (num_rows($checkUser) > 0) {
-        $array = array();
         $row   = fetch_assoc($checkUser);
         return array(
             "id"            => $row['user_id'],

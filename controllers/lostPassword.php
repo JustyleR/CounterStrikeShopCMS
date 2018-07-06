@@ -97,7 +97,7 @@ function lostPasswordChange() {
 					$password	= password_hash($password, PASSWORD_DEFAULT);
 					
 					query("UPDATE users SET password='$password' WHERE email='". $row['email'] ."'");
-					query("INSERT INTO logs (user,date,log) VALUES ('". $row['email'] ."','". core_date() ."','". language('logs', 'LOST_PASSWORD_CHANGED') ."')");
+					addLog($row['email'], language('logs', 'LOST_PASSWORD_CHANGED'));
 					query("DELETE FROM password_keys WHERE email='". $row['email'] ."'");
 					
 					if(isset($_SESSION['pass_key'])) {

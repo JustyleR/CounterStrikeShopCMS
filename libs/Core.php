@@ -133,3 +133,7 @@ function random($lenght, $upper = 0) {
 		return $string;
 	}
 }
+
+function addLog($user, $log) {
+	query("INSERT INTO logs (user,date,log) VALUES ('". $user ."','". core_date() ."','". $log ."')");
+}

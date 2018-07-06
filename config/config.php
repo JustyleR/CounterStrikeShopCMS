@@ -11,21 +11,22 @@ define('db_pass', '');
 define('db_name', 'sms');
 define('prefix',  'csbans_');
 
+require('libs/Database.php');
+
+$settings = get_site_settings();
+
 // Settings
-define('url', '');
-define('template', 'bootstrap');
-define('default_language', 'bg');
-define('md5_enc', 0); // (1 = on / 0 = off ) md5 hash за паролите в сървъра
-define('amx_reloadadmins', 1); // (1 = on / 0 = off ) при закупуване на флаг да изпраща reloadadmins команда
+define('url', 'http://127.0.0.1/sms/'); // Don't forget to add the / at the end of the link (sitename.com/sms/)
 
-// Mobio Codes
-define('servID120', 25);
-define('servID240', 26);
-define('servID480', 7);
-define('servID600', 29);
-
-// Mobio Money Receive
-define('money120', 0.50); // serverID120
-define('money240', 1.50); // servID240
-define('money480', 3.50); // servID480
-define('money600', 8.50); // servID600
+define('template', $settings['template']);
+define('default_language', $settings['language']);
+define('md5_enc', $settings['md5_enc']); // (1 = on / 0 = off ) md5 hash за паролите в сървъра
+define('amx_reloadadmins', $settings['reloadadmins']); // (1 = on / 0 = off ) при закупуване на флаг да изпраща reloadadmins команда
+define('servID120', $settings['servID1']);
+define('servID240', $settings['servID2']);
+define('servID480', $settings['servID3']);
+define('servID600', $settings['servID4']);
+define('money120', $settings['balance1']);
+define('money240', $settings['balance2']);
+define('money480', $settings['balance3']);
+define('money600', $settings['balance4']);

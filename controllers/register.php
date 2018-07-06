@@ -45,8 +45,7 @@ function register() {
                         $lang         = default_language;
 
                         query("INSERT INTO users (email,password,registerDate,ipAdress,lang) VALUES ('$email', '$password', '$registerDate', '$ipAdress','$lang')");
-						query("INSERT INTO logs (user,date,log) VALUES ('$email','". core_date() ."','". language('logs', 'SUCCESSFULLY_REGISTERED') ."')");
-						
+						addLog($email, language('logs', 'SUCCESSFULLY_REGISTERED'));
 						// Set the output message
                         core_message_set('register', language('messages', 'SUCCESSFULLY_REGISTERED'));
 						

@@ -79,8 +79,8 @@ function buyFlags() {
                     query("INSERT INTO flag_history (nickname,flag,dateBought,dateExpire,server) VALUES ('" . $user['nickname'] . "','$flag','$dateBought', '$dateExpire','$server')");
                     query("UPDATE users SET balance='$money' WHERE email='" . $user['email'] . "'");
                     query("UPDATE " . prefix . "amxadmins SET access = '$flags' WHERE id='$adminID'");
-                    query("INSERT INTO logs (user,date,log) VALUES ('" . $_SESSION['user_logged'] . "','$dateBought','" . language('logs', 'SUCCESSFULLY_BOUGHT_FLAG') . " (" . $flag . ")" . "')");
-                    if(amx_reloadadmins != 0) {
+                    addLog($_SESSION['user_logged'], language('logs', 'SUCCESSFULLY_BOUGHT_FLAG'));
+					if(amx_reloadadmins != 0) {
 						$info = query("SELECT * FROM servers WHERE shortname='$server'");
 						$row = fetch_assoc($info);
 						$info = query("SELECT * FROM ". prefix ."serverinfo WHERE id='". $row['csbans_id'] ."'");
