@@ -11,6 +11,10 @@ editPage();
 			if(num_rows($check) == 0) { core_header('home'); }
 			
 			$row = fetch_assoc($check);
+			
+			echo '[b]<b> '. language('bbcodes', 'BOLD') .'</b>[b] , 
+			[i]<i> '. language('bbcodes', 'ITALIC') .'</i>[i] , [small]<small> '. language('bbcodes', 'SMALL') .'</small>[small] , <br />
+			[font=color]<font color="green"> '. language('bbcodes', 'FONT_COLOR') .'</font>[font], [url=LINK]NAME[/url]';
 			?>
 		</div>
 		
