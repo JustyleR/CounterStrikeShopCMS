@@ -21,7 +21,9 @@ editPage();
             <div class="panel-body">
                 <div class="input-group">
                     <textarea cols="55" rows="10" class="form-control" name="pageText" placeholder="<?php echo language('others', 'PAGE_TEXT'); ?>" style="resize: none;"><?php
-					if(isset($_SESSION['preview_text'])) { echo $_SESSION['preview_text']; } else { echo $row['text']; }
+					if(isset($_SESSION['preview_text'])) { $text = str_replace("<br />", "\r\n", $_SESSION['preview_text']); } else { $text = str_replace("<br />", "\r\n", $row['text']); }
+					
+					echo $text;
 					?></textarea>
 				</div>
             </div>
