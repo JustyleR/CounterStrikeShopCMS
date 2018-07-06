@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="<?php echo url . 'templates/' . template . '/assets/css/astyle.css'; ?>">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="<?php echo url . 'templates/' . template . '/assets/js/bootstrap.min.js'; ?>"></script>
+        <script src="<?php echo url . 'templates/' . template . '/assets/js/bootstrap.bundle.min.js'; ?>"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript">
             $(function () {
