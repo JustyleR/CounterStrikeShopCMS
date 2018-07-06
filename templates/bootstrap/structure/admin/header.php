@@ -60,7 +60,7 @@
                             <!-- Main Menu -->
                             <div class="side-menu-container">
                                 <ul class="nav navbar-nav">
-                                    <li class="active"><a href="<?php echo url . '!admin/home' ?>"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'HOME'); ?></a></li>
+                                    <li class="active"><a href="<?php echo url . '!admin/home'; ?>"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'HOME'); ?></a></li>
 
                                     <li class="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#flags">
@@ -71,8 +71,8 @@
                                         <div id="flags" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-                                                    <li><a href="<?php echo url . '!admin/addFlag/' ?>"><?php echo language('menu', 'ADD_FLAG'); ?></a></li>
-                                                    <li><a href="<?php echo url . '!admin/allFlags/' ?>"><?php echo language('menu', 'VIEW_ALL_FLAGS'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/addFlag/'; ?>"><?php echo language('menu', 'ADD_FLAG'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/allFlags/'; ?>"><?php echo language('menu', 'VIEW_ALL_FLAGS'); ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -88,8 +88,8 @@
                                         <div id="users" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-                                                    <li><a href="<?php echo url . '!admin/searchUser/' ?>"><?php echo language('menu', 'SEARCH_USER'); ?></a></li>
-                                                    <li><a href="<?php echo url . '!admin/allUsers/cPage/1' ?>"><?php echo language('menu', 'ALL_USERS'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/searchUser/'; ?>"><?php echo language('menu', 'SEARCH_USER'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/allUsers/cPage/1'; ?>"><?php echo language('menu', 'ALL_USERS'); ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -104,8 +104,8 @@
                                         <div id="sms" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-                                                    <li><a href="<?php echo url . '!admin/addCode' ?>"><?php echo language('menu', 'SMS_ADD_CODE'); ?></a></li>
-                                                    <li><a href="<?php echo url . '!admin/allCodes/cPage/1' ?>"><?php echo language('menu', 'SMS_ALL_CODES'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/addCode'; ?>"><?php echo language('menu', 'SMS_ADD_CODE'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/allCodes/cPage/1'; ?>"><?php echo language('menu', 'SMS_ALL_CODES'); ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -121,8 +121,8 @@
                                         <div id="text" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-													<li><a href="<?php echo url . '!admin/homeText/' ?>"><?php echo language('menu', 'TEXT_HOME'); ?></a></li>
-                                                    <li><a href="<?php echo url . '!admin/smsText/' ?>"><?php echo language('menu', 'TEXT_SMS'); ?></a></li>
+													<li><a href="<?php echo url . '!admin/homeText/'; ?>"><?php echo language('menu', 'TEXT_HOME'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/smsText/'; ?>"><?php echo language('menu', 'TEXT_SMS'); ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -138,15 +138,16 @@
                                         <div id="pages" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <ul class="nav navbar-nav">
-													<li><a href="<?php echo url . '!admin/addPage/' ?>"><?php echo language('menu', 'PAGES_ADD'); ?></a></li>
-                                                    <li><a href="<?php echo url . '!admin/allPages/cPage/1' ?>"><?php echo language('menu', 'PAGES_ALL'); ?></a></li>
+													<li><a href="<?php echo url . '!admin/addPage/'; ?>"><?php echo language('menu', 'PAGES_ADD'); ?></a></li>
+                                                    <li><a href="<?php echo url . '!admin/allPages/cPage/1'; ?>"><?php echo language('menu', 'PAGES_ALL'); ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
 
                                     </li>
-									<li><a href="<?php echo url . '!admin/logs/cPage/1' ?>"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'LOGS'); ?></a></li>
-                                    <li><a href="../"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; Към сайта</a></li>
+									<li><a href="<?php echo url . '!admin/logs/cPage/1'; ?>"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'LOGS'); ?></a></li>
+                                    <li><a href="<?php echo url . '!admin/settings'; ?>"><i class="fa fa-wrench" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'SITE_SETTINGS'); ?></a></li>
+                                    <li><a href="<?php  echo url;  ?>"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; <?php echo language('menu', 'TO_THE_SITE'); ?></a></li>
                                 </ul>
                             </div><!-- /.navbar-collapse -->
                         </nav>
