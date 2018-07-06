@@ -1,3 +1,14 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+
 CREATE TABLE `flags` (
   `flag_id` int(11) NOT NULL,
   `flag` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
@@ -24,19 +35,19 @@ CREATE TABLE `logs` (
 
 CREATE TABLE `pages` (
   `page_id` int(11) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `text` text NOT NULL,
-  `link_name` varchar(50) NOT NULL,
-  `link_page` varchar(50) NOT NULL,
+  `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
+  `link_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `link_page` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `logged` int(11) DEFAULT '2'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `password_keys` (
   `key_id` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password_key` varchar(200) NOT NULL,
-  `expireDate` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `password_key` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `expireDate` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `servers` (
   `server_id` int(11) NOT NULL,
@@ -75,6 +86,7 @@ CREATE TABLE `sms_text` (
 
 INSERT INTO `sms_text` (`text`, `home`) VALUES
 ('You can edit this text from the admin panel.', 'Hello and welcome!<br />[b]SMS[/b] system for [b]Counter-Strike[/b].<br /><br />[small]You can edit this text from the admin panel.[/small]');
+
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
@@ -139,3 +151,7 @@ ALTER TABLE `sms_codes`
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
