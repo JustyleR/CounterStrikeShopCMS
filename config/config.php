@@ -16,7 +16,7 @@ require('libs/Database.php');
 $settings = get_site_settings();
 
 // Settings
-define('url', 'http://127.0.0.1/sms/'); // Don't forget to add the / at the end of the link (sitename.com/sms/)
+define('url', ''); // Don't forget to add the / at the end of the link (sitename.com/sms/)
 
 define('template', $settings['template']);
 define('default_language', $settings['language']);
