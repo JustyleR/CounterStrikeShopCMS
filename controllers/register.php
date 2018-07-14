@@ -22,7 +22,7 @@ function register($conn, $content) {
 	$message = '';
 	
     if (isset($_POST['register'])) {
-        $email     = core_POSTP$conn, ($_POST['email']);
+        $email     = core_POSTP($conn, $_POST['email']);
         $password  = core_POSTP($conn, $_POST['password']);
         $cpassword = core_POSTP($conn, $_POST['cpassword']);
 
