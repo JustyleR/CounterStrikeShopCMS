@@ -1,0 +1,38 @@
+{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+<div class="col-md-4 col-md-offset-3 content">
+    <div class="panel panel-default">
+        <div class="panel-heading">{TRANSLATE}titles,ALL_EXISTING_FLAGS{/TRANSLATE}</div>
+        <div class="panel-body">
+			<!--SHOW FLAGS-->
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{TRANSLATE}others,FLAG{/TRANSLATE}</th>
+                        <th>{TRANSLATE}others,FLAG_PRICE{/TRANSLATE}</th>
+                        <th class="text-right">{TRANSLATE}others,ACTION{/TRANSLATE}</th>
+                    </tr>
+                </thead>
+                <tbody>
+					<tr>
+						<td>{FLAG}</td>
+						<td>{FLAG_PRICE}</td>
+						<td class="text-right">
+							<a class="btn btn-primary btn-xs" href="{SITE_URL}!admin/editFlag/{FLAG_ID}">
+								<i class="fa fa-edit fa-fw" aria-hidden="true"></i> {TRANSLATE}buttons,EDIT{/TRANSLATE}
+							</a>
+							
+							<a class="btn btn-danger btn-xs" href="{SITE_URL}!admin/deleteFlag/{SERVER_NAME}/{FLAG_ID}">
+								<i class="fa fa-trash fa-fw" aria-hidden="true"></i> {TRANSLATE}buttons,DELETE{/TRANSLATE}
+							</a>
+						</td>
+					</tr>
+				</tbody>
+            </table>
+			<!--END SHOW FLAGS-->
+			<!--SHOW NOTHING ADDED-->
+			{TRANSLATE}messages,NOTHING_ADDED{/TRANSLATE}
+			<!--END SHOW NOTHING ADDED-->
+        </div>
+    </div>
+</div>
+{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}

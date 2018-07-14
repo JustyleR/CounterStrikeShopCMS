@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{SITE_TITLE}</title>
+
+    <!-- Bootstrap core CSS -->
+   <link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/bootstrap.min.css" />
+   
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/shop-item.css" />
+
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/font-awesome.min.css" />
+	
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/style.css" />
+
+  </head>
+  
+	<body>
+	
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="{SITE_URL}">{TRANSLATE}others,CPANEL{/TRANSLATE}</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<!--IF USER IS NOT LOGGED-->
+						<li class="nav-item">
+						  <a class="nav-link" href="{SITE_URL}login">{TRANSLATE}menu,LOGIN{/TRANSLATE}</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="{SITE_URL}register">{TRANSLATE}menu,MAKE_REGISTRATION{/TRANSLATE}</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="{SITE_URL}lostPassword/">{TRANSLATE}menu,LOST_PASSWORD{/TRANSLATE}</a>
+						</li>
+						<!--END IF USER IS NOT LOGGED-->
+						<!--IF USER IS LOGGED-->
+						<li class="nav-item">
+							<a class="nav-link" href="{SITE_URL}profile/1">{USER_EMAIL} [ {USER_BALANCE}$ ]</a>
+						<li>
+						<li class="nav-item">
+						  <a class="nav-link" href="{SITE_URL}settings">{TRANSLATE}menu,SETTINGS{/TRANSLATE}</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="{SITE_URL}logout">{TRANSLATE}menu,LOGOUT{/TRANSLATE}</a>
+						</li>
+						<!--END IF USER IS LOGGED-->
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<!-- Page Content -->
+		<div class="container">
+			<div class="row">
+			<!--IF USER IS LOGGED-->
+				<div class="col-lg-3">
+					<div class="list-group">
+						<a href="{SITE_URL}" class="list-group-item"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,HOME{/TRANSLATE}</a>
+						<a href="{SITE_URL}money" class="list-group-item"><i class="fa fa-dollar fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,ADD_BALANCE{/TRANSLATE}</a>
+						<a href="{SITE_URL}buyFlags/" class="list-group-item"><i class="fa fa-money fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,BUY_FLAGS{/TRANSLATE}</a>
+						<a href="{SITE_URL}flags/" class="list-group-item"><i class="fa fa-cloud fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,CURRENT_FLAGS{/TRANSLATE}</a>
+						<a href="{SITE_URL}logs/cPage/1" class="list-group-item"><i class="fa fa-history fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,LOG{/TRANSLATE}</a>
+						<!--IF USER IS AN ADMIN-->
+						<a href="{SITE_URL}!admin/home" class="list-group-item"><i class="fa fa-mail-forward fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,TO_ADMIN_PANEL{/TRANSLATE}</a>
+						<!--END IF USER IS AN ADMIN-->
+					</div>
+				</div>
+			<!--END IF USER IS LOGGED-->

@@ -1,0 +1,120 @@
+{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+<div class="col-md-4 col-md-offset-3 content">
+    <div class="panel panel-default">
+        <div class="panel-heading">SITE SETTINGS</div>
+        <form action="" method="POST">
+			<div class="panel-body">
+                <div class="input-group">
+                    <div class="form-group">
+						<label>{TRANSLATE}admin,SITE_SETTINGS_TITLE{/TRANSLATE}</label>
+						<input type="text" name="site_title" class="form-control" value="{INFO_SITE_TITLE}" placeholder="{TRANSLATE}admin,SITE_SETTINGS_TITLE{/TRANSLATE}">
+					</div>
+                </div>
+            </div>
+		
+            <div class="panel-body">
+                <div class="input-group">
+                    <div class="form-group">
+						<label>{TRANSLATE}admin,SITE_SETTINGS_LANGUAGE{/TRANSLATE}</label>
+						<select name="lang" class="form-control">
+							<!--SHOW SITE LANGUAGE-->
+							<option value="{INFO_SITE_LANGUAGE}" {SELECTED}>{INFO_SITE_LANGUAGE}</option>
+							<!--END SHOW SITE LANGUAGE-->
+						</select>
+					</div>
+                </div>
+            </div>
+			
+			<div class="panel-body">
+                <div class="input-group">
+                    <div class="form-group">
+						<label>{TRANSLATE}admin,SITE_SETTINGS_TEMPLATE{/TRANSLATE}</label>
+						<select name="template" class="form-control">
+							<!--SHOW SITE TEMPLATE-->
+							<option value="{INFO_SITE_TEMPLATE}" {SELECTED}>{INFO_SITE_TEMPLATE}</option>
+							<!--END SHOW SITE TEMPLATE-->
+						</select>
+					</div>
+                </div>
+            </div>
+			
+			<div class="panel-body">
+                <div class="input-group">
+                    <div class="form-group">
+						<label>{TRANSLATE}admin,SITE_SETTINGS_MD5ENC{/TRANSLATE}</label>
+						<select name="md5" class="form-control">
+							<!--SHOW SITE MD5-->
+							<option value="{INFO_MD5_VALUE}" {SELECTED}>{INFO_MD5_OPTION}</option>
+							<!--END SHOW SITE MD5-->
+						</select>
+					</div>
+                </div>
+            </div>
+			
+			<div class="panel-body">
+                <div class="input-group">
+                    <div class="form-group">
+						<label>{TRANSLATE}admin,SITE_SETTINGS_RELOADADMINS{/TRANSLATE}</label>
+						<select name="reloadadmins" class="form-control">
+							<!--SHOW SITE AMIND RELOAD-->
+							<option value="{INFO_RELOAD_VALUE}" {SELECTED}>{INFO_RELOAD_OPTION}</option>
+							<!--END SHOW SITE AMIND RELOAD-->
+						</select>
+					</div>
+                </div>
+            </div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,servID120{/TRANSLATE}</label>
+					<input type="text" name="id120" class="form-control" value="{INFO_MOBIO_ID120}" placeholder="{TRANSLATE}mobio,servID120{/TRANSLATE}">
+				</div>
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,balance120{/TRANSLATE}</label>
+					<input type="text" name="b120" class="form-control" value="{INFO_MOBIO_BALANCE120}" placeholder="{TRANSLATE}mobio,balance120{/TRANSLATE}">
+				</div>
+			</div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,servID240{/TRANSLATE}</label>
+					<input type="text" name="id240" class="form-control" value="{INFO_MOBIO_ID240}" placeholder="{TRANSLATE}mobio,servID240{/TRANSLATE}">
+				</div>
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,balance240{/TRANSLATE}</label>
+					<input type="text" name="b240" class="form-control" value="{INFO_MOBIO_BALANCE240}" placeholder="{TRANSLATE}mobio,balance240{/TRANSLATE}">
+				</div>
+			</div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,servID480{/TRANSLATE}</label>
+					<input type="text" name="id480" class="form-control" value="{INFO_MOBIO_ID480}" placeholder="{TRANSLATE}mobio,servID480{/TRANSLATE}">
+				</div>
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,balance480{/TRANSLATE}</label>
+					<input type="text" name="b480" class="form-control" value="{INFO_MOBIO_BALANCE480}" placeholder="{TRANSLATE}mobio,balance480{/TRANSLATE}">
+				</div>
+			</div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,servID600{/TRANSLATE}</label>
+					<input type="text" name="id600" class="form-control" value="{INFO_MOBIO_ID600}" placeholder="{TRANSLATE}mobio,servID600{/TRANSLATE}">
+				</div>
+				<div class="form-group col-md-6">
+					<label>{TRANSLATE}mobio,balance600{/TRANSLATE}</label>
+					<input type="text" name="b600" class="form-control" value="{INFO_MOBIO_BALANCE600}" placeholder="{TRANSLATE}mobio,balance600{/TRANSLATE}">
+				</div>
+			</div>
+			
+            <div class="panel-body">
+                <div class="input-group">
+                    <input type="submit" class="btn btn-primary" name="edit" value="{TRANSLATE}buttons,EDIT{/TRANSLATE}" />
+                </div>
+            </div>
+        </form>
+		<p>{SHOW_MESSAGE}</p>
+	</div>
+</div>
+{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}

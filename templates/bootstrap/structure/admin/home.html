@@ -1,0 +1,31 @@
+{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+<div class="col-md-10 content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {TRANSLATE}admin,DASHBOARD{/TRANSLATE}
+        </div>
+        <div class="panel-body">
+            <div class="row">
+				<div class="information-box">
+					<div class="information-left" style="color: #D9534F">
+						<span><strong>{COUNT_USERS}</strong><br /></span>
+						<span>{TRANSLATE}admin,USERS{/TRANSLATE}</span>
+					</div>
+					<div class="information-middle" style="color: #5CB85C">
+						<span><strong>{COUNT_SERVERS}</strong><br /></span>
+						<span>{TRANSLATE}admin,SERVERS{/TRANSLATE}</span>
+					</div>
+					<div class="information-middle" style="color: #11ABC1">
+						<span><strong>{COUNT_FLAGS}</strong><br /></span>
+						<span>{TRANSLATE}admin,FLAGS{/TRANSLATE}</span>
+					</div>
+					<div class="information-right" style="color: #337AB7">
+						<span><strong>{COUNT_CODES}</strong><br /></span>
+						<span>{TRANSLATE}admin,CODES{/TRANSLATE}</span>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}

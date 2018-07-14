@@ -1,0 +1,24 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+            <div class="card-body">
+				<p>
+					{MONEY_PAGE_TEXT}
+				</p>
+				<form action="" method="POST">
+					<fieldset>
+						<div class="form-group">
+							<input style="width:150px;" class="form-control" placeholder="{TRANSLATE}others,CODE{/TRANSLATE}" name="code" type="text" autofocus required />
+						</div>
+						<div class="form-group">
+							<input style="width:150px;" type="submit" name="add" class="btn btn-outline btn-success btn-block" value="{TRANSLATE}buttons,REDEEM_SMS_CODE{/TRANSLATE}" />
+						</div>
+					</fieldset>
+					<p>{MONEY_MESSAGE}</p>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}

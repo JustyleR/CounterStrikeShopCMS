@@ -1,0 +1,50 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">View profile</div>
+			<div class="card-body">
+				<div class="row">
+					<div class=" col-md-9 col-lg-9 "> 
+						<table class="table table-user-information">
+							<tbody>
+								<tr>
+									<td>{TRANSLATE}profile,NICKNAME{/TRANSLATE}:</td>
+									<td>{NICKNAME}</td>
+								</tr>
+								<tr>
+									<td>{TRANSLATE}profile,BALANCE{/TRANSLATE}:</td>
+									<td>{BALANCE}$</td>
+								</tr>
+								<tr>
+									<td>{TRANSLATE}profile,REGISTER_DATE{/TRANSLATE}:</td>
+									<td>{REGISTER_DATE}</td>
+								</tr>
+								<tr>
+									<td>{TRANSLATE}profile,GROUP{/TRANSLATE}:</td>
+									<td>{GROUP}</td>
+								</tr>
+								<tr>
+									<td>{TRANSLATE}profile,LANGUAGE{/TRANSLATE}:</td>
+									<td>{LANG}</td>
+								</tr>
+								<!--IF USER IS AN ADMIN-->
+								<tr>
+									<td>{TRANSLATE}profile,EMAIL{/TRANSLATE}</td>
+									<td>{EMAIL}</td>
+								</tr>
+								<tr>
+									<td>{TRANSLATE}profile,IP_ADRESS{/TRANSLATE}</td>
+									<td>{IP}</td>
+								</tr>
+								<!--END IF USER IS AN ADMIN-->
+							</tbody>
+						</table>
+					</div>
+				 </div>
+			</div>
+		</div>
+	</div>
+
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}

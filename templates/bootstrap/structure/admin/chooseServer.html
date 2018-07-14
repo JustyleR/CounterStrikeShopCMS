@@ -1,0 +1,30 @@
+{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+<div class="col-md-10 content">
+    <div class="panel panel-default">
+        <div class="panel-heading">{CHOOSE_SERVER_TITLE}</div>
+        <div class="panel-body">
+		<!--SHOW SERVERS-->
+		<form action="" method="POST">
+            <div class="panel-body">
+                <div class="input-group">
+                    <select class="form-control" name="server" id="sel1">
+					<!--GET SERVERS-->
+					<option value="{SERVER}">{SERVER_NAME}</option>
+					<!--END GET SERVERS-->
+					</select>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <input type="submit" class="btn btn-primary" name="choose" value="{TRANSLATE}buttons,CHOOSE{/TRANSLATE}" />
+                </div>
+            </div>
+        </form>
+		<!--END SHOW SERVERS-->
+		<!--NO SERVERS TEXT-->
+		{TRANSLATE}messages,NO_SERVERS_ADDED{/TRANSLATE}
+		<!--END NO SERVERS TEXT-->
+        </div>
+	</div>
+</div>
+{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}

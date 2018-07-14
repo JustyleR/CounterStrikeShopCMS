@@ -1,0 +1,34 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+            <div class="card-header">{YOUR_FLAGS_TITLE}</div>
+            <div class="card-body">
+				<!--SHOW FLAGS INFO-->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{FLAG}</th>
+							<th>{INFORMATION}</th>
+							<th>{EXPIRE_DATE}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--SHOW FLAGS-->
+						<tr>
+							<td>{FLAGS_FLAG}</td>
+							<td>{FLAGS_DESCRIPTION}</td>
+							<td>{FLAGS_EXPIRE_DATE}</td>
+						</tr>
+						<!--END SHOW FLAGS-->
+					</tbody>
+				</table>
+				<!--END SHOW FLAGS INFO-->
+				<!--SHOW NO FLAGS TEXT-->
+				{NO_FLAGS_TEXT}
+				<!--END SHOW NO FLAGS TEXT-->
+			</div>
+		</div>
+	</div>
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}

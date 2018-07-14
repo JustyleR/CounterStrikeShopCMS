@@ -1,0 +1,57 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">Profile settings</div>
+			<div class="card-body">
+				<form action="" method="POST">
+					<div class="row">
+						<div class="col">
+							<label>{TRANSLATE}profile,CURRENT_PASSWORD{/TRANSLATE}</label>
+							<input type="password" name="cpassword" class="form-control" placeholder="{TRANSLATE}profile,CURRENT_PASSWORD{/TRANSLATE}" maxlength="50" />
+						</div>
+						<div class="col">
+							<label for="exampleInputEmail1">{TRANSLATE}profile,NEW_PASSWORD{/TRANSLATE}</label>
+							<input type="text" name="npassword" class="form-control" placeholder="{TRANSLATE}profile,NEW_PASSWORD{/TRANSLATE}" maxlength="40" />
+						</div>
+					</div>
+					
+						<br />
+					
+					<div class="row">
+						<div class="col">
+							<label for="exampleInputEmail1">{TRANSLATE}settings,NICKNAME{/TRANSLATE}</label>
+							<input type="text" name="nickname" class="form-control" placeholder="{TRANSLATE}settings,NICKNAME{/TRANSLATE}" 
+							value="{NICKNAME}" maxlength="40" required />
+						</div>
+						<div class="col">
+							<label for="exampleInputEmail1">{TRANSLATE}settings,PASSWORD_INGAME{/TRANSLATE}</label>
+							<input type="text" name="nick_password" class="form-control" placeholder="{TRANSLATE}settings,PASSWORD_INGAME{/TRANSLATE}"
+							value="{INGAME_PASS}" maxlength="40" required />
+						</div>
+					</div>
+					
+						<br />
+					
+					<div class="form-group">
+						<label for="exampleInputEmail1">{TRANSLATE}settings,LANGUAGE{/TRANSLATE}</label>
+						<select name="lang" class="form-control">
+							<!--LANG SELECT-->
+							<option value="{LANG}" {SELECTED}>{LANG}</option>
+							<!--END LANG SELECT-->
+						</select>
+					</div>
+						
+						<br />
+						
+					<div class="form-group">
+						<input type="submit" name="save" class="btn btn-primary" value="{TRANSLATE}buttons,SAVE{/TRANSLATE}" />
+					</div>
+					
+					<div class="form-group">{SETTINGS_MESSAGE}</div>					
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}

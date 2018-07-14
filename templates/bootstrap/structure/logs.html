@@ -1,0 +1,38 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">{LOGS_TITLE}</div>
+			<div class="card-body">
+				<!--SHOW LOGS INFO-->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{DATE}</th>
+							<th>{LOG}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--SHOW LOGS-->
+						<tr>
+							<td>{LOG_DATE}</td>
+							<td>{LOG_TEXT}</td>
+						</tr>
+						<!--END SHOW LOGS-->
+					</tbody>
+				</table>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" href="{PREVIOUS_PAGE_LINK}">{PREVIOUS_PAGE_NAME}</a></li>
+						<li class="page-item"><a class="page-link" href="{NEXT_PAGE_LINK}">{NEXT_PAGE_NAME}</a></li>
+					</ul>
+				</nav>
+				<!--END SHOW LOGS INFO-->
+				<!--SHOW NO LOGS TEXT-->
+				{NO_LOGS_TEXT}
+				<!--END SHOW NO LOGS TEXT-->
+			</div>
+		</div>
+	</div>
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}
