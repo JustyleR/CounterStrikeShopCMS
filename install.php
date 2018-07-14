@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <form action="" method="POST">
 	
 	<?php
