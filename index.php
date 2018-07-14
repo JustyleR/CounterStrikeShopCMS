@@ -3,7 +3,7 @@
 /*
  * @project SMS CMS
  * @author  JustyleR
- * @version 0.0.4
+ * @version 0.0.5
  */
 
 define('file_access', TRUE);
@@ -19,9 +19,5 @@ require('libs/BBCodes.php');
 require('libs/Custom.php');
 require('libs/CSBans.php');
 require('libs/Pagination.php');
-//require('libs/Custom.php');
-//require('libs/Rcon.php');
-//require('libs/Mods.php');
-//expire_flags();
-//checkUser();
+require('libs/Rcon.php');
 Bootstrap();

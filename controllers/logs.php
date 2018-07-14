@@ -25,7 +25,7 @@ function show_logs($conn, $content) {
 	$user		= user_info($conn, $_SESSION['user_logged']);
 	$content	= str_replace('{LOGS_TITLE}', language($conn, 'titles', 'LOGS'), $content);
 	
-	$getLogs = pagination($conn, "SELECT * FROM logs WHERE user='" . $_SESSION['user_logged'] . "' ORDER BY log_id DESC", 2);
+	$getLogs = pagination($conn, "SELECT * FROM logs WHERE user='" . $_SESSION['user_logged'] . "' ORDER BY log_id DESC", 14);
 	if($getLogs != NULL) {
 		
 		$content 	= str_replace($cText, '', $content);

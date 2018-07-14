@@ -93,7 +93,8 @@ function checkFile($page, $dir, $type) {
 
         if (count($page) == (count($main_info))) {
             if (count(array_unique($array)) === 1) {
-				
+				checkUser($conn);
+				expire_flags($conn);
                 main($conn);
             } else {
                 core_header('home');
