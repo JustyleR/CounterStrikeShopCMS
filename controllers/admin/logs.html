@@ -1,0 +1,42 @@
+{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+<div class="col-md-10 content">
+    <div class="panel panel-default">
+        <div class="panel-heading">{TRANSLATE}titles,ALL_EXISTING_LOGS{/TRANSLATE}</div>
+        <div class="panel-body">
+			<!--SHOW ALL LOGS-->
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{TRANSLATE}logs,DATE_CREATED{/TRANSLATE}</th>
+                        <th>{TRANSLATE}logs,CREATED_BY{/TRANSLATE}</th>
+                        <th>{TRANSLATE}logs,LOG{/TRANSLATE}</th>
+                    </tr>
+                </thead>
+                <tbody>
+					<!--SHOW LOGS-->
+                    <tr>
+						<td>{INFO_LOG_DATE}</td>
+						<td>{INFO_LOG_USER}</td>
+						<td>{INFO_LOG}</td>
+					</tr>
+					<!--END SHOW LOGS-->
+				</tbody>
+            </table>
+			<!--SHOW PAGES-->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="{PREV_PAGE_LINK}">{TRANSLATE}others,PAGINATION_PREVIOUS{/TRANSLATE}</a></li>
+					<li class="page-item"><a class="page-link" href="{NEXT_PAGE_LINK}">{TRANSLATE}others,PAGINATION_NEXT{/TRANSLATE}</a></li>
+				</ul>
+			</nav>
+			<!--END SHOW PAGES-->
+			
+			<!--END SHOW ALL LOGS-->
+			
+			<!--SHOW NOTHING ADDED-->
+			{TRANSLATE}messages,NOTHING_ADDED{/TRANSLATE}
+			<!--END SHOW NOTHING ADDED-->
+        </div>
+    </div>
+</div>
+{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}
