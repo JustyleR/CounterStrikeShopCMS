@@ -19,23 +19,24 @@ function main($conn) {
 function allLogs($conn, $content) {
 	
 	$getCodes 	= pagination($conn, "SELECT * FROM logs ORDER BY log_id DESC", 14);
-	$cLogs		= comment('SHOW LOGS', $content);
+	$cAllLogs	= comment('SHOW ALL LOGS', $content);
 	$cPages		= comment('SHOW PAGES', $content);
 	$cText		= comment('SHOW NOTHING ADDED', $content);
 	
 	if($getCodes != NULL) {
 		
 		$list		= "";
+		$cLogs		= comment('SHOW LOGS', $content);
 		
 		foreach ($getCodes[1] as $code) {
 			
 			$replace	= ['{INFO_LOG_DATE}', '{INFO_LOG_USER}', '{INFO_LOG}'];
 			$with		= [$code['date'], $code['user'], $code['log']];
-			$list		.= str_replace($replace, $with, $comment);
+			$list		.= str_replace($replace, $with, $cLogs);
 			
 		}
 		
-		$content	= str_replace($comment, $list, $content);
+		$content	= str_replace($cLogs, $list, $content);
 		$content	= str_replace($cText, '', $content);
 		$pages		= $getCodes[0];
 		$comment	= comment('SHOW PAGES', $content);
@@ -65,7 +66,7 @@ function allLogs($conn, $content) {
 		}
 	} else {
 		
-		$content	= str_replace($cLogs, '', $content);
+		$content	= str_replace($cAllLogs, '', $content);
 		$content	= str_replace($cPages, '', $content);
 		
 	}
