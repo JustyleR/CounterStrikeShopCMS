@@ -8,50 +8,55 @@ function main_info() {
 }
 
 // Main function
-function main() {
+function main($conn) {
 	// Pages
 	$page = core_page();
 	// Check if we have the flag id set
     if ($page[2] != NULL) {
-        $flagID        = core_POSTP($page[2]);
-        $checkServer = query("SELECT flag_id FROM flags WHERE flag_id='$flagID'");
+        $flagID        = core_POSTP($conn, $page[2]);
+        $checkServer = query($conn, "SELECT flag_id FROM flags WHERE flag_id='". $flagID ."'");
         if (num_rows($checkServer) > 0) {
-			// Include the template file
-            template('admin/editFlag');
-        } else {
-			// Include the template file
-            template('admin/home');
-        }
-    } else {
-		// Include the template file
-        template('admin/home');
-    }
+			$content = template($conn, 'admin/editFlag');
+			$content = editFlag($conn, $content);
+			$content = editFlag_submit($conn, $content);
+			
+			echo $content;
+        } else { core_header('!admin/allFlags'); }
+    } else { core_header('!admin/allFlags'); }
 }
 
 // Get the information about a flag from the database
-function editFlag() {
-    $page  = core_page()[2];
-    $query = query("SELECT * FROM flags WHERE flag_id='$page'");
-    return $row   = fetch_assoc($query);
+function editFlag($conn, $content) {
+    $page		= core_page()[2];
+    $query	= query($conn, "SELECT * FROM flags WHERE flag_id='". $page ."'");
+    $row	= fetch_assoc($query);
+	
+	$content = str_replace('{FLAG}', $row['flag'], $content);
+	$content = str_replace('{FLAG_DESCRIPTION}', $row['flagDesc'], $content);
+	$content = str_replace('{FLAG_PRICE}', $row['price'], $content);
+	
+	return $content;
 }
 
 // Call the function after the submit button
-function editFlag_submit() {
+function editFlag_submit($conn, $content) {
+	$message = core_message('editFlag');
     if (isset($_POST['edit'])) {
-        $flag      = core_POSTP($_POST['flag']);
-        $flagDesc  = core_POSTP($_POST['flagDesc']);
-        $flagPrice = core_POSTP($_POST['flagPrice']);
+        $flag      = core_POSTP($conn, $_POST['flag']);
+        $flagDesc  = core_POSTP($conn, $_POST['flagDesc']);
+        $flagPrice = core_POSTP($conn, $_POST['flagPrice']);
         $flagID    = core_page()[2];
 
         if (empty($flag) || (empty($flagDesc)) || (empty($flagPrice))) {
-			// Set the output message
-            core_message_set('editFlag', language('messages', 'FILL_THE_FIELDS'));
+            $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            query("UPDATE flags SET flag='$flag', flagDesc='$flagDesc', price='$flagPrice' WHERE flag_id='$flagID'");
-			// Set the output message
-            core_message_set('editFlag', language('messages', 'SUCCESSFULLY_UPDATED_THE_FLAG'));
-			// Redirect to a page after 1 seconds
-            core_header('', 1);
+            query($conn, "UPDATE flags SET flag='". $flag ."', flagDesc='". $flagDesc ."', price='". $flagPrice ."' WHERE flag_id='". $flagID ."'");
+			
+            $message = language($conn, 'messages', 'SUCCESSFULLY_UPDATED_THE_FLAG');
         }
+		core_message_set('editFlag', $message);
+		core_header('!admin/editFlag/' . core_page()[2]);
     }
+	
+	return $content = str_replace('{SHOW_MESSAGE}', $message, $content);
 }

@@ -8,18 +8,36 @@ function main_info() {
 }
 
 // Main function
-function main() {
+function main($conn) {
 	// Check if we are logged in
     core_check_logged('user', 'logged');
 	
-	// Include the template file
-    template('money');
+	$content = template($conn, 'money');
+	$content = money_text($conn, $content);
+	$content = money($conn, $content);
+	
+	
+	echo $content;
 }
 
-function money() {
+function money_text($conn, $content) {
+	
+	$query = query($conn, "SELECT * FROM sms_text");
+	if(num_rows($query) > 0) {
+		
+		$text = bbcode_preview(fetch_assoc($query)['text']);
+		
+		return $content = str_replace('{MONEY_PAGE_TEXT}', $text, $content);
+		
+	}
+	
+}
+
+function money($conn, $content) {
+	$message = core_message('money');
     if (isset($_POST['add'])) {
 
-        $code = core_POSTP($_POST['code']);
+        $code = core_POSTP($conn, $_POST['code']);
         $pay  = 0.00;
 
 		// Check if the code is valid and set the money for the correct servID
@@ -32,12 +50,12 @@ function money() {
         } else if (mobio_check(servID600, $code)) {
             $pay = money600;
         } else {
-            $query = query("SELECT * FROM sms_codes WHERE code='$code'");
+            $query = query($conn, "SELECT * FROM sms_codes WHERE code='$code'");
 			if(num_rows($query) > 0) {
 				$pay = fetch_assoc($query)['balance'];
 				$db = 1;
 			} else {
-				core_message_set('money', language('messages', 'THE_CODE_IS_NOT_VALID'));
+				$message = language($conn, 'messages', 'THE_CODE_IS_NOT_VALID');
 			}
         }
 
@@ -47,16 +65,19 @@ function money() {
             $balance = $user['balance'] + $pay;
 			
 			if(isset($db)) {
-				query("DELETE FROM sms_codes WHERE code='$code'");
+				query($conn, "DELETE FROM sms_codes WHERE code='$code'");
 			}
-            query("UPDATE users SET balance='$balance' WHERE email='" . $user['email'] . "'");
-			addLog($user['email'], language('logs', 'SUCCESSFULLY_ADDED_BALANCE') . ' - ' . $pay);
+            query($conn, "UPDATE users SET balance='$balance' WHERE email='" . $user['email'] . "'");
+			addLog($conn, $user['email'], language('logs', 'SUCCESSFULLY_ADDED_BALANCE') . ' - ' . $pay);
 			// Set the output message
-            core_message_set('money', language('messages', 'SUCCESSFULLY_REDEEMED_MONEY'));
+            $message = language($conn, 'messages', 'SUCCESSFULLY_REDEEMED_MONEY');
 			// Redirect to a page
-            core_header('money', 2);
         }
+		core_message_set('money', $message);
+		core_header('money');
     }
+	
+	return $content = str_replace('{MONEY_MESSAGE}', $message, $content);
 }
 
 // Function to check the code with the servID

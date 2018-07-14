@@ -3,23 +3,25 @@
 /*
  * @project SMS CMS
  * @author  JustyleR
- * @version 0.0.3
+ * @version 0.0.4
  */
 
 define('file_access', TRUE);
 
 // Core files
 require('config/config.php');
-require('libs/Users.php');
 require('libs/Bootstrap.php');
+require('libs/Users.php');
 require('libs/Template.php');
 require('libs/Core.php');
 require('libs/Language.php');
-require('libs/Pagination.php');
-require('libs/CSBans.php');
+require('libs/BBCodes.php');
 require('libs/Custom.php');
-require('libs/bbcodes.php');
-require('libs/Rcon.php');
-expire_flags();
-checkUser();
+require('libs/CSBans.php');
+require('libs/Pagination.php');
+//require('libs/Custom.php');
+//require('libs/Rcon.php');
+//require('libs/Mods.php');
+//expire_flags();
+//checkUser();
 Bootstrap();

@@ -8,27 +8,59 @@ function main_info() {
 }
 
 // Main function
-function main() {
-	template('admin/addCode');
+function main($conn) {
+	
+	$content = template($conn, 'admin/addCode');
+	$content = addCode($conn, $content);
+	
+	echo $content;
 }
 
-function addCode() {
-    if(isset($_POST['add'])) {
+function addCode($conn, $content) {
+	$message = core_message('addCode');
+	if(isset($_SESSION['sms_success']) && (isset($_SESSION['sms_code']))) {
+		
+		$success	= $_SESSION['sms_success'];
+		$code		= $_SESSION['sms_code'];
+		
+		unset($_SESSION['sms_success']); 
+		unset($_SESSION['sms_code']); 
+		
+	} else { $success = 0; }
 	
-		$balance	= core_POSTP($_POST['code']);
+	$comment = comment('SHOW CODE', $content);
+	
+    if(isset($_POST['add'])) {
+		
+		$balance	= core_POSTP($conn, $_POST['code']);
 		$code		= random(6, 1);
 		
 		if(empty($balance)) {
 			
-			core_message_set('addCode', language('messages', 'FILL_THE_FIELDS'));
+			$message = language($conn, 'messages', 'FILL_THE_FIELDS');
 			
 		} else {
+			$_SESSION['sms_success']	= 1;
+			$_SESSION['sms_code']		= $code;
 			
-			query("INSERT INTO sms_codes (code, balance) VALUES ('$code','$balance')");
+			query($conn, "INSERT INTO sms_codes (code, balance) VALUES ('$code','$balance')");
 			
-			core_message_set('addCode', language('messages', 'SUCCESSFULLY_CREATED_CODE') . '<br /> <strong>'. $code .'</strong>');
-			
+			$message = language($conn, 'messages', 'SUCCESSFULLY_CREATED_CODE');
 		}
 		
+		core_message_set('addCode', $message);
+		core_header('!admin/addCode');
 	}
+	
+	if($success == 1) {
+		
+		$content = str_replace('{CODE}', $code, $content);
+		
+	} else {
+		
+		$content = str_replace($comment, '', $content);
+		
+	}
+	
+	return $content = str_replace('{SHOW_MESSAGE}', $message, $content);
 }

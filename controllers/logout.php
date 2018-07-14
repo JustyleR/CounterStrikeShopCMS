@@ -4,17 +4,16 @@ if (!defined('file_access')) { header('Location: home'); }
 
 // Pages function
 function main_info() {
-    return array('logout');
+    return array('login');
 }
 
 // Main function
-function main() {
-	// Check if we are logged in
+function main($conn) {
+	// Check if we are not logged in
     core_check_logged('user', 'logged');
 	
     unset($_SESSION['user_logged']);
     unset($_SESSION['admin_logged']);
-	
-	//Redirect to a page
-    core_header('login');
+	core_header('login');
+	exit();
 }

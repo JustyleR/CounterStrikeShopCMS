@@ -1,39 +1,41 @@
 <?php
-
 define('file_access', TRUE);
 
 require('config/config.php');
-require('libs/Database.php');
 require('libs/Core.php');
 
-if(isset($_GET['type'])) {
-	$type = $_GET['type'];
-	
+$conn = connect();
 
-	if($type === 'user') {
-		if(isset($_GET['email'])) {
-			$email = core_POSTP($_GET['email']);
-			$query = query("SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE email='$email'");
-			if(num_rows($query) > 0) {
-				print json_encode(fetch_assoc($query));
-			}
-		}
-	} else if($type === 'users') {
-		if($_GET['num'] === 0) {
-			// Get all users
-		} else {
-			if(isset($_GET['email'])) {
-				$email = core_POSTP($_GET['email']);
-				$query = query("SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE email LIKE '%$email%'");
+$type = isset($_GET['type']) ? trim($_GET['type']) : "";
+$email = isset($_GET['email']) ? core_POSTP($conn, trim($_GET['email'])) : "";
+
+switch($type)
+{
+		case 'user': {				
+				$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE email='$email'");
 				if(num_rows($query) > 0) {
-					$array = array();
-					while($row = fetch_assoc($query)) {
-						$array[] = $row;
+					print json_encode(fetch_assoc($query));
+				}
+		}
+		
+		case 'users': {
+			if(isset($_GET['num']) && ctype_digit($_GET['num'])) {
+				$num = $_GET['num'];
+				
+				if($num == 0) {
+					// Вадене на всички потребители
+				} else {
+					$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE `email` LIKE '%$email%'");
+					if($query && num_rows($query) > 0) {
+						$array = array();
+						
+						while($row = fetch_assoc($query)) {
+							$array[] = $row;
+						}
+						
+						print json_encode($array);						
 					}
-					print json_encode($array);
 				}
 			}
 		}
-	}
 }
-

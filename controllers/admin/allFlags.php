@@ -8,39 +8,60 @@ function main_info() {
 }
 
 // Main function
-function main() {
+function main($conn) {
 	// Pages
     $page = core_page();
 	
 	// Check if we have the servername set
     if ($page[2] != NULL) {
-        $serverName        = core_POSTP($page[2]);
-        $checkServer = query("SELECT * FROM servers WHERE shortname='$serverName'");
+        $serverName		= core_POSTP($conn, $page[2]);
+        $checkServer	= query($conn, "SELECT * FROM servers WHERE shortname='". $serverName ."'");
         if (num_rows($checkServer) > 0) {
-			// Include the template file
-            template('admin/allFlags');
-        } else {
-			// Include the template file
-            template('admin/chooseServer');
-        }
+			$content = template($conn, 'admin/allFlags');
+			$content = allFlags($conn, $content);
+			
+			echo $content;
+        } else { core_header('!admin/allFlags/'); }
     } else {
-		// Include the template file
-        template('admin/chooseServer');
+        $content = template($conn, 'admin/chooseServer');
+		$content = template_show_servers($conn, $content);
+		
+		if(isset($_POST['choose'])) {
+			$page = core_page();
+			
+			core_header('!admin/allFlags/' . $_POST['server']);
+		}
+		
+		echo $content;
     }
 }
 
-function allFlags() {
-    $page = core_page()[2];
-
-    $getFlags = query("SELECT * FROM flags WHERE server='$page'");
+function allFlags($conn, $content) {
+    $page	= core_page();
+	$cFlags = comment('SHOW FLAGS', $content);
+	$cText	= comment('SHOW NOTHING ADDED', $content);
+	
+    $getFlags = query($conn, "SELECT * FROM flags WHERE server='". $page[2] ."'");
     if (num_rows($getFlags) > 0) {
-        $array = array();
-        while ($row   = fetch_assoc($getFlags)) {
-            $array[] = $row;
+		
+		
+		$list		= "";
+		
+        while ($row	= fetch_assoc($getFlags)) {
+            
+			$replace	= ['{FLAG}', '{FLAG_PRICE}', '{FLAG_ID}'];
+			$with		= [$row['flag'], $row['price'], $row['flag_id']];
+			$list 		.= str_replace($replace, $with, $cFlags);
+			
         }
-        return $array;
+		
+		$content = str_replace($cFlags, $list, $content);
+		$content = str_replace('{SERVER_NAME}', $page[2], $content);
+		$content = str_replace($cText, '', $content);
     } else {
-		// Return a language text
-        return language('messages', 'NOTHING_ADDED');
+		$content = str_replace($cFlags, '', $content);
+        $content = str_replace('{NOTHING_ADDED}', language($conn, 'messages', 'NOTHING_ADDED'), $content);
     }
+	
+	return $content;
 }

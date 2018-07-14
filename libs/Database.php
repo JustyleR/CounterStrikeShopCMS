@@ -1,9 +1,14 @@
 <?php
+/*
+	Database Library
+	The core file for the database
+*/
 
 if (!defined('file_access')) {
     header('Location: home');
 }
 
+// Function to connect to the database
 function connect() {
     $conn = mysqli_connect(db_host, db_user, db_pass, db_name);
     if(mysqli_error($conn)) {
@@ -14,16 +19,12 @@ function connect() {
     return $conn;
 }
 
-function lastid() {
-	$conn = connect();
-	return mysqli_insert_id($conn);
-}
-
-function query($query) {
-    $conn = connect();
+// Query function
+function query($conn, $query) {
     return $conn = mysqli_query($conn, $query);
 }
 
+// Get the number of rows
 function num_rows($query) {
     if(mysqli_num_rows($query) > 0) {
         $return = mysqli_num_rows($query);
@@ -34,24 +35,27 @@ function num_rows($query) {
     return $return;
 }
 
+// Fetch assoc
 function fetch_assoc($query) {
     return mysqli_fetch_assoc($query);
 }
 
+// Fetch array
 function fetch_array($query) {
     return mysqli_fetch_array($query);
 }
 
 function get_site_settings() {
-	$get = query("SELECT * FROM settings");
+	$conn = connect();
+	$get = query($conn, "SELECT * FROM settings");
 	if(num_rows($get) > 0) {
 		
-		$arary = array();
 		$row = fetch_assoc($get);
 		
 		return array(
 			"template" => $row['template'],
 			"language" => $row['language'],
+			"site_title" => $row['site_title'],
 			"md5_enc" => $row['md5_enc'],
 			"reloadadmins" => $row['reloadadmins'],
 			"servID1" => $row['servID1'],

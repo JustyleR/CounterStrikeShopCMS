@@ -1,17 +1,21 @@
 <?php
-
 /*
- * Simple library for the users stuff
- */
+	Users Library
+	File to get some user information
+*/
 
 if (!defined('file_access')) {
     header('Location: home');
 }
 
-function user_info($email) {
-    $checkUser = query("SELECT * FROM users WHERE email='" . $email . "'");
+// Get user info from the database
+function user_info($conn, $user, $type = 'email') {
+	if($type === 'email') { $checkUser = query($conn, "SELECT * FROM users WHERE email='". $user ."'"); }
+	else if($type === 'id') { $checkUser = query($conn, "SELECT * FROM users WHERE user_id='". $user ."'"); }
+    
     if (num_rows($checkUser) > 0) {
         $row   = fetch_assoc($checkUser);
+		
         return array(
             "id"            => $row['user_id'],
             "nickname"      => $row['nickname'],
@@ -25,16 +29,14 @@ function user_info($email) {
             "language"      => $row['lang']
         );
     } else {
-		if(isset($_SESSION['user_logged'])) {
-			unset($_SESSION['user_logged']);
-			core_header('logout');
-		}
+		return false;
 	}
 }
 
+// On login check if the user is banned of admin, if it is an admin then create special session
 function checkUser() {
     if(isset($_SESSION['user_logged'])) {
-        $checkUser = query("SELECT user_id FROM users WHERE email='" . $_SESSION['user_logged'] . "'");
+        $checkUser = query($conn, "SELECT user_id FROM users WHERE email='" . $_SESSION['user_logged'] . "'");
         if (num_rows($checkUser) > 0) {
             $user = user_info($_SESSION['user_logged']);
 

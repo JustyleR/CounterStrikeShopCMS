@@ -33,15 +33,6 @@ CREATE TABLE `logs` (
   `log` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `pages` (
-  `page_id` int(11) NOT NULL,
-  `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `text` text COLLATE utf8_unicode_ci NOT NULL,
-  `link_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `link_page` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `logged` int(11) DEFAULT '2'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 CREATE TABLE `password_keys` (
   `key_id` int(11) NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -58,6 +49,7 @@ CREATE TABLE `servers` (
 CREATE TABLE `settings` (
   `template` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `site_title` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `md5_enc` int(11) NOT NULL,
   `reloadadmins` int(11) NOT NULL,
   `servID1` int(11) NOT NULL,
@@ -70,8 +62,8 @@ CREATE TABLE `settings` (
   `balance4` float(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `settings` (`template`, `language`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES
-('bootstrap', 'en', 0, 1, 0, 0, 0, 0, 0.00, 0.00, 0.00, 0.00);
+INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES
+('bootstrap', 'en', 'Testing', 0, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00);
 
 CREATE TABLE `sms_codes` (
   `sms_code_id` int(11) NOT NULL,
@@ -85,8 +77,7 @@ CREATE TABLE `sms_text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `sms_text` (`text`, `home`) VALUES
-('You can edit this text from the admin panel.', 'Hello and welcome!<br />[b]SMS[/b] system for [b]Counter-Strike[/b].<br /><br />[small]You can edit this text from the admin panel.[/small]');
-
+('[b]Hello, world![/b]<br /><br />This is the BALANCE page!<br />You can edit this page from the [b]Admin panel[/b].<br /><br />Thanks for using the system and have fun!<br /><br />[small]System by [url=https://github.com/JustyleR]JustyleR[/url][/small]', '[b]Hello, world![/b]<br /><br />This is the HOME page!<br />You can edit this page from the [b]Admin panel[/b].<br /><br />Thanks for using the system and have fun!<br /><br />[small]System by [url=https://github.com/JustyleR]JustyleR[/url][/small]');
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
@@ -111,9 +102,6 @@ ALTER TABLE `flag_history`
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`log_id`);
 
-ALTER TABLE `pages`
-  ADD PRIMARY KEY (`page_id`);
-
 ALTER TABLE `password_keys`
   ADD PRIMARY KEY (`key_id`);
 
@@ -135,9 +123,6 @@ ALTER TABLE `flag_history`
 
 ALTER TABLE `logs`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `pages`
-  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `password_keys`
   MODIFY `key_id` int(11) NOT NULL AUTO_INCREMENT;

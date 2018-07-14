@@ -1,34 +1,45 @@
 <?php
+/*
+	Custom Library
+	File for custom functions
+*/
 
 if (!defined('file_access')) {
-    header('Location: home');
+    header('Location: ' . url . ' home');
 }
 
-// Check for the flags that are expired and remove them from the admin access flags
-function expire_flags() {
-	$get = query("SELECT * FROM flag_history");
-	if (num_rows($get) > 0) {
-		$date = strtotime(core_date());
+function template_show_servers($conn, $content) {
+	
+	$cServers	= comment('SHOW SERVERS', $content);
+	$cText		= comment('NO SERVERS TEXT', $content);
+	$content	= str_replace('{CHOOSE_SERVER_TITLE}', language($conn, 'titles', 'CHOOSE_SERVER'), $content);
+	
+	$get = mysqli_query($conn, "SELECT * FROM servers");
+	if(num_rows($get) > 0) {
+		
+		$content	= str_replace($cText, '', $content);
+		$list		= "";
+		$comment = comment('GET SERVERS', $content);
+		
 		while($row = fetch_assoc($get)) {
-			$expireDate = strtotime($row['dateExpire']);
-			if($date >= $expireDate) {
-				$getServer = query("SELECT * FROM servers WHERE shortname='" . $row['server'] . "'");
-				if(num_rows($getServer) > 0) {
-					$row2     = fetch_assoc($getServer);
-					$serverID = $row2['csbans_id'];
-					$admins   = csbans_all_admins("WHERE nickname='" . $row['nickname'] . "'");
-					foreach ($admins as $admin) {
-						$check = query("SELECT * FROM " . prefix . "admins_servers WHERE server_id='$serverID' AND admin_id='" . $admin['id'] . "'");
-						if(num_rows($check) > 0) {
-							$getFlags = query("SELECT * FROM ". prefix ."amxadmins WHERE id='". $admin['id'] ."'");
-							$row3  = fetch_assoc($getFlags);
-							$flags = str_replace($row['flag'], '', $row3['access']);
-							query("UPDATE " . prefix . "amxadmins SET access='$flags' WHERE id='" . $admin['id'] . "'");
-							query("DELETE FROM flag_history WHERE flag_id='" . $row['flag_id'] . "'");
-						}
-					}
-				}
-			}
+			
+			$csbans = csbans_serverInfo($conn, $row['csbans_id']);
+			
+			$replace	= ['{SERVER}', '{SERVER_NAME}'];
+			$with		= [$row['shortname'], $csbans['hostname']];
+			
+			$list .= str_replace($replace, $with, $comment);
+			
 		}
+		
+		$content = str_replace($comment, $list, $content);
+		
+	} else {
+		
+		$content = str_replace($cServers, '', $content);
+		
 	}
+	
+	return $content;
+	
 }

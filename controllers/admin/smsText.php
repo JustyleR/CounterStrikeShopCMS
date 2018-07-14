@@ -4,59 +4,52 @@ if (!defined('file_access')) { header('Location: home'); }
 
 // Pages function
 function main_info() {
-    return array('smsText', '{STRING}');
+    return array('smsText');
 }
 
 // Main function
-function main() {
-	// Pages
-    $page = core_page();
-
-	// Check if its defined preview
-    if ($page[2] != NULL) {
-        $string	= core_POSTP($page[2]);
-		if($string === 'preview') {
-			template('admin/smsTextPreview');
-		} else {
-			core_header('!admin/smsText');
-		}
-        
-    } else {
-		// Include the template file
-        template('admin/smsText');
-    }
+function main($conn) {
+	
+	$content = template($conn, 'admin/smsText');
+	$content = showText($conn, $content);
+	$content = smsText($conn, $content);
+	
+	echo $content;
 }
 
-function smsText() {
+function showText($conn, $content) {
+	
+	$query = query($conn, "SELECT text FROM sms_text");
+	if(num_rows($query) > 0) {
+		
+		$content = str_replace('{INFO_TEXT}', bbcode_brFix(fetch_assoc($query)['text']), $content);
+		
+	}
+	
+	return $content;
+}
+
+function smsText($conn, $content) {
+	$message = core_message('smsText');
     if(isset($_POST['edit'])) {
 		
-		$text = bbcode_save(core_POSTP($_POST['smsText']));
+		$text = bbcode_save(core_POSTP($conn, $_POST['smsText']));
 		
-		$get = query("SELECT * FROM sms_text");
+		$get = query($conn, "SELECT text FROM sms_text");
 		if(num_rows($get) > 0) {
 			
-			query("UPDATE sms_text SET text='$text'");
+			query($conn, "UPDATE sms_text SET text='". $text ."'");
 			
 		} else {
 			
-			query("INSERT INTO sms_text (text) VALUES ('$text')");
+			query($conn, "INSERT INTO sms_text (text) VALUES ('". $text ."')");
 			
 		}
 		
-		core_header('!admin/smsText/');
+		core_message_set('text', language($conn, 'messages', 'CHANGES_SAVED'));
+		core_header('!admin/smsText');
 		
 	}
-	if(isset($_POST['preview'])) {
-		
-		$text = core_POSTP($_POST['smsText']);
-		$_SESSION['preview'] = $text;
-		
-		core_header('!admin/smsText/preview');
-		
-	}
-	if(isset($_POST['clearPreview'])) {
-		
-		unset($_SESSION['preview']);
-		core_header('!admin/smsText/');
-	}
+	
+	return $content = str_replace('{SHOW_MESSAGE}', $message, $content);
 }
