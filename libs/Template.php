@@ -73,6 +73,7 @@ function template_replace_default($conn, $content) {
 	if(isset($_SESSION['user_logged'])) {
 		
 		$user = user_info($conn, $_SESSION['user_logged']);
+		$content = str_replace('{USER_ID}', $user['id'], $content);
 		$content = str_replace('{USER_EMAIL}', $user['email'], $content);
 		$content = str_replace('{USER_BALANCE}', $user['balance'], $content);
 		
