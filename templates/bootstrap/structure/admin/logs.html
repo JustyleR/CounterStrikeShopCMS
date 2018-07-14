@@ -3,7 +3,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">{TRANSLATE}titles,ALL_EXISTING_LOGS{/TRANSLATE}</div>
         <div class="panel-body">
-			<!--SHOW LOGS-->
+			<!--SHOW ALL LOGS-->
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -13,11 +13,13 @@
                     </tr>
                 </thead>
                 <tbody>
+					<!--SHOW LOGS-->
                     <tr>
 						<td>{INFO_LOG_DATE}</td>
 						<td>{INFO_LOG_USER}</td>
 						<td>{INFO_LOG}</td>
 					</tr>
+					<!--END SHOW LOGS-->
 				</tbody>
             </table>
 			<!--SHOW PAGES-->
@@ -29,7 +31,7 @@
 			</nav>
 			<!--END SHOW PAGES-->
 			
-			<!--END SHOW LOGS-->
+			<!--END SHOW ALL LOGS-->
 			
 			<!--SHOW NOTHING ADDED-->
 			{TRANSLATE}messages,NOTHING_ADDED{/TRANSLATE}
