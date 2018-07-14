@@ -26,9 +26,7 @@ function template_error($conn, $msg, $die = 0) {
         if ($die == 1) {
             die($msg);
         } else {
-			$content 	= template($conn, 'header');
-            $content	.= template($conn, 'error');
-            $content	.= template($conn, 'footer');
+            $content	= template($conn, 'error');
 			$replace	= ['{ERROR_SITE_TITLE}', '{ERROR_TEXT_TITLE}', '{ERROR_TEXT}'];
 			$with		= [language($conn, 'errors', 'ERROR_FILE_SITE_TITLE'), language($conn, 'errors', 'ERROR_FILE_TEXT_TITLE'), $msg];
 			$content 	= str_replace($replace, $with, $content);
