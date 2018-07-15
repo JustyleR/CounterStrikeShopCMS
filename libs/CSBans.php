@@ -84,10 +84,10 @@ A very stupid way to do this function but..
 Basically check if there are any servers in the csbans servers table and put them in the sms servers table
 (I WILL UPDATE THIS FUNCTION IN THE FUTURE)
 */
-function csbans_checkServers() {
+function csbans_checkServers($conn) {
 
-    $getServers  = query("SELECT * FROM " . prefix . "serverinfo");
-    $getServers2 = query("SELECT * FROM servers");
+    $getServers  = query($conn, "SELECT * FROM ". prefix ."serverinfo");
+    $getServers2 = query($conn, "SELECT * FROM servers");
 
     if (num_rows($getServers) > 0) {
 
@@ -101,13 +101,13 @@ function csbans_checkServers() {
 
                         if ($row['id'] != $row2['csbans_id']) {
 
-                            query("INSERT INTO servers (csbans_id,shortname) VALUES ('" . $row['id'] . "','server" . $row['id'] . "')");
+                            query($conn, "INSERT INTO servers (csbans_id,shortname) VALUES ('". $row['id'] . "','server" . $row['id'] ."')");
                         }
                     }
                 }
             } else {
 
-                query("INSERT INTO servers (csbans_id,shortname) VALUES ('" . $row['id'] . "','server" . $row['id'] . "')");
+                query($conn, "INSERT INTO servers (csbans_id,shortname) VALUES ('". $row['id'] ."','server". $row['id'] ."')");
             }
         }
     }
