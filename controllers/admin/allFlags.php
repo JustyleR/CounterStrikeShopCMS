@@ -37,14 +37,15 @@ function main($conn) {
 }
 
 function allFlags($conn, $content) {
+	
     $page	= core_page();
-	$cFlags = comment('SHOW FLAGS', $content);
+	$cAllFlags = comment('SHOW ALL FLAGS', $content);
 	$cText	= comment('SHOW NOTHING ADDED', $content);
 	
     $getFlags = query($conn, "SELECT * FROM flags WHERE server='". $page[2] ."'");
     if (num_rows($getFlags) > 0) {
 		
-		
+		$cFlags		= comment('SHOW FLAGS', $content);
 		$list		= "";
 		
         while ($row	= fetch_assoc($getFlags)) {
@@ -59,7 +60,7 @@ function allFlags($conn, $content) {
 		$content = str_replace('{SERVER_NAME}', $page[2], $content);
 		$content = str_replace($cText, '', $content);
     } else {
-		$content = str_replace($cFlags, '', $content);
+		$content = str_replace($cAllFlags, '', $content);
         $content = str_replace('{NOTHING_ADDED}', language($conn, 'messages', 'NOTHING_ADDED'), $content);
     }
 	

@@ -19,12 +19,13 @@ function main($conn) {
 function allCodes($conn, $content) {
 	
 	$getCodes 	= pagination($conn, "SELECT * FROM sms_codes", 10);
-	$cCodes		= comment('SHOW CODES', $content);
+	$cAllCodes	= comment('SHOW ALL CODES', $content);
 	$cPages		= comment('SHOW PAGES', $content);
 	$cText		= comment('SHOW NOTHING ADDED', $content);
 	
 	if($getCodes != NULL) {
 		
+		$cCodes		= comment('SHOW CODES', $content);
 		$list		= "";
 		
 		foreach ($getCodes[1] as $code) {
@@ -65,7 +66,7 @@ function allCodes($conn, $content) {
 		
 	} else {
 		
-		$content	= str_replace($cCodes, '', $content);
+		$content	= str_replace($cAllCodes, '', $content);
 		$content	= str_replace($cPages, '', $content);
 		
 	}

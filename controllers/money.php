@@ -61,14 +61,14 @@ function money($conn, $content) {
 
         if ($pay > 0) {
 			// Get the user information
-            $user    = user_info($_SESSION['user_logged']);
+            $user    = user_info($conn, $_SESSION['user_logged']);
             $balance = $user['balance'] + $pay;
 			
 			if(isset($db)) {
-				query($conn, "DELETE FROM sms_codes WHERE code='$code'");
+				query($conn, "DELETE FROM sms_codes WHERE code='". $code ."'");
 			}
-            query($conn, "UPDATE users SET balance='$balance' WHERE email='" . $user['email'] . "'");
-			addLog($conn, $user['email'], language('logs', 'SUCCESSFULLY_ADDED_BALANCE') . ' - ' . $pay);
+            query($conn, "UPDATE users SET balance='". $balance ."' WHERE email='". $user['email'] ."'");
+			addLog($conn, $user['email'], language($conn, 'logs', 'SUCCESSFULLY_ADDED_BALANCE') .' - '. $pay);
 			// Set the output message
             $message = language($conn, 'messages', 'SUCCESSFULLY_REDEEMED_MONEY');
 			// Redirect to a page

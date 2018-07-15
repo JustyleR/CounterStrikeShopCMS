@@ -29,6 +29,8 @@ function show_logs($conn, $content) {
 	if($getLogs != NULL) {
 		
 		$content 	= str_replace($cText, '', $content);
+		$content 	= str_replace('{DATE}', language($conn, 'logs', 'DATE_CREATED'), $content);
+		$content 	= str_replace('{LOG}', language($conn, 'logs', 'LOG'), $content);
 		$comment	= comment('SHOW LOGS', $content);
 		$list		= "";
 		

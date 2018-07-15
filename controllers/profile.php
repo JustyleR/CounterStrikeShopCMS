@@ -25,7 +25,7 @@ function main($conn) {
 		
 	} else {
 		
-		template_error($conn, language($conn, 'messages', 'USER_NOT_FOUND'));
+		template_error($conn, language($conn, 'messages', 'USER_NOT_FOUND'), 0);
 		
 	}
 }

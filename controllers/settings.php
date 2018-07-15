@@ -25,6 +25,18 @@ function show_settings($conn, $content) {
 	
 	if($user != '') {
 		
+		$comment = comment('SHOW TYPE INGAME SETTINGS MESSAGE', $content);
+		
+		if(empty($user['nickname']) || (empty($user['nick_pass']))) {
+			
+			$content = str_replace('{INGAME_SETTINGS_MESSAGE}', language($conn, 'messages', 'ADD_NICKNAME_AND_PASSWORD'), $content);
+			
+		} else {
+			
+			$content = str_replace($comment, '', $content);
+			
+		}
+		
 		$content = str_replace('{NICKNAME}', $user['nickname'], $content);
 		$content = str_replace('{INGAME_PASS}', $user['nick_pass'], $content);
 		$comment = comment('LANG SELECT', $content);
