@@ -32,6 +32,12 @@ function main($conn) {
 		$content = template($conn, 'chooseServer');
 		$content = template_show_servers($conn, $content);
 		
+		if(isset($_POST['choose'])) {
+			$page = core_page();
+			
+			core_header($page[0] . '/' . $_POST['server']);
+		}
+		
 		echo $content;
 		
     }
