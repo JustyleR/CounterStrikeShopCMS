@@ -12,6 +12,8 @@ function main($conn) {
 	$content = template($conn, 'admin/home');
 	$content = home($conn, $content);
 	
+	csbans_checkServers($conn);
+	
 	echo $content;
 }
 

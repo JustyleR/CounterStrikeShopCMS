@@ -41,7 +41,7 @@ function allCodes($conn, $content) {
 		
 		if($pages['max'] == 1) {
 			
-			$content = str_replace($comment, '', $content);
+			$content = str_replace($cPages, '', $content);
 			
 		} else {
 			
