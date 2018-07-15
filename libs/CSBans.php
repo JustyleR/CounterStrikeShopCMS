@@ -87,28 +87,18 @@ Basically check if there are any servers in the csbans servers table and put the
 function csbans_checkServers($conn) {
 
     $getServers  = query($conn, "SELECT * FROM ". prefix ."serverinfo");
-    $getServers2 = query($conn, "SELECT * FROM servers");
 
     if (num_rows($getServers) > 0) {
 
         while ($row = fetch_assoc($getServers)) {
-
-            if (num_rows($getServers2) > 0) {
-
-                while ($row2 = fetch_assoc($getServers2)) {
-
-                    while ($row = fetch_assoc($getServers)) {
-
-                        if ($row['id'] != $row2['csbans_id']) {
-
-                            query($conn, "INSERT INTO servers (csbans_id,shortname) VALUES ('". $row['id'] . "','server" . $row['id'] ."')");
-                        }
-                    }
-                }
-            } else {
-
-                query($conn, "INSERT INTO servers (csbans_id,shortname) VALUES ('". $row['id'] ."','server". $row['id'] ."')");
-            }
+			
+			$getServers2 = query($conn, "SELECT * FROM servers WHERE csbans_id='". $row['id'] ."'");
+		
+            if (num_rows($getServers2) == 0) {
+				
+				query($conn, "INSERT INTO servers (csbans_id,shortname) VALUES ('". $row['id'] ."','server". $row['id'] ."')");
+				
+			}
         }
     }
 }
