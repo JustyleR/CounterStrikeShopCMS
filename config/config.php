@@ -5,11 +5,11 @@ session_start();
 date_default_timezone_set('Europe/Sofia');
 
 // Database connect settings
-define('db_host', 'localhost'); // Hostname
-define('db_user', 'root'); // User
+define('db_host', ''); // Hostname
+define('db_user', ''); // User
 define('db_pass', ''); // Password
-define('db_name', 'sms'); // Database
-define('prefix',  'csbans_'); // Prefix for AMXBans tables
+define('db_name', ''); // Database
+define('prefix',  ''); // Prefix for AMXBans tables
 
 // Include the Database library and get the site settings from the table
 require('libs/Database.php');
