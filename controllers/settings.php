@@ -136,11 +136,20 @@ function settings($conn, $content) {
                         $message = language($conn, 'messages', 'NICKNAME_ALREADY_IN_USE');
                         $next = 0;
                     } else {
-                        query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."' 
-						WHERE nickname='" . $user['nickname'] . "'");
-                        query($conn, "UPDATE "._table('flag_history')." SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
-                        query($conn, "UPDATE "._table('users')." SET nickname='". $nickname ."' WHERE email='". $user['email'] ."'");
-                        $next = 1;
+                        $checkNick2 = query($conn, "SELECT nickname FROM ".prefix."amxadmins WHERE nickname='". $nickname ."'");
+						if(num_rows($checkNick2) > 0) {
+							// Set the output message
+							$message = language($conn, 'messages', 'NICKNAME_ALREADY_IN_USE');
+							$next = 0;
+						} else {
+							
+							query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."' 
+							WHERE nickname='" . $user['nickname'] . "'");
+							query($conn, "UPDATE "._table('flag_history')." SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
+							query($conn, "UPDATE "._table('users')." SET nickname='". $nickname ."' WHERE email='". $user['email'] ."'");
+							$next = 1;
+							
+						}
                     }
                 }
             }
