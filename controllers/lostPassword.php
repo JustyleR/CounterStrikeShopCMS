@@ -75,11 +75,11 @@ function lostPassword($conn, $content) {
 				if($iEmail == 1) {
 					if(isset($_SESSION['pass_email'])) {
 						if($_SESSION['pass_email'] <= core_date()) {
-							mail($row['email'], 'Lost password', 'Key: $key');
+							mail($row['email'], 'Lost password', 'Key: '. $key .'');
 							$_SESSION['pass_email'] = core_date('all', '5 minutes');
 						}
 					} else {
-						mail($row['email'], 'Lost password', 'Key: $key');
+						mail($row['email'], 'Lost password', 'Key: '. $key .'');
 						$_SESSION['pass_email'] = core_date('all', '5 minutes');
 					}
 				}
