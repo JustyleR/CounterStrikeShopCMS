@@ -73,14 +73,14 @@ function lostPassword($conn, $content) {
 				}
 				
 				if($iEmail == 1) {
-					$body = 'Lost password, <a href="'. url .'lostPassword/'. $key .'">reset</a>.';
+					$body = 'Lost password, '. url .'lostPassword/'. $key .'';
 					if(isset($_SESSION['pass_email'])) {
 						if($_SESSION['pass_email'] <= core_date()) {
-							mail($row['email'], $body);
+							mail($row['email'], 'Lost password', $body);
 							$_SESSION['pass_email'] = core_date('all', '5 minutes');
 						}
 					} else {
-						mail($row['email'], $body);
+						mail($row['email'], 'Lost password', $body);
 						$_SESSION['pass_email'] = core_date('all', '5 minutes');
 					}
 				}
