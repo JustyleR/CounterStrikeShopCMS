@@ -120,7 +120,7 @@
 				$get	= str_replace("define('db_user', '');", "define('db_user', '". $username ."');", $get);
 				$get	= str_replace("define('db_pass', '');", "define('db_pass', '". $password ."');", $get);
 				$get	= str_replace("define('db_name', '');", "define('db_name', '". $dbname ."');", $get);
-				$get	= str_replace("define('prefix', '');", "define('prefix', '". $prefix ."');", $get);
+				$get	= str_replace("define('prefix',  '');", "define('prefix',  '". $prefix ."');", $get);
 				$get	= str_replace("define('sysPrefix',  '');", "define('sysPrefix',  '". $sysPrefix ."');", $get);
 				$get	= str_replace("define('url', '');", "define('url', '". $url ."');", $get);
 				
