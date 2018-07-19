@@ -13,7 +13,7 @@ $email = isset($_GET['email']) ? core_POSTP($conn, trim($_GET['email'])) : "";
 switch($type)
 {
 		case 'user': {			
-				$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE email='$email'");
+				$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE email='$email'");
 				if(num_rows($query) > 0) {
 					print json_encode(fetch_assoc($query));
 				}
@@ -27,7 +27,7 @@ switch($type)
 				if($num == 0) {
 					// Вадене на всички потребители
 				} else {
-					$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM users WHERE `email` LIKE '%$email%'");
+					$query = query($conn, "SELECT user_id,email,nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE `email` LIKE '%$email%' LIMIT ". $num ."");
 					if($query && num_rows($query) > 0) {
 						$array = array();
 						
@@ -36,7 +36,7 @@ switch($type)
 						}
 						
 						print json_encode($array);						
-					}
+					} else { echo 'test'; }
 				}
 			}
 			break;
@@ -94,12 +94,12 @@ switch($type)
 					
 					if($payment_status == 'Completed') {
 						
-						$get = query($conn, "SELECT balance FROM users WHERE email='". $payer_email ."'");
+						$get = query($conn, "SELECT balance FROM "._table('users')." WHERE email='". $payer_email ."'");
 						if(num_rows($get) > 0) {
 							
 							$balance = fetch_assoc($get)['balance'] + $payment_amount;
 							
-							query($conn, "UPDATE users SET balance='". $balance ."' WHERE email='". $payer_email ."'");
+							query($conn, "UPDATE "._table('users')." SET balance='". $balance ."' WHERE email='". $payer_email ."'");
 							
 						}
 						

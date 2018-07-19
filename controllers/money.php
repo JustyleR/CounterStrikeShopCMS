@@ -22,7 +22,7 @@ function main($conn) {
 
 function money_text($conn, $content) {
 	
-	$query = query($conn, "SELECT * FROM sms_text");
+	$query = query($conn, "SELECT * FROM "._table('sms_text')."");
 	if(num_rows($query) > 0) {
 		
 		$text = bbcode_preview(fetch_assoc($query)['text']);
@@ -50,7 +50,7 @@ function money($conn, $content) {
         } else if (mobio_check(servID600, $code)) {
             $pay = money600;
         } else {
-            $query = query($conn, "SELECT * FROM sms_codes WHERE code='$code'");
+            $query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
 			if(num_rows($query) > 0) {
 				$pay = fetch_assoc($query)['balance'];
 				$db = 1;
@@ -61,14 +61,14 @@ function money($conn, $content) {
 
         if ($pay > 0) {
 			// Get the user information
-            $user    = user_info($_SESSION['user_logged']);
+            $user    = user_info($conn, $_SESSION['user_logged']);
             $balance = $user['balance'] + $pay;
 			
 			if(isset($db)) {
-				query($conn, "DELETE FROM sms_codes WHERE code='$code'");
+				query($conn, "DELETE FROM "._table('sms_codes')." WHERE code='". $code ."'");
 			}
-            query($conn, "UPDATE users SET balance='$balance' WHERE email='" . $user['email'] . "'");
-			addLog($conn, $user['email'], language('logs', 'SUCCESSFULLY_ADDED_BALANCE') . ' - ' . $pay);
+            query($conn, "UPDATE "._table('users')." SET balance='". $balance ."' WHERE email='". $user['email'] ."'");
+			addLog($conn, $user['email'], language($conn, 'logs', 'SUCCESSFULLY_ADDED_BALANCE') .' - '. $pay);
 			// Set the output message
             $message = language($conn, 'messages', 'SUCCESSFULLY_REDEEMED_MONEY');
 			// Redirect to a page

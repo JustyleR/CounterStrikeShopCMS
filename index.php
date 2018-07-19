@@ -3,7 +3,7 @@
 /*
  * @project SMS CMS
  * @author  JustyleR
- * @version 0.0.5
+ * @version 0.0.6
  */
 
 define('file_access', TRUE);

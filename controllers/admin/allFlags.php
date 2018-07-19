@@ -15,7 +15,7 @@ function main($conn) {
 	// Check if we have the servername set
     if ($page[2] != NULL) {
         $serverName		= core_POSTP($conn, $page[2]);
-        $checkServer	= query($conn, "SELECT * FROM servers WHERE shortname='". $serverName ."'");
+        $checkServer	= query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
         if (num_rows($checkServer) > 0) {
 			$content = template($conn, 'admin/allFlags');
 			$content = allFlags($conn, $content);
@@ -37,14 +37,15 @@ function main($conn) {
 }
 
 function allFlags($conn, $content) {
+	
     $page	= core_page();
-	$cFlags = comment('SHOW FLAGS', $content);
+	$cAllFlags = comment('SHOW ALL FLAGS', $content);
 	$cText	= comment('SHOW NOTHING ADDED', $content);
 	
-    $getFlags = query($conn, "SELECT * FROM flags WHERE server='". $page[2] ."'");
+    $getFlags = query($conn, "SELECT * FROM "._table('flags')." WHERE server='". $page[2] ."'");
     if (num_rows($getFlags) > 0) {
 		
-		
+		$cFlags		= comment('SHOW FLAGS', $content);
 		$list		= "";
 		
         while ($row	= fetch_assoc($getFlags)) {
@@ -59,7 +60,7 @@ function allFlags($conn, $content) {
 		$content = str_replace('{SERVER_NAME}', $page[2], $content);
 		$content = str_replace($cText, '', $content);
     } else {
-		$content = str_replace($cFlags, '', $content);
+		$content = str_replace($cAllFlags, '', $content);
         $content = str_replace('{NOTHING_ADDED}', language($conn, 'messages', 'NOTHING_ADDED'), $content);
     }
 	

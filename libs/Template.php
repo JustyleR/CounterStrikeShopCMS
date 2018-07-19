@@ -69,6 +69,10 @@ function template_replace_default($conn, $content) {
 	$content = str_replace('{SITE_TEMPLATE}', template, $content);
 	$content = str_replace('{SITE_TEMPLATE}', template, $content);
 	
+	// Show paypal link
+	$cPaypal = comment('SHOW PAYPAL LINK', $content);
+	if(paypal_enabled == 0) { $content = str_replace($cPaypal, '', $content); }
+	
 	// User information
 	if(isset($_SESSION['user_logged'])) {
 		

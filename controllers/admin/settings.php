@@ -19,7 +19,7 @@ function main($conn) {
 
 // Get the information about the settings from the database
 function getSettings($conn, $content) {
-    $query = query($conn, "SELECT * FROM settings");
+    $query = query($conn, "SELECT * FROM "._table('settings')."");
     if(num_rows($query) > 0) {
 		$row 		= fetch_assoc($query);
 		$content	= str_replace('{INFO_SITE_TITLE}', $row['site_title'], $content);
@@ -131,7 +131,7 @@ function settings_submit($conn, $content) {
 		$b4			= core_POSTP($conn, $_POST['b600']);
 		
 
-		query($conn, "UPDATE settings SET site_title='". $title ."', template='". $temp ."', language='". $lang ."', md5_enc='". $md5 ."', reloadadmins='". $radmins ."', servID1='". $id1 ."', 
+		query($conn, "UPDATE "._table('settings')." SET site_title='". $title ."', template='". $temp ."', language='". $lang ."', md5_enc='". $md5 ."', reloadadmins='". $radmins ."', servID1='". $id1 ."', 
 		servID2='". $id2 ."', servID3='". $id3 ."', servID4='". $id4 ."', 
 		balance1='". $b1 ."', balance2='". $b2 ."', balance3='". $b3 ."', balance4='". $b4 ."'");
 		

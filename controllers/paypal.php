@@ -15,6 +15,7 @@ function main_info() {
 function main($conn) {
     
 	if(!isset($_SESSION['user_logged'])) { core_header('login'); }
+	if(paypal_enabled == 0) { core_header('home'); }
 	
 	$content = template($conn, 'paypal');
 	$content = str_replace('{INFO_USER_EMAIL}', paypal_email, $content);

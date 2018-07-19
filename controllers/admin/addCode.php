@@ -43,7 +43,7 @@ function addCode($conn, $content) {
 			$_SESSION['sms_success']	= 1;
 			$_SESSION['sms_code']		= $code;
 			
-			query($conn, "INSERT INTO sms_codes (code, balance) VALUES ('$code','$balance')");
+			query($conn, "INSERT INTO "._table('sms_codes')." (code, balance) VALUES ('$code','$balance')");
 			
 			$message = language($conn, 'messages', 'SUCCESSFULLY_CREATED_CODE');
 		}

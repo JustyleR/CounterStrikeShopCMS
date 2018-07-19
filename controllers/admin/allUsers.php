@@ -17,7 +17,7 @@ function main($conn) {
 }
 
 function allUsers($conn, $content) {
-	$allUsers = pagination($conn, "SELECT * FROM users", 10);
+	$allUsers = pagination($conn, "SELECT * FROM "._table('users')."", 10);
 	if($allUsers != NULL) {
 		
 		$comment	= comment('SHOW USERS', $content);

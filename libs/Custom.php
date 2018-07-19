@@ -10,13 +10,13 @@ if (!defined('file_access')) {
 
 // Check for the flags that are expired and remove them from the admin access flags
 function expire_flags($conn) {
-	$get = query($conn, "SELECT * FROM flag_history");
+	$get = query($conn, "SELECT * FROM "._table('flag_history')."");
 	if (num_rows($get) > 0) {
 		$date = strtotime(core_date());
 		while($row = fetch_assoc($get)) {
 			$expireDate = strtotime($row['dateExpire']);
 			if($date >= $expireDate) {
-				$getServer = query($conn, "SELECT * FROM servers WHERE shortname='". $row['server'] ."'");
+				$getServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $row['server'] ."'");
 				if(num_rows($getServer) > 0) {
 					$row2     = fetch_assoc($getServer);
 					$serverID = $row2['csbans_id'];
@@ -28,7 +28,7 @@ function expire_flags($conn) {
 							$row3  = fetch_assoc($getFlags);
 							$flags = str_replace($row['flag'], '', $row3['access']);
 							query($conn, "UPDATE " . prefix . "amxadmins SET access='". $flags ."' WHERE id='". $admin['id'] ."'");
-							query($conn, "DELETE FROM flag_history WHERE flag_id='". $row['flag_id'] ."'");
+							query($conn, "DELETE FROM "._table('flag_history')." WHERE flag_id='". $row['flag_id'] ."'");
 						}
 					}
 				}
@@ -43,7 +43,7 @@ function template_show_servers($conn, $content) {
 	$cText		= comment('NO SERVERS TEXT', $content);
 	$content	= str_replace('{CHOOSE_SERVER_TITLE}', language($conn, 'titles', 'CHOOSE_SERVER'), $content);
 	
-	$get = mysqli_query($conn, "SELECT * FROM servers");
+	$get = mysqli_query($conn, "SELECT * FROM "._table('servers')."");
 	if(num_rows($get) > 0) {
 		
 		$content	= str_replace($cText, '', $content);

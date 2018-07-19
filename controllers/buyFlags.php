@@ -18,7 +18,7 @@ function main($conn) {
 	// Check if we have the servername set
     if ($page[1] != NULL) {
         $serverName  = core_POSTP($conn, $page[1]);
-        $checkServer = query($conn, "SELECT * FROM servers WHERE shortname='$serverName'");
+        $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
         if (num_rows($checkServer) > 0) {
 			
 			$content = template($conn, 'buyFlags');
@@ -48,7 +48,7 @@ function show_flags($conn, $content) {
 	$cText	= comment('SHOW NO FLAGS TEXT', $content);
 	$server	= core_page()[1];
 	
-	$getFlags = query($conn, "SELECT * FROM flags WHERE server='$server'");
+	$getFlags = query($conn, "SELECT * FROM "._table('flags')." WHERE server='". $server ."'");
 	if(mysqli_num_rows($getFlags) > 0) {
 		
 		$adminID = csbans_getadminID($conn, $server);
@@ -117,7 +117,7 @@ function submit_flags($conn, $content) {
 		// Get the Admin ID from the database
         $adminID = csbans_getadminID($conn, $server);
 		
-        $checkFlag = query($conn, "SELECT * FROM flags WHERE flag='$flag' AND server='$server'");
+        $checkFlag = query($conn, "SELECT * FROM "._table('flags')." WHERE flag='". $flag ."' AND server='". $server ."'");
         if (num_rows($checkFlag) > 0) {
 
             $row = fetch_assoc($checkFlag);
@@ -145,12 +145,12 @@ function submit_flags($conn, $content) {
                     $money      = $user['balance'] - $row['price'];
                     $flags      = $row2['access'] . $flag;
 
-                    query($conn, "INSERT INTO flag_history (nickname,flag,dateBought,dateExpire,server) VALUES ('" . $user['nickname'] . "','$flag','$dateBought', '$dateExpire','$server')");
-                    query($conn, "UPDATE users SET balance='$money' WHERE email='" . $user['email'] . "'");
+                    query($conn, "INSERT INTO "._table('flag_history')." (nickname,flag,dateBought,dateExpire,server) VALUES ('" . $user['nickname'] . "','$flag','$dateBought', '$dateExpire','$server')");
+                    query($conn, "UPDATE "._table('users')." SET balance='$money' WHERE email='" . $user['email'] . "'");
                     query($conn, "UPDATE " . prefix . "amxadmins SET access = '$flags' WHERE id='$adminID'");
                     addLog($conn, $_SESSION['user_logged'], language($conn, 'logs', 'SUCCESSFULLY_BOUGHT_FLAG'));
 					if(amx_reloadadmins != 0) {
-						$info = query($conn, "SELECT * FROM servers WHERE shortname='$server'");
+						$info = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $server ."'");
 						$row = fetch_assoc($info);
 						$info = query($conn, "SELECT * FROM ". prefix ."serverinfo WHERE id='". $row['csbans_id'] ."'");
 						$row = fetch_assoc($info);

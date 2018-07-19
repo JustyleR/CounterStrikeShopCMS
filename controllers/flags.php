@@ -18,7 +18,7 @@ function main($conn) {
 	// Check if we have the servername set
     if ($page[1] != NULL) {
         $serverName  = core_POSTP($conn, $page[1]);
-        $checkServer = query($conn, "SELECT * FROM servers WHERE shortname='$serverName'");
+        $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
         if (num_rows($checkServer) > 0) {
 			
 			$content = template($conn, 'flags');
@@ -67,11 +67,11 @@ function show_flags($conn, $content) {
 			
 			$char	= substr($flags, $i, 1);
 			
-			$getFlagInfo = query($conn, "SELECT flagDesc FROM flags WHERE flag='$char' AND server='$server'");
+			$getFlagInfo = query($conn, "SELECT flagDesc FROM "._table('flags')." WHERE flag='". $char ."' AND server='". $server ."'");
 			if (num_rows($getFlagInfo) > 0) {
 				
 				$row = fetch_assoc($getFlagInfo);
-				$getFlagExpire = query($conn, "SELECT dateExpire FROM flag_history WHERE flag='$char' AND server='$server'");
+				$getFlagExpire = query($conn, "SELECT dateExpire FROM "._table('flag_history')." WHERE flag='". $char ."' AND server='". $server ."'");
 				if (num_rows($getFlagExpire) > 0) {
 					
 					$row2 = fetch_assoc($getFlagExpire);

@@ -14,7 +14,7 @@ function main($conn) {
 	// Check if we have the flag id set
     if ($page[2] != NULL) {
         $flagID        = core_POSTP($conn, $page[2]);
-        $checkServer = query($conn, "SELECT flag_id FROM flags WHERE flag_id='". $flagID ."'");
+        $checkServer = query($conn, "SELECT flag_id FROM "._table('flags')." WHERE flag_id='". $flagID ."'");
         if (num_rows($checkServer) > 0) {
 			$content = template($conn, 'admin/editFlag');
 			$content = editFlag($conn, $content);
@@ -27,8 +27,8 @@ function main($conn) {
 
 // Get the information about a flag from the database
 function editFlag($conn, $content) {
-    $page		= core_page()[2];
-    $query	= query($conn, "SELECT * FROM flags WHERE flag_id='". $page ."'");
+    $page	= core_page()[2];
+    $query	= query($conn, "SELECT * FROM "._table('flags')." WHERE flag_id='". $page ."'");
     $row	= fetch_assoc($query);
 	
 	$content = str_replace('{FLAG}', $row['flag'], $content);
@@ -50,7 +50,7 @@ function editFlag_submit($conn, $content) {
         if (empty($flag) || (empty($flagDesc)) || (empty($flagPrice))) {
             $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            query($conn, "UPDATE flags SET flag='". $flag ."', flagDesc='". $flagDesc ."', price='". $flagPrice ."' WHERE flag_id='". $flagID ."'");
+            query($conn, "UPDATE "._table('flags')." SET flag='". $flag ."', flagDesc='". $flagDesc ."', price='". $flagPrice ."' WHERE flag_id='". $flagID ."'");
 			
             $message = language($conn, 'messages', 'SUCCESSFULLY_UPDATED_THE_FLAG');
         }
