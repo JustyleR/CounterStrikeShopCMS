@@ -10,8 +10,8 @@ if (!defined('file_access')) {
 
 // Get user info from the database
 function user_info($conn, $user, $type = 'email') {
-	if($type === 'email') { $checkUser = query($conn, "SELECT * FROM users WHERE email='". $user ."'"); }
-	else if($type === 'id') { $checkUser = query($conn, "SELECT * FROM users WHERE user_id='". $user ."'"); }
+	if($type === 'email') { $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE email='". $user ."'"); }
+	else if($type === 'id') { $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE user_id='". $user ."'"); }
     
     if (num_rows($checkUser) > 0) {
         $row   = fetch_assoc($checkUser);
@@ -38,7 +38,7 @@ function checkUser($conn) {
     if(isset($_SESSION['user_logged'])) {
 		$user = user_info($conn, $_SESSION['user_logged']);
 		
-        $checkUser = query($conn, "SELECT user_id FROM users WHERE email='" . $_SESSION['user_logged'] . "'");
+        $checkUser = query($conn, "SELECT user_id FROM "._table('users')." WHERE email='" . $_SESSION['user_logged'] . "'");
         if (num_rows($checkUser) > 0) {
 
             if ($user['type'] == 0) {

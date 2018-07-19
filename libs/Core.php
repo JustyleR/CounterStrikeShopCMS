@@ -131,5 +131,5 @@ function random($lenght, $upper = 0) {
 
 // Function to add logs
 function addLog($conn, $user, $log) {
-	query($conn, "INSERT INTO logs (user,date,log) VALUES ('". $user ."','". core_date() ."','". $log ."')");
+	query($conn, "INSERT INTO "._table('logs')." (user,date,log) VALUES ('". $user ."','". core_date() ."','". $log ."')");
 }

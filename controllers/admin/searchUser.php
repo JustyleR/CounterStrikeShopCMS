@@ -36,7 +36,7 @@ function main($conn) {
 function getUserInfo($conn, $content) {
 	
 	$email = core_POSTP($conn, core_page()[2]);
-	$query = query($conn, "SELECT * FROM users WHERE email LIKE '". $email ."%'");
+	$query = query($conn, "SELECT * FROM "._table('users')." WHERE email LIKE '". $email ."%'");
 	if(num_rows($query) > 0) {
 		
 		$row = fetch_assoc($query);
@@ -93,12 +93,12 @@ function editUser($conn, $content) {
             $next = 0;
 
             if ($type != $user['type']) {
-                query($conn, "UPDATE users SET type='$type' WHERE email='". $user['email'] ."'");
+                query($conn, "UPDATE "._table('users')." SET type='$type' WHERE email='". $user['email'] ."'");
 				// Set next to 1 so the script can continue
                 $next = 1;
             }
             if ($email != $user['email']) {
-                $checkEmail = query($conn, "SELECT email FROM users WHERE email='". $email ."'");
+                $checkEmail = query($conn, "SELECT email FROM "._table('users')." WHERE email='". $email ."'");
                 if (num_rows($checkEmail) > 0) {
 					// Set the output message
                     $next = 0;
@@ -107,8 +107,8 @@ function editUser($conn, $content) {
                         unset($_SESSION['user_logged']);
                         $_SESSION['user_logged'] = $email;
                     }
-                    query($conn, "UPDATE users SET email='". $email ."' WHERE email='". $user['email'] ."'");
-                    query($conn, "UPDATE logs SET email='". $email ."' WHERE email='". $user['email'] ."'");
+                    query($conn, "UPDATE "._table('users')." SET email='". $email ."' WHERE email='". $user['email'] ."'");
+                    query($conn, "UPDATE "._table('logs')." SET email='". $email ."' WHERE email='". $user['email'] ."'");
                     $next = 1;
                 }
             }
@@ -116,13 +116,13 @@ function editUser($conn, $content) {
             if ($password != NULL) {
                 $password = password_hash($password, PASSWORD_DEFAULT);
                 if ($password != $user['password']) {
-                    query($conn, "UPDATE users SET password='". $password ."' WHERE email='". $user['email'] ."'");
+                    query($conn, "UPDATE "._table('users')." SET password='". $password ."' WHERE email='". $user['email'] ."'");
                     $next = 1;
                 }
             }
 
             if ($nickname_pass != $user['nick_pass']) {
-                query($conn, "UPDATE users SET nicknamePass='". $nickname_pass ."' WHERE email='". $user['email'] ."'");
+                query($conn, "UPDATE "._table('users')." SET nicknamePass='". $nickname_pass ."' WHERE email='". $user['email'] ."'");
                 query($conn, "UPDATE ". prefix ."amxadmins SET password='". $nickname_npass ."' WHERE nickname='". $user['nickname'] ."'");
                 $next = 1;
             }
@@ -133,24 +133,24 @@ function editUser($conn, $content) {
                     $message = language($conn, 'messages', 'CONTAINS_UNAUTHORIZED_CHARACTERS');
                     $next = 0;
                 } else {
-                    $checkNickname = query($conn, "SELECT nickname FROM users WHERE nickname='". $nickname ."'");
+                    $checkNickname = query($conn, "SELECT nickname FROM "._table('users')." WHERE nickname='". $nickname ."'");
                     if (num_rows($checkNickname) > 0) {
 						// Set the output message
 						
                         $message = language($conn, 'messages', 'NICKNAME_ALREADY_IN_USE');
                         $next = 0;
                     } else {
-                        query($conn, "UPDATE users SET nickname='". $nickname ."' WHERE email='" . $user['email'] . "'");
+                        query($conn, "UPDATE "._table('users')." SET nickname='". $nickname ."' WHERE email='" . $user['email'] . "'");
                         query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."' 
 						WHERE nickname='" . $user['nickname'] . "'");
-                        query($conn, "UPDATE flag_history SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
+                        query($conn, "UPDATE "._table('flag_history')." SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
                         $next = 1;
                     }
                 }
             }
 
             if ($balance != $user['balance']) {
-                query($conn, "UPDATE users SET balance='". $balance ."' WHERE email='". $user['email'] ."'");
+                query($conn, "UPDATE "._table('users')." SET balance='". $balance ."' WHERE email='". $user['email'] ."'");
                 $next = 1;
             }
 			
@@ -164,7 +164,7 @@ function editUser($conn, $content) {
 		core_message_set('viewUser', $message);
 		core_header('!admin/searchUser/' . $email);
     } else if(isset($_POST['delete'])) {
-		query($conn, "DELETE FROM users WHERE email='". core_page()[2] ."'");
+		query($conn, "DELETE FROM "._table('users')." WHERE email='". core_page()[2] ."'");
 		core_header('!admin/allUsers/cPage/1');
 	}
 	

@@ -69,7 +69,7 @@ function show_settings($conn, $content) {
 
 function settings($conn, $content) {
 	$message = core_message('settings');
-    $checkUser = query($conn, "SELECT * FROM users WHERE email='" . $_SESSION['user_logged'] . "'");
+    $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE email='" . $_SESSION['user_logged'] . "'");
     if (num_rows($checkUser) > 0) {
         $row = fetch_assoc($checkUser);
         if (isset($_POST['save'])) {
@@ -112,7 +112,7 @@ function settings($conn, $content) {
                 } else {
                     if (password_verify($cpassword, $user['password'])) {
                         $npassword = password_hash($npassword, PASSWORD_BCRYPT);
-                        query($conn, "UPDATE users SET password='$npassword' WHERE email='" . $user['email'] . "'");
+                        query($conn, "UPDATE "._table('users')." SET password='". $npassword ."' WHERE email='". $user['email'] ."'");
 						// Set next to 1 so the script can continue
                         $next      = 1;
                     } else {
@@ -130,29 +130,29 @@ function settings($conn, $content) {
                     $message = language($conn, 'messages', 'CONTAINS_UNAUTHORIZED_CHARACTERS');
                     $next = 0;
                 } else {
-                    $checkNick = query($conn, "SELECT nickname FROM users WHERE nickname='$nickname'");
+                    $checkNick = query($conn, "SELECT nickname FROM "._table('users')." WHERE nickname='". $nickname ."'");
                     if (num_rows($checkNick) > 0) {
 						// Set the output message
                         $message = language($conn, 'messages', 'NICKNAME_ALREADY_IN_USE');
                         $next = 0;
                     } else {
-                        query($conn, "UPDATE " . prefix . "amxadmins SET nickname='$nickname', steamid='$nickname' 
+                        query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."' 
 						WHERE nickname='" . $user['nickname'] . "'");
-                        query($conn, "UPDATE flag_history SET nickname='$nickname' WHERE nickname='" . $user['nickname'] . "'");
-                        query($conn, "UPDATE users SET nickname='$nickname' WHERE email='" . $user['email'] . "'");
+                        query($conn, "UPDATE "._table('flag_history')." SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
+                        query($conn, "UPDATE "._table('users')." SET nickname='". $nickname ."' WHERE email='". $user['email'] ."'");
                         $next = 1;
                     }
                 }
             }
 
             if ($user['nick_pass'] != $nick_pass) {
-                query($conn, "UPDATE users SET nicknamePass='$nick_pass' WHERE email='" . $user['email'] . "'");
-                query($conn, "UPDATE " . prefix . "amxadmins SET password='$nick_npass' WHERE nickname='" . $user['nickname'] . "'");
+                query($conn, "UPDATE "._table('users')." SET nicknamePass='". $nick_pass ."' WHERE email='". $user['email'] ."'");
+                query($conn, "UPDATE " . prefix . "amxadmins SET password='". $nick_npass ."' WHERE nickname='". $user['nickname'] ."'");
                 $next = 1;
             }
 
             if ($user['language'] != $lang) {
-                query($conn, "UPDATE users SET lang='$lang' WHERE email='" . $_SESSION['user_logged'] . "'");
+                query($conn, "UPDATE "._table('users')." SET lang='". $lang ."' WHERE email='". $_SESSION['user_logged'] ."'");
 				$next = 1;
             }
 

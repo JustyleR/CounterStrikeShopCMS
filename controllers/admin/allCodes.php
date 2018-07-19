@@ -18,7 +18,7 @@ function main($conn) {
 
 function allCodes($conn, $content) {
 	
-	$getCodes 	= pagination($conn, "SELECT * FROM sms_codes", 10);
+	$getCodes 	= pagination($conn, "SELECT * FROM "._table('sms_codes')."", 10);
 	$cAllCodes	= comment('SHOW ALL CODES', $content);
 	$cPages		= comment('SHOW PAGES', $content);
 	$cText		= comment('SHOW NOTHING ADDED', $content);

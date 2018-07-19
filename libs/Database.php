@@ -45,9 +45,10 @@ function fetch_array($query) {
     return mysqli_fetch_array($query);
 }
 
+// Get the site settings
 function get_site_settings() {
 	$conn = connect();
-	$get = query($conn, "SELECT * FROM settings");
+	$get = query($conn, "SELECT * FROM "._table('settings')."");
 	if(num_rows($get) > 0) {
 		
 		$row = fetch_assoc($get);
@@ -69,4 +70,9 @@ function get_site_settings() {
 		);
 		
 	} else { die("The settings table is empty! Please reinstall the system!"); }
+}
+
+// set the tables with the current prefix
+function _table($table) {
+	return sysPrefix . $table;
 }

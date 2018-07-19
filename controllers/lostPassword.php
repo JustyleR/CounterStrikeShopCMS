@@ -41,7 +41,7 @@ function lostPassword($conn, $content) {
         if (empty($email)) {
             $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            $check = query($conn, "SELECT email FROM users WHERE email='$email'");
+            $check = query($conn, "SELECT email FROM "._table('users')." WHERE email='". $email ."'");
             if (num_rows($check) > 0) {
                 $row	= fetch_assoc($check);
 				$key	= random(30, 1);
@@ -49,11 +49,11 @@ function lostPassword($conn, $content) {
 				$iQuery = 1;
 				$iEmail = 1;
 				
-				$keyQ = query($conn, "SELECT * FROM password_keys WHERE email='$email'");
+				$keyQ = query($conn, "SELECT * FROM "._table('password_keys')." WHERE email='". $email ."'");
 				if(num_rows($keyQ) > 0) {
 					$r = fetch_assoc($keyQ);
 					if($r['expireDate'] <= core_date()) {
-						query("DELETE FROM password_keys WHERE email='$email'");
+						query("DELETE FROM "._table('password_keys')." WHERE email='". $email ."'");
 						$iQuery = 1;
 						$iEmail = 1;
 					} else {
@@ -68,7 +68,7 @@ function lostPassword($conn, $content) {
 				}
 				
 				if($iQuery == 1) {
-					query($conn, "INSERT INTO password_keys (email, password_key, expireDate) VALUES ('". $row['email'] ."', '$key', '$date')");
+					query($conn, "INSERT INTO "._table('password_keys')." (email, password_key, expireDate) VALUES ('". $row['email'] ."', '". $key ."', '". $date ."')");
 					$message = language($conn, 'messages', 'LOST_PASSWORD_EMAIL_SENT');
 				}
 				
@@ -96,7 +96,7 @@ function lostPassword($conn, $content) {
 function lostPasswordChange($conn, $content) {
 	$message = '';
 	$key = core_page()[1];
-	$query = query($conn, "SELECT * FROM password_keys WHERE password_key='$key'");
+	$query = query($conn, "SELECT * FROM "._table('password_keys')." WHERE password_key='". $key ."'");
 	if(num_rows($query) > 0) {
 		if(isset($_POST['changePassword'])) {
 			$password  = core_POSTP($conn, $_POST['password']);
@@ -111,9 +111,9 @@ function lostPasswordChange($conn, $content) {
 					
 					$password	= password_hash($password, PASSWORD_DEFAULT);
 					
-					query($conn, "UPDATE users SET password='$password' WHERE email='". $row['email'] ."'");
+					query($conn, "UPDATE "._table('users')." SET password='". $password ."' WHERE email='". $row['email'] ."'");
 					addLog($conn, $row['email'], language($conn, 'logs', 'LOST_PASSWORD_CHANGED'));
-					query($conn, "DELETE FROM password_keys WHERE email='". $row['email'] ."'");
+					query($conn, "DELETE FROM "._table('password_keys')." WHERE email='". $row['email'] ."'");
 					
 					if(isset($_SESSION['pass_key'])) {
 						unset($_SESSION['pass_key']);

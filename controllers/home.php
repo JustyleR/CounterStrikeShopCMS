@@ -24,7 +24,7 @@ function main($conn) {
 
 function show_site_text($conn, $content) {
 	
-	$query	= query($conn, "SELECT * FROM sms_text");
+	$query	= query($conn, "SELECT * FROM "._table('sms_text')."");
 	$text	= bbcode_preview(fetch_assoc($query)['home']);
 	
 	return str_replace('{HOME_PAGE_TEXT}', $text, $content);

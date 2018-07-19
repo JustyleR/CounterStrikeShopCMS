@@ -13,7 +13,7 @@ function check_language($conn, $lang) {
     if (!file_exists('language/' . $lang . '/' . $lang . '.ini')) {
         if (file_exists('language/' . default_language . '/' . default_language . '.ini')) {
             $lang = default_language;
-            query($conn, "UPDATE users SET lang='$lang' WHERE email='" . $_SESSION['user_logged'] . "'");
+            query($conn, "UPDATE "._table('users')." SET lang='$lang' WHERE email='" . $_SESSION['user_logged'] . "'");
             core_header('home');
         } else {
             template_error('Could not find the langauge file!', 1);

@@ -18,7 +18,7 @@ function main($conn) {
 
 function allLogs($conn, $content) {
 	
-	$getCodes 	= pagination($conn, "SELECT * FROM logs ORDER BY log_id DESC", 14);
+	$getCodes 	= pagination($conn, "SELECT * FROM "._table('logs')." ORDER BY log_id DESC", 14);
 	$cAllLogs	= comment('SHOW ALL LOGS', $content);
 	$cPages		= comment('SHOW PAGES', $content);
 	$cText		= comment('SHOW NOTHING ADDED', $content);

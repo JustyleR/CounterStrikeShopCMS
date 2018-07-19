@@ -15,7 +15,7 @@ function main($conn) {
 	// Check if we have the servername set
     if ($page[2] != NULL) {
         $serverName		= core_POSTP($conn, $page[2]);
-        $checkServer	= query($conn, "SELECT * FROM servers WHERE shortname='". $serverName ."'");
+        $checkServer	= query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
         if (num_rows($checkServer) > 0) {
 			$content = template($conn, 'admin/addFlag');
 			$content = addFlag($conn, $content);
@@ -49,12 +49,12 @@ function addFlag($conn, $content) {
 			// Set the output message
             $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            $checkData = query($conn, "SELECT flag_id FROM flags WHERE flag='". $flag ."'");
+            $checkData = query($conn, "SELECT flag_id FROM "._table('flags')." WHERE flag='". $flag ."'");
             if (num_rows($checkData) > 0) {
 				// Set the output message
                 $message = language($conn, 'messages', 'FLAG_ALREADY_EXISTS');
             } else {
-                query($conn, "INSERT INTO flags (flag,flagDesc,price,server) VALUES ('". $flag ."','". $flagDesc ."','". $flagPrice ."','".  $server ."')");
+                query($conn, "INSERT INTO "._table('flags')." (flag,flagDesc,price,server) VALUES ('". $flag ."','". $flagDesc ."','". $flagPrice ."','".  $server ."')");
 				// Set the output message
                 $message = language($conn, 'messages', 'SUCCESSFULLY_CREATED_FLAG');
             }

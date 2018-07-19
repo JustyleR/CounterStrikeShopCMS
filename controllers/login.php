@@ -27,7 +27,7 @@ function login($conn, $content) {
         if (empty($email) || (empty($password))) {
             $message = language($conn,'messages', 'FILL_THE_FIELDS');
         } else {
-            $check = query($conn, "SELECT email,password FROM users WHERE email='$email'");
+            $check = query($conn, "SELECT email,password FROM "._table('users')." WHERE email='". $email ."'");
             if (num_rows($check) > 0) {
                 $row = fetch_assoc($check);
                 if (password_verify($password, $row['password'])) {
