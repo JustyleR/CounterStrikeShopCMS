@@ -13,19 +13,19 @@
 	<body>
 		<main role="main">
 			<?php
-			
+
 			session_start();
-			
+
 			if(isset($_GET['p'])) {
 				$page = $_GET['p'];
-				
+
 				if($page == 'step2') {
-					
+
 					$_SESSION['step1'] = TRUE;
 					header('Location: install.php');
-					
+
 				} else if($page == 'goBack') {
-					
+
 					unset($_SESSION['db']);
 					unset($_SESSION['config']);
 					unset($_SESSION['sql']);
@@ -33,10 +33,10 @@
 					unset($_SESSION['step2']);
 					unset($_SESSION['step3']);
 					unset($_SESSION['step4']);
-					
+
 				}
 			}
-			
+
 			if(isset($_SESSION['step1'])) {
 				echo '
 				<div class="container">
@@ -44,9 +44,9 @@
 				</div>
 				';
 			}
-			
+
 			if(!isset($_SESSION['step1'])) {
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -86,44 +86,44 @@
 				</div>
 
 				<hr />
-				
+
 				<p><a class="btn btn-success btn-lg" href="install.php?p=step2" role="button">Install &raquo;</a></p>
 			</div>
 				';
-				
+
 			} else if(!isset($_SESSION['step2'])) {
 				$message = '';
-				
+
 				if(isset($_POST['next'])) {
-					
+
 					$hostname	= $_POST['hostname'];
 					$database	= $_POST['db'];
 					$user		= $_POST['user'];
 					$password	= $_POST['pass'];
-					
+
 					if(empty($hostname) || (empty($database)) || (empty($user))) {
-						
+
 						$message = 'Please, fill the fields!';
-						
+
 					} else {
-						
+
 						$conn = mysqli_connect($hostname, $user, $password, $database);
-						
+
 						if (mysqli_connect_errno()) {
 							$message = 'MySQL Connecton ERROR!';
 						} else {
-							
+
 							$_SESSION['db'] = array($hostname, $user, $password, $database);
 							$_SESSION['step2'] = TRUE;
-							
+
 							header('Location: install.php');
-							
+
 						}
 
 					}
-					
+
 				}
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -176,11 +176,11 @@
 			</div>
 				';
 			} else if(!isset($_SESSION['step3'])) {
-				
+
 				$message = '';
-				
+
 				if(isset($_POST['next'])) {
-					
+
 					$email			= $_POST['email'];
 					$pass			= $_POST['password'];
 					$csprefix		= $_POST['csbansprefix'];
@@ -189,22 +189,22 @@
 					$paypal_enable	= $_POST['paypal_enable'];
 					$paypal_logs	= $_POST['paypal_logs'];
 					$url			= $_POST['url'];
-					
+
 					if(empty($email) || (empty($pass)) || (empty($url))) {
-						
+
 						$message = 'Please fill E-Mail,Password and Site URL!';
-						
+
 					} else {
-						
+
 						if(substr($url, -1) != '/') { $url.= '/'; }
-						
+
 						if(empty($csprefix)) { $csprefix = 'csbans_'; }
 						if(empty($smsprefix)) { $smsprefix = 'sms_'; }
-						
+
 						if(file_exists('config/config.php')) {
-			
+
 						$get	= file_get_contents('config/config.php');
-						
+
 						$get	= str_replace("define('db_host', '');", "define('db_host', '". $_SESSION['db'][0] ."');", $get);
 						$get	= str_replace("define('db_user', '');", "define('db_user', '". $_SESSION['db'][1] ."');", $get);
 						$get	= str_replace("define('db_pass', '');", "define('db_pass', '". $_SESSION['db'][2] ."');", $get);
@@ -215,18 +215,18 @@
 						$get	= str_replace("define('paypal_email', '');", "define('paypal_email', '". $paypal_email ."');", $get);
 						$get	= str_replace("define('paypal_logs', );", "define('paypal_logs', ". $paypal_logs .");", $get);
 						$get	= str_replace("define('paypal_enabled', );", "define('paypal_enabled', ". $paypal_enable .");", $get);
-						
+
 						file_put_contents('config/config.php', $get);
-						
+
 						$_SESSION['step3'] = TRUE;
 						$_SESSION['config'] = array($email, $pass, $paypal_email, $paypal_enable, $paypal_logs, $url, $csprefix, $smsprefix);
-						
+
 						header('Location: install.php');
-						
+
 						} else { $msg = 'The file config.php is missing..'; }
 					}
 				}
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -314,83 +314,83 @@
 				</div>
 			</div>
 				';
-				
+
 			} else if(!isset($_SESSION['step4'])) {
-				
-								 
+
+
 				if(isset($_POST['no'])) {
-					
+
 					$_SESSION['step4'] = TRUE;
 					$_SESSION['sql'] = 'no';
-					
+
 					header('Location: install.php');
 				} else if(isset($_POST['import'])) {
-					
+
 					$conn = mysqli_connect($_SESSION['db'][0],$_SESSION['db'][1],$_SESSION['db'][2],$_SESSION['db'][3]);
-					
+
 					$templine	= '';
 					$lines		= file('SQL/sms.sql');
 					$sysPrefix	= $_SESSION['config'][7];
-					
+
 					foreach ($lines as $line) {
-						
+
 						// Skip it if it's a comment
 						if (substr($line, 0, 2) == '--' || $line == '') { continue; }
-						
+
 						// Replace the tables with the prefix
 						$count = substr_count($line, 'CREATE TABLE `');
-						
+
 						for($i = 0; $i < $count; $i++) {
 							$start	= 'CREATE TABLE `';
 							$end	= '` (';
 							$string	= ' ' . $line;
 							$ini	= strpos($string, $start);
-							
+
 							if ($ini == 0) return '';
-							
+
 							$ini	+= strlen($start);
 							$len	= strpos($string, $end, $ini) - $ini;
 							$table	= substr($string, $ini, $len);
-							
+
 							$line = str_replace('CREATE TABLE `'. $table .'` (', 'CREATE TABLE '. $sysPrefix . $table .' (', $line);
 						}
-						
+
 						// Replace the tables with the prefix
 						$count = substr_count($line, 'INSERT INTO `');
-						
+
 						for($i = 0; $i < $count; $i++) {
 							$start	= 'INSERT INTO `';
 							$end	= '` (';
 							$string	= ' ' . $line;
 							$ini	= strpos($string, $start);
-							
+
 							if ($ini == 0) return '';
-							
+
 							$ini	+= strlen($start);
 							$len	= strpos($string, $end, $ini) - $ini;
 							$table	= substr($string, $ini, $len);
-							
+
 							$line = str_replace('INSERT INTO `'. $table .'` (', 'INSERT INTO '. $sysPrefix . $table .' (', $line);
 						}
-						
+
 						// Replace the tables with the prefix
 						$count = substr_count($line, 'ALTER TABLE `');
-						
+
 						for($i = 0; $i < $count; $i++) {
 							$start	= 'ALTER TABLE `';
 							$end	= '`';
 							$string	= ' ' . $line;
 							$ini	= strpos($string, $start);
-							
+
 							if ($ini == 0) return '';
-							
+
 							$ini	+= strlen($start);
 							$len	= strpos($string, $end, $ini) - $ini;
 							$table	= substr($string, $ini, $len);
-							
+
 							$line = str_replace('ALTER TABLE `'. $table .'`', 'ALTER TABLE '. $sysPrefix . $table .' ', $line);
 						}
-						
+
 						// Add this line to the current segment
 						$templine .= $line;
 						// If it has a semicolon at the end, it's the end of the query
@@ -401,20 +401,21 @@
 							// Reset temp variable to empty
 							$templine = '';
 						}
-						
+
 					}
 					$conn = mysqli_connect($_SESSION['db'][0],$_SESSION['db'][1],$_SESSION['db'][2],$_SESSION['db'][3]);
 					$hash	= password_hash($_SESSION['config'][1], PASSWORD_DEFAULT);
 					$rand	= rand(999,9999).rand(999,9999);
-					
-					mysqli_query($conn, "INSERT INTO ". $sysPrefix ."users (email,password,type, nickname, nicknamePass) VALUES ('". $_SESSION['config'][0] ."','$hash','2', 'Admin', '$rand')");
+
+					mysqli_query($conn, "INSERT INTO ". $sysPrefix ."users (email,password,type, nickname, nicknamePass,balance,ipAdress,registerDate) VALUES
+					('". $_SESSION['config'][0] ."','$hash','2', 'Admin', '$rand','0','". $_SERVER['REMOTE_ADDR'] ."','". date('d-m-Y H:i') ."')");
 					
 					$_SESSION['step4'] = TRUE;
 					$_SESSION['sql'] = 'yes';
-					
+
 					header('Location: install.php');
 				}
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -443,12 +444,12 @@
 				</div>
 			</div>
 				';
-				
-				
+
+
 			} else if(!isset($_SESSION['finish'])) {
-				
+
 				$config = $_SESSION['config'];
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -521,14 +522,14 @@
 				</div>
 			</div>
 				';
-				
+
 				if(isset($_POST['finish'])) {
-					
+
 					$_SESSION['finish'] = TRUE;
 					header('Location: install.php');
-					
+
 				} else if(isset($_POST['back'])) {
-					
+
 					unset($_SESSION['db']);
 					unset($_SESSION['config']);
 					unset($_SESSION['sql']);
@@ -536,13 +537,13 @@
 					unset($_SESSION['step2']);
 					unset($_SESSION['step3']);
 					unset($_SESSION['step4']);
-					
+
 					header('install.php');
-					
+
 				}
-			
+
 			} else if(isset($_SESSION['finish'])) {
-				
+
 				echo '
 			<div class="jumbotron">
 				<div class="container">
@@ -557,7 +558,7 @@
 				</div>
 			</div>
 				';
-				
+
 				unset($_SESSION['db']);
 				unset($_SESSION['config']);
 				unset($_SESSION['sql']);
@@ -565,13 +566,13 @@
 				unset($_SESSION['step2']);
 				unset($_SESSION['step3']);
 				unset($_SESSION['step4']);
-				
+
 			}
-			
+
 			?>
-			
+
 		</main>
-		
+
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	</body>
 </html>
