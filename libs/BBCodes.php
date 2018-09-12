@@ -1,11 +1,7 @@
 <?php
-/*
-	BBCodes Library
-	Some simple functions to convert tags into html tags
-*/
 
+// Simple library for some bbcodes
 
-// Convert tags into html tags
 function bbcode_preview($text) {
 	
 	$find = array(
@@ -13,7 +9,7 @@ function bbcode_preview($text) {
 		'/\[i\](.+?)\[\/i\]/is',
 		'/\[small\](.+?)\[\/small\]/is',
 		'/\[font\=(.+?)\](.+?)\[\/font\]/is',
-		'/\[url=(.+?)\](.+?)\[\/url\]/',
+		'/\[url\=(.+?)\](.+?)\[\/url\]/is',
 		'/\\\\n/',
 		'/\\\\r/'
 	);
@@ -23,7 +19,7 @@ function bbcode_preview($text) {
 		'<i>$1</i>',
 		'<small>$1</small>',
 		'<font color="$1">$2</font>',
-		'<a href="\1">\2</a>',
+		'<a href=\"\\0\">\\0</a>',
 		'<br />',
 		''
 	);
@@ -32,7 +28,6 @@ function bbcode_preview($text) {
 	return $text;
 }
 
-// Fix the new line
 function bbcode_brFix($text) {
 	$text = str_replace('\r', '', $text);
 	$text = str_replace('\n', PHP_EOL, $text);
@@ -40,7 +35,6 @@ function bbcode_brFix($text) {
 	return $text;
 }
 
-// After saving the next make the new line into <br /> tag
 function bbcode_save($text) {
 	$text = str_replace('\r', '', $text);
 	$text = str_replace('\n', '<br />', $text);
