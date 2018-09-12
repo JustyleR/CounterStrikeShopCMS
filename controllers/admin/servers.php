@@ -47,12 +47,15 @@ function main($conn) {
 
 
 function servers($conn, $content) {
+	$next = 0;
 	
 	$amxServers	= query($conn, "SELECT id,hostname FROM ". prefix ."serverinfo");
+	if(!$amxServers) { $next = 0; } else { $next = 1; }
+	
 	$cServers	= comment('SHOW ALL AMXBANS SERVERS', $content);
 	$tServers	= comment('SHOW NO AMXBANS SERVERS', $content);
 	
-	if(num_rows($amxServers) > 0) {
+	if($next == 1 && num_rows($amxServers) > 0) {
 		
 		$comment	= comment('SHOW AMXBANS SERVERS', $content);
 		$list		= "";
