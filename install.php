@@ -200,30 +200,76 @@
 
 						if(empty($csprefix)) { $csprefix = 'csbans_'; }
 						if(empty($smsprefix)) { $smsprefix = 'sms_'; }
+						
+						if(substr($url, -1) != '/') { $url .= '/'; }
+						
+						$open = fopen('config/config.php', 'w+');
+						
+						$config = "<?php
+ob_start();
+session_start();
+error_reporting(0);
 
-						if(file_exists('config/config.php')) {
+date_default_timezone_set('Europe/Sofia');
 
-						$get	= file_get_contents('config/config.php');
+// Database connect settings
+";
+						
+						$config .= "define('db_host', '". $_SESSION['db'][0] ."'); // Hostname
+";
+						$config .= "define('db_user', '". $_SESSION['db'][1] ."'); // User
+";
+						$config .= "define('db_pass', '". $_SESSION['db'][2] ."'); // Pass
+";
+						$config .= "define('db_name', '". $_SESSION['db'][3] ."'); // Database
+";
+						$config .= "define('prefix', '". $csprefix ."'); // AMXBans Tables Prefix
+";
+						$config .= "define('sysPrefix', '". $smsprefix ."'); // SMS System Tables Prefix
+";
+						
+						$config .= '
+// Include the Database library and get the site settings from the table
+require(\'libs/Database.php\');
+$settings = get_site_settings();
 
-						$get	= str_replace("define('db_host', '');", "define('db_host', '". $_SESSION['db'][0] ."');", $get);
-						$get	= str_replace("define('db_user', '');", "define('db_user', '". $_SESSION['db'][1] ."');", $get);
-						$get	= str_replace("define('db_pass', '');", "define('db_pass', '". $_SESSION['db'][2] ."');", $get);
-						$get	= str_replace("define('db_name', '');", "define('db_name', '". $_SESSION['db'][3] ."');", $get);
-						$get	= str_replace("define('prefix', '');", "define('prefix', '". $csprefix ."');", $get);
-						$get	= str_replace("define('sysPrefix', '');", "define('sysPrefix', '". $smsprefix ."');", $get);
-						$get	= str_replace("define('url', '');", "define('url', '". $url ."');", $get);
-						$get	= str_replace("define('paypal_email', '');", "define('paypal_email', '". $paypal_email ."');", $get);
-						$get	= str_replace("define('paypal_logs', );", "define('paypal_logs', ". $paypal_logs .");", $get);
-						$get	= str_replace("define('paypal_enabled', );", "define('paypal_enabled', ". $paypal_enable .");", $get);
-
-						file_put_contents('config/config.php', $get);
-
+';
+						
+						$config .= "// Settings
+define('url', '". $url ."'); // Site URL
+";
+						
+						$config .= "define('paypal_email', '". $paypal_email ."'); // Your PayPal E-Mail
+";
+						$config .= "define('paypal_logs', ". $paypal_logs ."); // Log PayPal Transactions? (0/1)
+";
+						$config .= "define('paypal_enabled', ". $paypal_enable ."); // Enable PayPal ?
+";
+						
+						$config .= "
+// Define the settings from the table";
+						
+						$config .= '
+define(\'template\',			$settings[\'template\']);
+define(\'default_language\',	$settings[\'language\']);
+define(\'site_title\', 		$settings[\'site_title\']);
+define(\'md5_enc\', 			$settings[\'md5_enc\']);
+define(\'amx_reloadadmins\',	$settings[\'reloadadmins\']);
+define(\'servID120\', 		$settings[\'servID1\']);
+define(\'servID240\', 		$settings[\'servID2\']);
+define(\'servID480\', 		$settings[\'servID3\']);
+define(\'servID600\', 		$settings[\'servID4\']);
+define(\'money120\', 			$settings[\'balance1\']);
+define(\'money240\', 			$settings[\'balance2\']);
+define(\'money480\', 			$settings[\'balance3\']);
+define(\'money600\', 			$settings[\'balance4\']);';
+						
+						fwrite($open, $config);
+						fclose($open);
+						
 						$_SESSION['step3'] = TRUE;
 						$_SESSION['config'] = array($email, $pass, $paypal_email, $paypal_enable, $paypal_logs, $url, $csprefix, $smsprefix);
-
-						header('Location: install.php');
-
-						} else { $msg = 'The file config.php is missing..'; }
+ 						header('Location: install.php');
 					}
 				}
 
