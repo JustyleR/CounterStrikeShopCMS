@@ -19,7 +19,7 @@ function bbcode_preview($text) {
 		'<i>$1</i>',
 		'<small>$1</small>',
 		'<font color="$1">$2</font>',
-		'<a href=\"\\0\">\\0</a>',
+		'<a href="\1">\2</a>',
 		'<br />',
 		''
 	);
