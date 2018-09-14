@@ -77,3 +77,27 @@ function csbans_createAdmin($conn, $servername) {
         }
     }
 }
+
+function csbans_checkBan($conn, $content) {
+	
+	$comment = comment('IF USER IS BANNED', $content);
+	
+	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."'");
+	if(num_rows($checkBan) == 0) {
+		$content = str_replace($comment, '', $content);
+	}
+	
+	return $content;
+}
+
+function csbans_userBanned($conn) {
+	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."'");
+	
+	return num_rows($checkBan);
+}
+
+function csbans_removeBan($conn, $ip) {
+ 	
+	query($conn, "DELETE FROM ". prefix ."bans WHERE player_ip='". $ip ."'");
+	
+}

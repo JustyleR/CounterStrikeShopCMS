@@ -22,8 +22,16 @@ function main($conn) {
         if (num_rows($checkServer) > 0) {
 			
 			$content = template($conn, 'buyFlags');
-			$content = show_flags($conn, $content);
-			$content = submit_flags($conn, $content);
+			if(csbans_userBanned($conn) > 0) {
+				
+				$content = ifBanned($conn, $content);
+				
+			} else {
+				
+				$content = show_flags($conn, $content);
+				$content = submit_flags($conn, $content);
+				
+			}
 			
 			echo $content;
 			
@@ -44,9 +52,11 @@ function main($conn) {
 
 function show_flags($conn, $content) {
 	
-	$cFlags	= comment('SHOW ALL FLAGS', $content);
-	$cText	= comment('SHOW NO FLAGS TEXT', $content);
-	$server	= core_page()[1];
+	$cBanned	= comment('SHOW BANNED MESSAGE', $content);
+	$cFlags		= comment('SHOW ALL FLAGS', $content);
+	$cText		= comment('SHOW NO FLAGS TEXT', $content);
+	$server		= core_page()[1];
+	$content	= str_replace($cBanned, '', $content);
 	
 	$getFlags = query($conn, "SELECT * FROM "._table('flags')." WHERE server='". $server ."'");
 	if(mysqli_num_rows($getFlags) > 0) {
@@ -98,14 +108,16 @@ function submit_flags($conn, $content) {
 	
 	if (isset($_POST['buy'])) {
 		
+		$server = core_page()[1];
+		
         if (isset($_POST['flag'])) {
             $flag = core_POSTP($conn, $_POST['flag']);
         } else {
-            return false;
+            core_header('buyFlags/' . $server);
+			exit();
         }
 
         $user   = user_info($conn, $_SESSION['user_logged']);
-        $server = core_page()[1];
 		
         $checkFlag = query($conn, "SELECT * FROM "._table('flags')." WHERE flag='". $flag ."' AND server='". $server ."'");
         if (num_rows($checkFlag) > 0) {
@@ -143,7 +155,7 @@ function submit_flags($conn, $content) {
                     query($conn, "INSERT INTO "._table('flag_history')." (nickname,flag,dateBought,dateExpire,server) VALUES ('" . $user['nickname'] . "','$flag','$dateBought', '$dateExpire','$server')");
                     query($conn, "UPDATE "._table('users')." SET balance='$money' WHERE email='" . $user['email'] . "'");
                     query($conn, "UPDATE " . prefix . "amxadmins SET access = '$flags' WHERE id='$adminID'");
-                    addLog($conn, $_SESSION['user_logged'], language($conn, 'logs', 'SUCCESSFULLY_BOUGHT_FLAG'));
+                    addLog($conn, $_SESSION['user_logged'], language($conn, 'logs', 'SUCCESSFULLY_BOUGHT_FLAG') . " {$flag}");
 					if(amx_reloadadmins != 0) {
 						$info = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $server ."'");
 						$row = fetch_assoc($info);
@@ -171,5 +183,26 @@ function submit_flags($conn, $content) {
     }
 	
 	return $content = str_replace('{BUY_FLAGS_MESSAGE}', $message, $content);
+	
+}
+
+function ifBanned($conn, $content) {
+	
+	$cBanned	= comment('SHOW BANNED MESSAGE', $content);
+	$cFlags		= comment('SHOW ALL FLAGS', $content);
+	$cMessage	= comment('SHOW NO FLAGS TEXT', $content);
+	
+	if(csbans_userBanned($conn) > 0) {
+		
+		$content = str_replace($cFlags, '', $content);
+		$content = str_replace($cMessage, '', $content);
+		
+	} else {
+		
+		$content = str_replace($cBanned, '', $content);
+		
+	}
+	
+	return $content;
 	
 }

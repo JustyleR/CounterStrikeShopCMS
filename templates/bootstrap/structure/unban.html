@@ -1,0 +1,20 @@
+{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
+	<!--IF USER IS LOGGED-->
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+            <div class="card-header">
+				{TRANSLATE}amxbans,REMOVE_BAN_TITLE{/TRANSLATE}
+            </div>
+            <div class="card-body">
+				<p>{TRANSLATE}amxbans,REMOVE_BAN_INFO{/TRANSLATE}</p>
+				<p>
+					<form action="" method="POST">
+						<input type="submit" name="unban" value="{TRANSLATE}amxbans,UNBAN_BUTTON{/TRANSLATE}" />
+					</form>
+				</p>
+				{UNBAN_MESSAGE}
+			</div>
+		</div>
+	</div>
+	<!--END IF USER IS LOGGED-->
+{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}

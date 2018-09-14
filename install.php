@@ -244,6 +244,7 @@ define('url', '". $url ."'); // Site URL
 						$config .= "define('paypal_logs', ". $paypal_logs ."); // Log PayPal Transactions? (0/1)
 ";
 						$config .= "define('paypal_enabled', ". $paypal_enable ."); // Enable PayPal ?
+define('unban_price', 5.00); // How much it will cost to remove a ban
 ";
 						
 						$config .= "
