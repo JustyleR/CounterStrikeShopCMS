@@ -52,41 +52,35 @@ function show_flags($conn, $content) {
 	if(mysqli_num_rows($getFlags) > 0) {
 		
 		$adminID = csbans_getadminID($conn, $server);
-		if($adminID != NULL) {
+		
+		$getAdminInfo = query($conn, "SELECT * FROM ". prefix ."amxadmins WHERE id='$adminID'");
+		$row = fetch_assoc($getAdminInfo);
+		
+		$comment	= comment('SHOW FLAGS', $content);
+		$list		= "";
+		
+		while($row2 = fetch_assoc($getFlags)) {
 			
-			$getAdminInfo = query($conn, "SELECT * FROM ". prefix ."amxadmins WHERE id='$adminID'");
-			$row = fetch_assoc($getAdminInfo);
-			
-			$comment	= comment('SHOW FLAGS', $content);
-			$list		= "";
-			
-			while($row2 = fetch_assoc($getFlags)) {
+			if (strpos($row['access'], $row2['flag']) === FALSE) {
 				
-				if (strpos($row['access'], $row2['flag']) === FALSE) {
-					
-					$replace	= ['{FLAG_VALUE}', '{FLAG_PRICE}', '{FLAG_DESCRIPTION}'];
-					$with		= [$row2['flag'], $row2['price'], $row2['flagDesc']];
-					
-					$list .= str_replace($replace, $with, $comment);
-					
-					$_SESSION['has_flag'] = TRUE;
-					
-				}
+				$replace	= ['{FLAG_VALUE}', '{FLAG_PRICE}', '{FLAG_DESCRIPTION}'];
+				$with		= [$row2['flag'], $row2['price'], $row2['flagDesc']];
+				
+				$list .= str_replace($replace, $with, $comment);
+				
+				$_SESSION['has_flag'] = TRUE;
 				
 			}
 			
-			if (isset($_SESSION['has_flag'])) {
-				$content	= str_replace($cText, '', $content);
-				$content = str_replace($comment, $list, $content);
-				unset($_SESSION['has_flag']);
-			} else {
-				$content = str_replace($cFlags, '', $content);
-				$content = str_replace('{NO_FLAGS_TEXT}', language($conn, 'messages', 'NO_MORE_FLAGS_TO_BUY'), $content);
-			}
-			
+		}
+		
+		if (isset($_SESSION['has_flag'])) {
+			$content = str_replace($cText, '', $content);
+			$content = str_replace($comment, $list, $content);
+			unset($_SESSION['has_flag']);
 		} else {
-			csbans_createAdmin($conn, $server);
-			core_header('buyFlags/' . $server);
+			$content = str_replace($cFlags, '', $content);
+			$content = str_replace('{NO_FLAGS_TEXT}', language($conn, 'messages', 'NO_MORE_FLAGS_TO_BUY'), $content);
 		}
 		
 	} else {
@@ -97,7 +91,6 @@ function show_flags($conn, $content) {
 	}
 	
 	return $content;
-	
 }
 
 function submit_flags($conn, $content) {
@@ -114,9 +107,6 @@ function submit_flags($conn, $content) {
         $user   = user_info($conn, $_SESSION['user_logged']);
         $server = core_page()[1];
 		
-		// Get the Admin ID from the database
-        $adminID = csbans_getadminID($conn, $server);
-		
         $checkFlag = query($conn, "SELECT * FROM "._table('flags')." WHERE flag='". $flag ."' AND server='". $server ."'");
         if (num_rows($checkFlag) > 0) {
 
@@ -124,20 +114,25 @@ function submit_flags($conn, $content) {
             if ($row['price'] > $user['balance']) {
                 $message = language($conn, 'messages', 'NO_MONEY_TO_BUY_FLAG');
             } else {
-
+				
+				// Get the Admin ID from the database
+				$adminID = csbans_getadminID($conn, $server);
+				
+				if($adminID == NULL) {
+					csbans_createAdmin($conn, $server);
+					$adminID = csbans_getadminID($conn, $server);
+				}
+				
                 $getUserFlags = query($conn, "SELECT access FROM " . prefix . "amxadmins WHERE id='$adminID'");
-                if (num_rows($getUserFlags) > 0) {
-                    $row2 = fetch_assoc($getUserFlags);
-					// Check if we have the flag in our access field in the table (amxadmins)
-                    if (strpos($row2['access'], $flag) === FALSE) {
-                        $hasFlag = 0;
-                    } else {
-                        $hasFlag = 1;
-                    }
-                } else {
-					// Create an admin without any access flags to the database (amxadmins)
-                    csbans_createAdmin($conn, $server);
-                }
+				
+				$row2 = fetch_assoc($getUserFlags);
+				
+				// Check if we have the flag in our access field in the table (amxadmins)
+				if (strpos($row2['access'], $flag) === FALSE) {
+					$hasFlag = 0;
+				} else {
+					$hasFlag = 1;
+				}
 
                 if ($hasFlag == 0) {
                     $dateBought = core_date();
