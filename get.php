@@ -80,13 +80,13 @@ switch($type)
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
 				curl_setopt($ch, CURLOPT_CAINFO, __DIR__ . "/libs/cert/cacert.pem");
 				
-				if ( !($res = curl_exec($ch)) ) {
+				if(!($res = curl_exec($ch))) {
 					
 				  curl_close($ch);
 				  exit;
 				}
 				
-				if (strcmp ($res, "VERIFIED") == 0) {
+				if (strcmp ($res, "VERIFIED") == 1) {
 					
 					$payment_status		= $_POST['payment_status'];
 					$payment_amount		= $_POST['mc_gross'];
