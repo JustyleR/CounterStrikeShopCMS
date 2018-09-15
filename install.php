@@ -242,9 +242,13 @@ define('url', '". $url ."'); // Site URL
 						$config .= "define('paypal_email', '". $paypal_email ."'); // Your PayPal E-Mail
 ";
 						$config .= "define('paypal_logs', ". $paypal_logs ."); // Log PayPal Transactions? (0/1)
-";
+";						
+						if($paypal_enable == 1) { $paypal_type = 'online'; } else { $paypal_type = 'test'; }
+						
 						$config .= "define('paypal_enabled', ". $paypal_enable ."); // Enable PayPal ?
 define('unban_price', 5.00); // How much it will cost to remove a ban
+";						
+						$config .= "define('paypal_type', '". $paypal_type ."'); // Paypal type - (test/online)
 ";
 						
 						$config .= "
