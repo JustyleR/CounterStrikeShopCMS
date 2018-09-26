@@ -24,11 +24,16 @@ function expire_flags($conn) {
 					foreach ($admins as $admin) {
 						$check = query($conn, "SELECT * FROM " . prefix . "admins_servers WHERE server_id='". $serverID ."' AND admin_id='" . $admin['id'] ."'");
 						if(num_rows($check) > 0) {
-							$getFlags = query($conn, "SELECT * FROM ". prefix ."amxadmins WHERE id='". $admin['id'] ."'");
-							$row3  = fetch_assoc($getFlags);
-							$flags = str_replace($row['flag'], '', $row3['access']);
+							$flags = str_replace($row['flag'], '', $admin['access']);
 							query($conn, "UPDATE " . prefix . "amxadmins SET access='". $flags ."' WHERE id='". $admin['id'] ."'");
 							query($conn, "DELETE FROM "._table('flag_history')." WHERE flag_id='". $row['flag_id'] ."'");
+							
+							$getFlags = query($conn, "SELECT access FROM ". prefix ."amxadmins WHERE id='". $admin['id'] ."'");
+							$row3  = fetch_assoc($getFlags);
+							
+							if(empty($row3['access'])) {
+								query($conn, "DELETE FROM ". prefix ."amxadmins WHERE id='". $admin['id'] ."'");
+							}
 						}
 					}
 				}

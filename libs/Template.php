@@ -69,6 +69,11 @@ function template_replace_default($conn, $content) {
 	$content = str_replace('{SITE_TEMPLATE}', template, $content);
 	$content = str_replace('{SITE_TEMPLATE}', template, $content);
 	
+	// Show if player is banned
+	$content = csbans_checkBan($conn, $content);
+	
+	
+	
 	// Show paypal link
 	$cPaypal = comment('SHOW PAYPAL LINK', $content);
 	if(paypal_enabled == 0) { $content = str_replace($cPaypal, '', $content); }
