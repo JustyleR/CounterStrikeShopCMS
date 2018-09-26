@@ -82,7 +82,7 @@ function csbans_checkBan($conn, $content) {
 	
 	$comment = comment('IF USER IS BANNED', $content);
 	
-	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."'");
+	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."' AND expired='0'");
 	if(num_rows($checkBan) == 0) {
 		$content = str_replace($comment, '', $content);
 	}
@@ -91,13 +91,13 @@ function csbans_checkBan($conn, $content) {
 }
 
 function csbans_userBanned($conn) {
-	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."'");
+	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."' AND expired='0'");
 	
 	return num_rows($checkBan);
 }
 
 function csbans_removeBan($conn, $ip) {
  	
-	query($conn, "DELETE FROM ". prefix ."bans WHERE player_ip='". $ip ."'");
+	query($conn, "UPDATE ". prefix ."bans SET expired='1' WHERE player_ip='". $ip ."'");
 	
 }

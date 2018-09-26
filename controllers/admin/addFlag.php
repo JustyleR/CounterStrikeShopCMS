@@ -49,7 +49,7 @@ function addFlag($conn, $content) {
 			// Set the output message
             $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            $checkData = query($conn, "SELECT flag_id FROM "._table('flags')." WHERE flag='". $flag ."'");
+            $checkData = query($conn, "SELECT flag_id FROM "._table('flags')." WHERE flag='". $flag ."' AND server='". $server ."'");
             if (num_rows($checkData) > 0) {
 				// Set the output message
                 $message = language($conn, 'messages', 'FLAG_ALREADY_EXISTS');
