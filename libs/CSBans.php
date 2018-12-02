@@ -37,19 +37,31 @@ function csbans_all_admins($conn, $sql = '') {
 function csbans_getadminID($conn, $servername) {
     $getServerID = query($conn, "SELECT csbans_id FROM "._table('servers')." WHERE shortname='". $servername ."'");
     if (num_rows($getServerID) > 0) {
-
+ 
         $serverID  = fetch_assoc($getServerID)['csbans_id'];
         $admins    = csbans_all_admins($conn, "WHERE nickname='" . user_info($conn, $_SESSION['user_logged'])['nickname'] . "'");
         $getAdmins = query($conn, "SELECT * FROM " . prefix . "admins_servers WHERE server_id='". $serverID ."'");
-
-        if ($admins != NULL) {
-            foreach ($admins as $admin) {
-                if (num_rows($getAdmins) > 0) {
-                    while ($row = fetch_assoc($getAdmins)) {
-                        if ($row['admin_id'] === $admin['id']) {
-                            return $admin['id'];
-                        }
+       
+        if (num_rows($getAdmins) > 0)
+        {
+            $array_get = array();
+           
+            while ($row = fetch_assoc($getAdmins))
+            {
+                $array_get[] = $row;
+            }
+        }
+        if ($admins != NULL)
+        {
+            foreach ($admins as $admin)
+            {
+                foreach ($array_get as $admin2)
+                {
+                    if ($admin2['admin_id'] === $admin['id'])
+                    {
+                        return $admin['id'];
                     }
+                   
                 }
             }
         }
