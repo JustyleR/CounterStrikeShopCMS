@@ -76,3 +76,14 @@ function get_site_settings() {
 function _table($table) {
 	return sysPrefix . $table;
 }
+
+function db_array($conn, $sql) {
+  $query = query($conn, $sql);
+  if(num_rows($query) > 0) {
+    $array = array();
+    while($row = fetch_assoc($query)) {
+      $array[] = $row;
+    }
+    return $array;
+  } else { return ''; }
+}

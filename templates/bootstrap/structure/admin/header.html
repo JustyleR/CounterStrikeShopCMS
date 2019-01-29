@@ -1,42 +1,52 @@
+<!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8" />
+  <head>
 
-        <title>{SITE_TITLE} &bull; Admin Panel</title>
-		
-		<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/abootstrap.min.css" />
-		<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="{SITE_URL}templates/{SITE_TEMPLATE}/assets/css/astyle.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="{SITE_URL}templates/{SITE_TEMPLATE}/assets/js/bootstrap.bundle.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $('.navbar-toggle-sidebar').click(function () {
-                    $('.navbar-nav').toggleClass('slide-in');
-                    $('.side-body').toggleClass('body-slide-in');
-                    $('#search').removeClass('in').addClass('collapse').slideUp(200);
-                });
+    <title>{{ SITE_TITLE }}  &bull; Admin Panel</title>
 
-                $('#search-trigger').click(function () {
-                    $('.navbar-nav').removeClass('slide-in');
-                    $('.side-body').removeClass('body-slide-in');
-                    $('.search-input').focus();
-                });
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/bootstrap.min.css" />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/font-awesome.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/astyle.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ SITE_URL }}templates/{SITE_TEMPLATE}/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.navbar-toggle-sidebar').click(function () {
+                $('.navbar-nav').toggleClass('slide-in');
+                $('.side-body').toggleClass('body-slide-in');
+                $('#search').removeClass('in').addClass('collapse').slideUp(200);
             });
-        </script>
-    </head>
 
-    <body>
+            $('#search-trigger').click(function () {
+                $('.navbar-nav').removeClass('slide-in');
+                $('.side-body').removeClass('body-slide-in');
+                $('.search-input').focus();
+            });
+        });
+    </script>
+  </head>
+
+	<body>
 
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
-                        
+
                     </button>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only"></span>
@@ -91,7 +101,7 @@
                                             </div>
                                         </div>
                                     </li>
-									
+
 									<li class="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#sms">
                                             <i class="fa fa-plus fa-fw" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,SMS{/TRANSLATE} <span class="caret"></span>
@@ -108,7 +118,7 @@
                                         </div>
 
                                     </li>
-									
+
 									<li class="panel panel-default" id="dropdown">
                                         <a data-toggle="collapse" href="#text">
                                             <i class="fa fa-newspaper-o" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,TEXT_PAGES{/TRANSLATE} <span class="caret"></span>
@@ -125,7 +135,7 @@
                                         </div>
 
                                     </li>
-									
+
 									<li><a href="{SITE_URL}!admin/servers/home/"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,SERVERS{/TRANSLATE}</a></li>
 									<li><a href="{SITE_URL}!admin/logs/cPage/1"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,LOGS{/TRANSLATE}</a></li>
                                     <li><a href="{SITE_URL}!admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> &nbsp; {TRANSLATE}menu,SITE_SETTINGS{/TRANSLATE}</a></li>
@@ -135,5 +145,5 @@
                         </nav>
 
                     </div>
-                </div>  	
+                </div>
             </div>

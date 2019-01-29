@@ -1,8 +1,8 @@
-{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
-	<!--IF USER IS NOT LOGGED-->
+{% extends "body.html" %}
+	{% block content %}
 	<div class="col-lg-9">
 	  <div class="card card-outline-secondary my-4">
-		<div class="card-header">{TRANSLATE}titles,LOGIN{/TRANSLATE}</div>
+		<div class="card-header">{{ translate('titles', 'LOGIN') }}</div>
 		<div class="card-body">
 			<div class="container">
 				<div class="row">
@@ -12,17 +12,21 @@
 								<form action="" method="POST">
 									<fieldset>
 										<div class="form-group">
-											<input class="form-control" placeholder="{TRANSLATE}others,EMAIL{/TRANSLATE}" name="email" type="email" autofocus required />
+											<input class="form-control" placeholder="{{ translate('others', 'EMAIL') }}" name="email" type="email" autofocus required />
 										</div>
 										<div class="form-group">
-											<input class="form-control" placeholder="{TRANSLATE}others,PASSWORD{/TRANSLATE}" name="password" type="password" required />
+											<input class="form-control" placeholder="{{ translate('others', 'PASSWORD') }}" name="password" type="password" required />
 										</div>
-										
+
 										<div class="form-group">
-											<input type="submit" name="login" class="btn btn-outline btn-success btn-block" value="{TRANSLATE}buttons,LOGIN{/TRANSLATE}" />
+											<input type="submit" name="login" class="btn btn-outline btn-success btn-block" value="{{ translate('buttons', 'LOGIN') }}" />
 										</div>
 									</fieldset>
-									<p>{LOGIN_MESSAGE}</p>
+									<p>
+										{% if message is not empty%}
+										{{ message }}
+										{% endif %}
+									</p>
 								</form>
 							</div>
 						</div>
@@ -32,5 +36,4 @@
 		</div>
 	  </div>
 	</div>
-	<!--END IF USER IS NOT LOGGED-->
-{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}
+	{% endblock %}

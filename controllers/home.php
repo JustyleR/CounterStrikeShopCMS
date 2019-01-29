@@ -13,19 +13,18 @@ function main_info() {
 
 // Main function
 function main($conn) {
-    
-	if(!isset($_SESSION['user_logged'])) { core_header('login'); }
-	
-	$content = template($conn, 'home');
-	$content = show_site_text($conn, $content);
-	
-	echo $content;
-}
 
-function show_site_text($conn, $content) {
-	
-	$query	= query($conn, "SELECT * FROM "._table('sms_text')."");
+	if(!isset($_SESSION['user_logged'])) { core_header('login'); }
+
+  // Load the template
+  $template = template($conn, 'home');
+  // Load the default template variables
+  $vars = template_vars($conn);
+
+  $query	= query($conn, "SELECT * FROM "._table('sms_text')."");
 	$text	= bbcode_preview(fetch_assoc($query)['home']);
-	
-	return str_replace('{HOME_PAGE_TEXT}', $text, $content);
+  
+  $vars['site_index'] = $text;
+
+  echo $template->render($vars);
 }

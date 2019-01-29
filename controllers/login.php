@@ -10,15 +10,19 @@ function main_info() {
 // Main function
 function main($conn) {
 	// Check if we are not logged in
-    core_check_logged('user');
-	
-    $content = template($conn, 'login');
-	$content = login($conn, $content);
-	
-	echo $content;
+  core_check_logged('user');
+
+  // Load the template
+  $template = template($conn, 'login');
+  // Load the default template variables
+  $vars = template_vars($conn);
+
+	$vars['message'] = login($conn);
+
+	echo $template->render($vars);
 }
 
-function login($conn, $content) {
+function login($conn) {
 	$message = '';
     if (isset($_POST['login'])) {
         $email    = core_POSTP($conn, $_POST['email']);
@@ -50,6 +54,6 @@ function login($conn, $content) {
             }
         }
     }
-	
-	return $content = str_replace('{LOGIN_MESSAGE}', $message, $content);
+
+	return $message;
 }

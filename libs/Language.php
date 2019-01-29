@@ -16,12 +16,25 @@ function check_language($conn, $lang) {
             query($conn, "UPDATE "._table('users')." SET lang='$lang' WHERE email='" . $_SESSION['user_logged'] . "'");
             core_header('home');
         } else {
-            template_error('Could not find the langauge file!', 1);
+            template_error($conn, 'Could not find the langauge file!', 'error', 1);
         }
     }
 }
 
-// Use the language
+// Function for translating stuff in the template engine
+function get_language($conn) {
+	if(isset($_SESSION['user_logged'])) {
+		$user = user_info($conn, $_SESSION['user_logged']);
+        check_language($conn, $user['language']);
+        $lang = $user['language'];
+	} else {
+		$lang = default_language;
+	}
+    
+	return define('user_language', $lang);
+}
+
+// Function for translating stuff inside php functions
 function language($conn, $name, $string) {
 	if(isset($_SESSION['user_logged'])) {
 		$user = user_info($conn, $_SESSION['user_logged']);
@@ -34,31 +47,22 @@ function language($conn, $name, $string) {
     return $ini[$name][$string];
 }
 
-// Use custom language (in the template folder)
-function clanguage($name, $string) {
-	if(isset($_SESSION['user_logged'])) {
+// Function to get all available languages into array
+function get_languages() {
+	$path    	= 'language/';
+	$results 	= scandir($path);
+	$list		= array();
+	foreach ($results as $result) {
 		
-		$user = user_info($_SESSION['user_logged']);
-		$lang = $user['language'];
+		if ($result === '.' or $result === '..')
+			continue;
 		
-	} else { $lang = default_language; }
+		if (is_dir($path . '/' . $result)) {
+			
+			$list[] = $result;
+			
+		}
+	}
 	
-    if (file_exists('templates/' . template . '/language/' . lang . '/' . lang . '.ini')) {
-        $ini = parse_ini_file('templates/' . template . '/language/' . lang . '/' . lang . '.ini', TRUE);
-        return $ini[$name][$string];
-    }
-}
-
-function mlanguage($mod, $name, $string) {
-	if(isset($_SESSION['user_logged'])) {
-		
-		$user = user_info($_SESSION['user_logged']);
-		$lang = $user['language'];
-		
-	} else { $lang = default_language; }
-	
-	if (file_exists('mods/' . $mod . '/language/' . $lang . '/' . $lang . '.ini')) {
-        $ini = parse_ini_file('mods/' . $mod . '/language/' . $lang . '/' . $lang . '.ini', TRUE);
-        return $ini[$name][$string];
-    }
+	return $list;
 }

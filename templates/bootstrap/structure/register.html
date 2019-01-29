@@ -1,5 +1,5 @@
-{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
-	<!--IF USER IS NOT LOGGED-->
+{% extends "body.html" %}
+	{% block content %}
 	<script>
 	function showName(str) {
 		var xmlhttp = new XMLHttpRequest();
@@ -19,11 +19,11 @@
 		xmlhttp.send();
 	}
 	</script>
-	
+
 	<div class="col-lg-9">
 		<div class="card card-outline-secondary my-4">
 			<div class="card-header">
-				Register            
+				{{ translate('titles', 'REGISTRATION') }}
 			</div>
 			<div class="card-body">
 				<div class="container">
@@ -34,22 +34,26 @@
 									<form action="" method="POST">
 										<fieldset>
 											<div class="form-group">
-												<input id="eemail" class="form-control" placeholder="{TRANSLATE}others,EMAIL{/TRANSLATE}" name="email" 
+												<input id="eemail" class="form-control" placeholder="{{ translate('others', 'EMAIL') }}" name="email"
 												type="email" onkeyup="showName(this.value)" autofocus required>
 												<div id="txtHint"></div>
 											</div>
 											<div class="form-group">
-												<input class="form-control" placeholder="{TRANSLATE}others,PASSWORD{/TRANSLATE}" name="password" type="password" required>
+												<input class="form-control" placeholder="{{ translate('others', 'PASSWORD') }}" name="password" type="password" required>
 											</div>
 											<div class="form-group">
-												<input class="form-control" placeholder="{TRANSLATE}profile,CONFIRM_PASSWORD{/TRANSLATE}" name="cpassword" type="password" required>
+												<input class="form-control" placeholder="{{ translate('profile', 'CONFIRM_PASSWORD') }}" name="cpassword" type="password" required>
 											</div>
-											
+
 											<div class="form-group">
-												<input type="submit" name="register" class="btn btn-outline btn-success btn-block" value="{TRANSLATE}buttons,REGISTER{/TRANSLATE}" />
+												<input type="submit" name="register" class="btn btn-outline btn-success btn-block" value="{{ translate('buttons', 'REGISTER') }}" />
 											</div>
 										</fieldset>
-										<p>{REGISTER_MESSAGE}</p>
+										<p>
+											{% if message is not empty%}
+											{{ message }}
+											{% endif %}
+										</p>
 									</form>
 								</div>
 							</div>
@@ -59,5 +63,4 @@
 			</div>
 		</div>
 	</div>
-	<!--END IF USER IS NOT LOGGED-->
-{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}
+	{% endblock %}

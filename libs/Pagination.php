@@ -48,8 +48,14 @@ function pagination($conn, $sql, $limit = 5) {
         while ($row = fetch_assoc($query)) {
             $array[] = $row;
         }
+		
+		$prev = $cpage - 1;
+		$next = $cpage + 1;
+		
+		if($prev < 1) { $prev = 1; }
+		if($next > $result) { $next = $result; }
 
-        $pagination = array('prev' => $cpage - 1, 'next' => $cpage + 1, 'max' => $result);
+        $pagination = array('prev' => $prev, 'next' => $next, 'max' => $result, 'current' => $cpage);
 
         return array($pagination, $array);
     } else {

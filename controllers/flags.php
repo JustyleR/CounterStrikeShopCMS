@@ -11,89 +11,83 @@ function main_info() {
 function main($conn) {
 	// Check if we are logged in
     core_check_logged('user', 'logged');
-	
+
 	// Pages
     $page = core_page();
 
 	// Check if we have the servername set
     if ($page[1] != NULL) {
-        $serverName  = core_POSTP($conn, $page[1]);
-        $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
-        if (num_rows($checkServer) > 0) {
-			
-			$content = template($conn, 'flags');
-			$content = show_flags($conn, $content);
-			
-			echo $content;
-			
-        } else { core_header('flags/'); }
+      $serverName  = core_POSTP($conn, $page[1]);
+      $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
+      if (num_rows($checkServer) > 0) {
+        // Load the template
+        $template = template($conn, 'flags');
+        // Load the default template variables
+        $vars = template_vars($conn);
+
+      	$vars['flags'] = show_flags($conn);
+
+      	echo $template->render($vars);
+      } else { core_header('flags/'); }
     } else {
-		
-		$content = template($conn, 'chooseServer');
-		$content = template_show_servers($conn, $content);
-		
-		if(isset($_POST['choose'])) {
-			$page = core_page();
-			
-			core_header($page[0] . '/' . $_POST['server']);
-		}
-		
-		echo $content;
-		
+      // Load the template
+      $template = template($conn, 'chooseServer');
+      // Load the default template variables
+      $vars = template_vars($conn);
+
+    	$vars['servers'] = get_all_servers($conn);
+
+    	echo $template->render($vars);
+
+      if(isset($_POST['choose'])) { core_header($page[0] . '/' . $_POST['server']); }
     }
 }
 
-function show_flags($conn, $content) {
-	
-	$cFlags		= comment('SHOW FLAGS INFO', $content);
-	$cText		= comment('SHOW NO FLAGS TEXT', $content);
+function show_flags($conn) {
 	$server		= core_page()[1];
 	$adminID	= csbans_getadminID($conn, $server);
-	$content	= str_replace('{YOUR_FLAGS_TITLE}', language($conn, 'titles', 'CURRENT_FLAGS'), $content);
-	
+
 	$getFlags = query($conn, "SELECT * FROM ". prefix ."amxadmins WHERE id='$adminID'");
 	if(num_rows($getFlags) > 0) {
-		
-		$row		= fetch_assoc($getFlags);
-		$replace	= ['{FLAG}', '{INFORMATION}', '{EXPIRE_DATE}'];
-		$with		= [language($conn, 'others', 'FLAG'), language($conn, 'others', 'INFORMATION'), language($conn, 'others', 'DATE_EXPIRE')];
-		$content	= str_replace($replace, $with, $content);
-		$comment	= comment('SHOW FLAGS', $content);
-		$list		= "";
+    $row      = fetch_assoc($getFlags);
 		$flags		= $row['access'];
-		$strlen		= strlen($flags);
-		
-		for ($i = 0; $i <= $strlen; $i++) {
-			
-			$char	= substr($flags, $i, 1);
-			
-			$getFlagInfo = query($conn, "SELECT flagDesc FROM "._table('flags')." WHERE flag='". $char ."' AND server='". $server ."'");
-			if (num_rows($getFlagInfo) > 0) {
-				
-				$row = fetch_assoc($getFlagInfo);
-				$getFlagExpire = query($conn, "SELECT dateExpire FROM "._table('flag_history')." WHERE flag='". $char ."' AND server='". $server ."'");
-				if (num_rows($getFlagExpire) > 0) {
-					
-					$row2 = fetch_assoc($getFlagExpire);
-					$replace	= ['{FLAGS_FLAG}', '{FLAGS_DESCRIPTION}' ,'{FLAGS_EXPIRE_DATE}'];
-					$with		= [$char, $row['flagDesc'], $row2['dateExpire']];
-					$list		.= str_replace($replace, $with, $comment);
-					
-				}
-				
-			}
-			
-		}
-		
-		$content = str_replace($comment, $list, $content);
-		$content = str_replace($cText, '', $content);
-		
+    $user     = user_info($conn, $_SESSION['user_logged']);
+
+		$getFlagsHistory = query($conn, "SELECT * FROM ". sysPrefix ."flag_history WHERE nickname='". $user['nickname'] ."' AND server='". $server ."'");
+    if(num_rows($getFlagsHistory) > 0) {
+      $tArray = array();
+      while($gRow = fetch_assoc($getFlagsHistory)) {
+        if (\strpos($flags, $gRow['flag']) !== false) {
+            $tArray[] = $gRow['flag'];
+            $flags = str_replace($gRow['flag'], '', $flags);
+        }
+      }
+
+      $array    = array();
+      foreach($tArray as $char) {
+        $getFlagInfo = query($conn, "SELECT flagDesc FROM "._table('flags')." WHERE flag='". $char ."' AND server='". $server ."'");
+  			if (num_rows($getFlagInfo) > 0) {
+  				$row = fetch_assoc($getFlagInfo);
+  				$getFlagExpire = query($conn, "SELECT dateExpire FROM "._table('flag_history')." WHERE flag='". $char ."' AND server='". $server ."'");
+  				if (num_rows($getFlagExpire) > 0) {
+  					$row2 = fetch_assoc($getFlagExpire);
+
+            $arr = array();
+            $arr['flag'] = $char;
+            $arr['desc'] = $row['flagDesc'];
+            $arr['expire_date'] = $row2['dateExpire'];
+            $array[] = $arr;
+  				}
+  			}
+      }
+    } else {
+      return '';
+    }
+
+    return $array;
 	} else {
-		
-		$content = str_replace($cFlags, '', $content);
-		$content = str_replace('{NO_FLAGS_TEXT}', language($conn, 'messages', 'NO_BOUGHT_FLAGS'), $content);
-		
+
+		return '';
+
 	}
-	
-	return $content;
 }

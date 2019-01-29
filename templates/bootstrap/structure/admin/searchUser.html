@@ -1,7 +1,8 @@
-{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+{% extends "admin/body.html" %}
+{% block content %}
 <script>
-function showResult(str) {
-	if (str.length==0) { 
+	function showResult(str) {
+	if (str.length==0) {
 		document.getElementById("livesearch").innerHTML = "";
 		document.getElementById("livesearch").style.border = "0px";
 		return;
@@ -15,14 +16,14 @@ function showResult(str) {
 			}
 		}
 	};
-	xmlhttp.open("GET", "{SITE_URL}get.php?type=users&num=1&email=" + str, true);
+	xmlhttp.open("GET", "{{ SITE_URL }}get.php?type=users&num=1&email=" + str, true);
 	xmlhttp.send();
 	function myFunction(arr) {
 		var out = "";
 		var i;
 		for(i = 0; i < arr.length; i++) {
 			if(i >= 15) { break; }
-			out += '<a href="'+ arr[i].email + '">' + 
+			out += '<a href="'+ arr[i].email + '">' +
 			arr[i].email + '</a><br>';
 		}
 		document.getElementById("livesearch").innerHTML = out;
@@ -32,21 +33,22 @@ function showResult(str) {
 </script>
 
 <div class="col-md-4 col-md-offset-3 content">
-    <form action="" method="POST">
-        <div class="panel panel-default">
-            <div class="panel-heading">{TRANSLATE}titles,SEARCH_USER{/TRANSLATE}</div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="email" onkeyup="showResult(this.value)" placeholder="{TRANSLATE}others,EMAIL{/TRANSLATE}">
+	<form action="" method="POST">
+		<div class="panel panel-default">
+			<div class="panel-heading">{{ translate('titles', 'SEARCH_USER') }}</div>
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="text" class="form-control" name="email" onkeyup="showResult(this.value)"
+					placeholder="{{ translate('others', 'EMAIL') }}">
 					<div id="livesearch"></div>
 				</div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <input type="submit" class="btn btn-primary" name="search" value="{TRANSLATE}buttons,SEARCH{/TRANSLATE}" />
-                </div>
-            </div>
-        </div>
-    </form>
+			</div>
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="submit" class="btn btn-primary" name="search" value="{{ translate('buttons', 'SEARCH') }}" />
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
-{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}
+{% endblock %}

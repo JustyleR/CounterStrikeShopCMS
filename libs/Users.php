@@ -61,3 +61,34 @@ function checkUser($conn) {
 		}
     }
 }
+
+// Change the type to a group name
+function user_group($conn, $type) {
+
+	$group = '';
+
+	switch($type) {
+
+		case 0: {
+			$group = language($conn, 'groups', 'banned');
+			break;
+		}
+		case 1: {
+			$group = language($conn, 'groups', 'member');
+			break;
+		}
+		case 2: {
+			$group = language($conn, 'groups', 'admin');
+			break;
+		}
+
+	}
+
+	return $group;
+}
+
+function user_get_groups($conn) {
+	$array = array('0' => language($conn, 'groups', 'banned'), '1' => language($conn, 'groups', 'member'), '2' => language($conn, 'groups', 'admin'));
+	
+	return $array;
+}
