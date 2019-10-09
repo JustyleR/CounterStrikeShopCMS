@@ -1,32 +1,39 @@
-{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+{% extends "admin/body.html" %}
+{% block content %}
 <div class="col-md-4 col-md-offset-3 content">
-    <div class="panel panel-default">
-        <div class="panel-heading">{TRANSLATE}titles,CREATE_FLAG{/TRANSLATE}</div>
-        <form action="" method="POST">
-            
-			<div class="panel-body">
-                <div class="input-group">
-                    <input type="text" size="40" class="form-control" name="flag" value="{FLAG}" placeholder="{TRANSLATE}others,FLAG{/TRANSLATE}" />
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <textarea style="resize: none" cols="42" rows="4" class="form-control" 
-					name="flagDesc" placeholder="{TRANSLATE}others,FLAG_DESCRIPTION{/TRANSLATE}">{FLAG_DESCRIPTION}</textarea>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <input type="text" size="40" class="form-control" name="flagPrice" value="{FLAG_PRICE}" placeholder="{TRANSLATE}others,FLAG_PRICE{/TRANSLATE}" />
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <input type="submit" class="btn btn-primary" name="edit" value="{TRANSLATE}buttons,EDIT{/TRANSLATE}" />
-                </div>
-            </div>
-        </form>
-		<p>{SHOW_MESSAGE}</p>
-	</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ translate('titles', 'EDIT_FLAG') }}</div>
+    <form action="" method="POST">
+
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="text" size="40" class="form-control" name="flag" value="{{ flag.flag }}"
+          placeholder="{{ translate('others', 'FLAG') }}" />
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="input-group">
+          <textarea style="resize: none" cols="42" rows="4" class="form-control" name="flagDesc"
+          placeholder="{{ translate('others', 'FLAG_DESCRIPTION') }}">{{ flag.flagDesc }}</textarea>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="text" size="40" class="form-control" name="flagPrice" value="{{ flag.price }}"
+          placeholder="{{ translate('others', 'FLAG_PRICE') }}" />
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="submit" class="btn btn-primary" name="edit" value="{{ translate('buttons', 'EDIT') }}" />
+        </div>
+      </div>
+    </form>
+    <p>
+      {% if message is not empty %}
+      {{ message }}
+      {% endif %}
+    </p>
+  </div>
 </div>
-{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}
+{% endblock %}

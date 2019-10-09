@@ -10,37 +10,39 @@ function main_info() {
 // Main function
 function main($conn) {
 	// Check if we are logged in
-    core_check_logged('user', 'logged');
-	
-	$content = template($conn, 'money');
-	$content = money_text($conn, $content);
-	$content = money($conn, $content);
-	
-	
-	echo $content;
+  core_check_logged('user', 'logged');
+
+  // Load the template
+  $template = template($conn, 'money');
+  // Load the default template variables
+  $vars = template_vars($conn);
+
+  $vars['message'] = money($conn);
+  $vars['money_text'] = money_text($conn);
+
+  echo $template->render($vars);
 }
 
-function money_text($conn, $content) {
-	
+function money_text($conn) {
+
 	$query = query($conn, "SELECT * FROM "._table('sms_text')."");
 	if(num_rows($query) > 0) {
-		
+
 		$text = bbcode_preview(fetch_assoc($query)['text']);
-		
-		return $content = str_replace('{MONEY_PAGE_TEXT}', $text, $content);
-		
+
+		return $text;
+
 	}
-	
 }
 
-function money($conn, $content) {
+function money($conn) {
 	$message = core_message('money');
     if (isset($_POST['add'])) {
 
         $code = core_POSTP($conn, $_POST['code']);
         $pay  = 0.00;
 
-		// Check if the code is valid and set the money for the correct servID
+	      // Check if the code is valid and set the money for the correct servID
         if (mobio_check(servID120, $code) === 1) {
             $pay = money120;
         } else if (mobio_check(servID240, $code)) {
@@ -50,20 +52,20 @@ function money($conn, $content) {
         } else if (mobio_check(servID600, $code)) {
             $pay = money600;
         } else {
-            $query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
-			if(num_rows($query) > 0) {
-				$pay = fetch_assoc($query)['balance'];
-				$db = 1;
-			} else {
-				$message = language($conn, 'messages', 'THE_CODE_IS_NOT_VALID');
-			}
+          $query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
+    			if(num_rows($query) > 0) {
+    				$pay = fetch_assoc($query)['balance'];
+    				$db = 1;
+    			} else {
+    				$message = language($conn, 'messages', 'THE_CODE_IS_NOT_VALID');
+    			}
         }
 
         if ($pay > 0) {
 			// Get the user information
             $user    = user_info($conn, $_SESSION['user_logged']);
             $balance = $user['balance'] + $pay;
-			
+
 			if(isset($db)) {
 				query($conn, "DELETE FROM "._table('sms_codes')." WHERE code='". $code ."'");
 			}
@@ -76,8 +78,8 @@ function money($conn, $content) {
 		core_message_set('money', $message);
 		core_header('money');
     }
-	
-	return $content = str_replace('{MONEY_MESSAGE}', $message, $content);
+
+	return $message;
 }
 
 // Function to check the code with the servID

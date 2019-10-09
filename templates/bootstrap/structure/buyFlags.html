@@ -1,37 +1,48 @@
-{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
-	<!--IF USER IS LOGGED-->
+{% extends "body.html" %}
+	{% block content %}
 	<div class="col-lg-9">
 		<div class="card card-outline-secondary my-4">
-            <div class="card-header">
-				{TRANSLATE}titles,BUY_FLAGS{/TRANSLATE}
-            </div>
-            <div class="card-body">
-				<!--SHOW BANNED MESSAGE-->
+	    <div class="card-header">
+				{{ translate('titles', 'BUY_FLAGS') }}
+	    </div>
+      <div class="card-body">
+				{% if user_banned > 0 %}
 				<div class="alert alert-danger">
 					<p class="text-center">{TRANSLATE}amxbans,YOU_ARE_BANNED{/TRANSLATE}</p>
 				</div>
-				<!--END SHOW BANNED MESSAGE-->
-				
-				<!--SHOW ALL FLAGS-->
-				<form action="" method="POST">
-					<!--SHOW FLAGS-->
-					<div class="controls-row">
-						<input type="radio" class="form-check-input" name="flag" value="{FLAG_VALUE}" />
-						<label class="form-check-label">
-							<small><strong>{FLAG_PRICE}$</strong></small>
-						</label>
-						<label class="form-check-label">{FLAG_DESCRIPTION}</label>
-					</div>
-					<!--END SHOW FLAGS-->
-					<input type="submit" name="buy" class="btn btn-primary" value="Buy" />
-				</form>
-				<p>{BUY_FLAGS_MESSAGE}</p>
-				<!--END SHOW ALL FLAGS-->
-				<!--SHOW NO FLAGS TEXT-->
-				{NO_FLAGS_TEXT}
-				<!--END SHOW NO FLAGS TEXT-->
+				{% endif %}
+
+				{% if user_banned == 0 %}
+					{% if flags is not empty %}
+					<form action="" method="POST">
+						{% for flag in flags %}
+						<div class="controls-row">
+							<input type="radio" class="form-check-input" name="flag" value="{{ flag.flag }}" />
+							<label class="form-check-label">
+								<small><strong>{{ flag.price }}$</strong></small>
+							</label>
+							<label class="form-check-label">{{ flag.desc }}</label>
+						</div>
+						{% endfor %}
+						<input type="submit" name="buy" class="btn btn-primary" value="{{ translate('buttons', 'BUY_FLAG') }}" />
+					</form>
+					<p>
+						{% if message is not empty%}
+							{{ message }}
+						{% endif %}
+					</p>
+						{% if flags == 'EMPTY' %}
+							{{ translate('messages', 'NO_FLAGS_ADDED') }}
+						{% endif %}
+					{% endif %}
+
+					{% if flags is empty %}
+						<p>
+							{{ translate('messages', 'NO_MORE_FLAGS_TO_BUY') }}
+						</p>
+					{% endif %}
+				{% endif %}
 			</div>
 		</div>
 	</div>
-	<!--END IF USER IS LOGGED-->
-{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}
+	{% endblock %}

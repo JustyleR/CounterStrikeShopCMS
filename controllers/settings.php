@@ -10,64 +10,20 @@ function main_info() {
 // Main function
 function main($conn) {
 	// Check if we are logged in
-    core_check_logged('user', 'logged');
-	
-	$content = template($conn, 'settings');
-	$content = show_settings($conn, $content);
-	$content = settings($conn, $content);
-	
-	echo $content;
+  core_check_logged('user', 'logged');
+
+  // Load the template
+  $template = template($conn, 'settings');
+  // Load the default template variables
+  $vars = template_vars($conn);
+
+  $vars['message'] = settings($conn);
+  $vars['languages'] = get_languages();
+
+  echo $template->render($vars);
 }
 
-function show_settings($conn, $content) {
-	
-	$user = user_info($conn, $_SESSION['user_logged']);
-	
-	if($user != '') {
-		
-		$comment = comment('SHOW TYPE INGAME SETTINGS MESSAGE', $content);
-		
-		if(empty($user['nickname']) || (empty($user['nick_pass']))) {
-			
-			$content = str_replace('{INGAME_SETTINGS_MESSAGE}', language($conn, 'messages', 'ADD_NICKNAME_AND_PASSWORD'), $content);
-			
-		} else {
-			
-			$content = str_replace($comment, '', $content);
-			
-		}
-		
-		$content = str_replace('{NICKNAME}', $user['nickname'], $content);
-		$content = str_replace('{INGAME_PASS}', $user['nick_pass'], $content);
-		$comment = comment('LANG SELECT', $content);
-		
-		$path    	= 'language/';
-		$results 	= scandir($path);
-		$list		= "";
-		foreach ($results as $result) {
-			
-			if ($result === '.' or $result === '..')
-				continue;
-			
-			if (is_dir($path . '/' . $result)) {
-				
-				if ($result === $user['language']) { $selected = 'selected="selected"'; } else { $selected = ''; }
-				
-				$replace	= ['{LANG}', '{SELECTED}'];
-				$with		= [$result, $selected];
-				
-				$list .= str_replace($replace, $with, $comment);
-				
-			}
-		}
-		
-		return $content = str_replace($comment, $list, $content);
-		
-	} else { core_header('logout'); }
-	
-}
-
-function settings($conn, $content) {
+function settings($conn) {
 	$message = core_message('settings');
     $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE email='" . $_SESSION['user_logged'] . "'");
     if (num_rows($checkUser) > 0) {
@@ -79,10 +35,10 @@ function settings($conn, $content) {
             $email      = $user['email'];
             $nickname   = core_POSTP($conn, $_POST['nickname']);
             $nick_pass  = core_POSTP($conn, $_POST['nick_password']);
-			if(md5_enc != 0) {$nick_npass  = md5($nick_pass); } else { $nick_npass  = $nick_pass; }
+           if(md5_enc != 0) {$nick_npass  = md5($nick_pass); } else { $nick_npass  = $nick_pass; }
             $lang       = core_POSTP($conn, $_POST['lang']);
             $next       = 0;
-			
+
             if (!empty($npassword)) {
                 if (empty($cpassword)) {
 					// Set the output message
@@ -142,22 +98,25 @@ function settings($conn, $content) {
 							$message = language($conn, 'messages', 'NICKNAME_ALREADY_IN_USE');
 							$next = 0;
 						} else {
-							
-							query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."' 
+
+							query($conn, "UPDATE " . prefix . "amxadmins SET nickname='". $nickname ."', steamid='". $nickname ."'
 							WHERE nickname='" . $user['nickname'] . "'");
 							query($conn, "UPDATE "._table('flag_history')." SET nickname='". $nickname ."' WHERE nickname='". $user['nickname'] ."'");
 							query($conn, "UPDATE "._table('users')." SET nickname='". $nickname ."' WHERE email='". $user['email'] ."'");
 							$next = 1;
-							
+
 						}
                     }
                 }
             }
 
-            if ($user['nick_pass'] != $nick_pass) {
+            if ($user['nick_pass'] != $nick_pass && $nick_pass != NULL) {
                 query($conn, "UPDATE "._table('users')." SET nicknamePass='". $nick_pass ."' WHERE email='". $user['email'] ."'");
                 query($conn, "UPDATE " . prefix . "amxadmins SET password='". $nick_npass ."' WHERE nickname='". $user['nickname'] ."'");
                 $next = 1;
+            } else if($user['nick_pass'] == NULL) {
+              $message = language($conn, 'messages', 'ADD_NICKNAME_AND_PASSWORD');
+              $next = 0;
             }
 
             if ($user['language'] != $lang) {
@@ -175,6 +134,6 @@ function settings($conn, $content) {
 		// Redirect to a page
         core_header('home');
     }
-	
-	return $content = str_replace('{SETTINGS_MESSAGE}', $message, $content);
+
+	return $message;
 }

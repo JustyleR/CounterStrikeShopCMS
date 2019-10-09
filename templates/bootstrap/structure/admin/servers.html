@@ -1,69 +1,70 @@
-{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+{% extends "admin/body.html" %}
+{% block content %}
 <div class="col-md-10 content">
-    <div class="panel panel-default">
-		<div class="panel-heading">{TRANSLATE}titles,ALL_EXISTING_SERVERS{/TRANSLATE}</div>
-        <div class="panel-body">
-			<!--SHOW ALL AMXBANS SERVERS-->
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>{TRANSLATE}others,SERVER_ID{/TRANSLATE}</th>
-                        <th>{TRANSLATE}others,SERVER_NAME{/TRANSLATE}</th>
-                        <th class="text-right">{TRANSLATE}others,ACTION{/TRANSLATE}</th>
-                    </tr>
-                </thead>
-                <tbody>
-					<!--SHOW AMXBANS SERVERS-->
-                    <tr>
-						<td>#{AMXBANS_SERVER_ID}</td>
-						<td>{AMXBANS_SERVER_NAME}</td>
-						<td class="text-right">
-							<a class="btn btn-success btn-xs" href="{SITE_URL}!admin/servers/add/{AMXBANS_SERVER_ID}">
-								<i class="fa fa-plus fa-fw" aria-hidden="true"></i> {TRANSLATE}buttons,ADD{/TRANSLATE}
-							</a>
-						</td>
-					</tr>
-					<!--END SHOW AMXBANS SERVERS-->
-				</tbody>
-            </table>
-			<!--END SHOW ALL AMXBANS SERVERS-->
-			
-			<!--SHOW NO AMXBANS SERVERS-->
-			{TRANSLATE}messages,NO_AMXBANS_SERVERS_TEXT{/TRANSLATE}
-			<!--END SHOW NO AMXBANS SERVERS-->
-		</div>
-	</div>
-	<div class="panel panel-default">
-        <div class="panel-body">
-			<!--SHOW ALL ADDED SERVERS-->
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>{TRANSLATE}others,SERVER_ID{/TRANSLATE}</th>
-                        <th>{TRANSLATE}others,SERVER_NAME{/TRANSLATE}</th>
-                        <th class="text-right">{TRANSLATE}others,ACTION{/TRANSLATE}</th>
-                    </tr>
-                </thead>
-                <tbody>
-					<!--SHOW ADDED SERVERS-->
-                    <tr>
-						<td>#{INFO_SERVER_ID}</td>
-						<td>{INFO_SERVER_NAME}</td>
-						<td class="text-right">
-							<a class="btn btn-danger btn-xs" href="{SITE_URL}!admin/servers/remove/{INFO_SERVER_ID}">
-								<i class="fa fa-trash fa-fw" aria-hidden="true"></i> {TRANSLATE}buttons,DELETE{/TRANSLATE}
-							</a>
-						</td>
-					</tr>
-					<!--END SHOW ADDED SERVERS-->
-				</tbody>
-            </table>
-			<!--END SHOW ALL ADDED SERVERS-->
-			
-			<!--SHOW NO ADDED SERVERS-->
-			{TRANSLATE}messages,NO_SERVERS_TEXT{/TRANSLATE}
-			<!--END SHOW NO ADDED SERVERS-->
-		</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ translate('titles', 'ALL_EXISTING_SERVERS') }}</div>
+    <div class="panel-body">
+      {% if servers.0 is not empty %}
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>{{ translate('others', 'SERVER_ID') }}</th>
+            <th>{{ translate('others', 'SERVER_NAME') }}</th>
+            <th class="text-right">{{ translate('others', 'ACTION') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for server in servers.0 %}
+          <tr>
+            <td>#{{ server.id }}</td>
+            <td>{{ server.hostname }}</td>
+            <td class="text-right">
+              <a class="btn btn-success btn-xs" href="{{ SITE_URL }}!admin/servers/add/{{ server.id }}">
+                <i class="fa fa-plus fa-fw" aria-hidden="true"></i> {{ translate('buttons', 'ADD') }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+      {% if servers.0 is empty %}
+      {{ translate('messages', 'NO_AMXBANS_SERVERS_TEXT') }}
+      {% endif %}
     </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      {% if servers.1 is not empty %}
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>{{ translate('others', 'SERVER_ID') }}</th>
+            <th>{{ translate('others', 'SERVER_NAME') }}</th>
+            <th class="text-right">{{ translate('others', 'ACTION') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for server in servers.1 %}
+          <tr>
+            <td>#{{ server.id }}</td>
+            <td>{{ server.hostname }}</td>
+            <td class="text-right">
+              <a class="btn btn-danger btn-xs" href="{{ SITE_URL }}!admin/servers/remove/{{ server.id }}">
+                <i class="fa fa-minus fa-fw" aria-hidden="true"></i> {{ translate('buttons', 'DELETE') }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+      {% if servers.0 is empty %}
+      {{ translate('messages', 'NO_AMXBANS_SERVERS_TEXT') }}
+      {% endif %}
+    </div>
+  </div>
 </div>
-{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}
+{% endblock %}

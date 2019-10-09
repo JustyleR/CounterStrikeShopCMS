@@ -25,7 +25,6 @@ function csbans_all_admins($conn, $sql = '') {
         $array = array();
 
         while ($row = fetch_assoc($get)) {
-
             $array[] = $row;
         }
         return $array;
@@ -37,32 +36,23 @@ function csbans_all_admins($conn, $sql = '') {
 function csbans_getadminID($conn, $servername) {
     $getServerID = query($conn, "SELECT csbans_id FROM "._table('servers')." WHERE shortname='". $servername ."'");
     if (num_rows($getServerID) > 0) {
- 
+
         $serverID  = fetch_assoc($getServerID)['csbans_id'];
         $admins    = csbans_all_admins($conn, "WHERE nickname='" . user_info($conn, $_SESSION['user_logged'])['nickname'] . "'");
+		
         $getAdmins = query($conn, "SELECT * FROM " . prefix . "admins_servers WHERE server_id='". $serverID ."'");
-       
-        if (num_rows($getAdmins) > 0)
-        {
-            $array_get = array();
-           
-            while ($row = fetch_assoc($getAdmins))
-            {
-                $array_get[] = $row;
-            }
-        }
-        if ($admins != NULL)
-        {
-            foreach ($admins as $admin)
-            {
-                foreach ($array_get as $admin2)
-                {
-                    if ($admin2['admin_id'] === $admin['id'])
-                    {
-                        return $admin['id'];
-                    }
-                   
-                }
+        if ($admins != NULL) {
+			if (num_rows($getAdmins) > 0) {
+				$adms = array();
+				while($row = fetch_assoc($getAdmins)) {
+					$adms[] = $row['admin_id'];
+				}
+				
+				foreach ($admins as $admin) {
+					if (in_array($admin['id'], $adms)) {
+						return $admin['id'];
+					}	
+				}
             }
         }
     } else {
@@ -90,16 +80,16 @@ function csbans_createAdmin($conn, $servername) {
     }
 }
 
-function csbans_checkBan($conn, $content) {
-	
-	$comment = comment('IF USER IS BANNED', $content);
+function csbans_checkBan($conn) {
 	
 	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."' AND expired='0'");
 	if(num_rows($checkBan) == 0) {
-		$content = str_replace($comment, '', $content);
+		$ban = 0;
+	} else {
+		$ban = 1;
 	}
 	
-	return $content;
+	return $ban;
 }
 
 function csbans_userBanned($conn) {

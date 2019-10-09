@@ -42,18 +42,12 @@ function expire_flags($conn) {
 	}
 }
 
-function template_show_servers($conn, $content) {
-	
-	$cServers	= comment('SHOW SERVERS', $content);
-	$cText		= comment('NO SERVERS TEXT', $content);
-	$content	= str_replace('{CHOOSE_SERVER_TITLE}', language($conn, 'titles', 'CHOOSE_SERVER'), $content);
-	
+// Return all servers into array
+function get_all_servers($conn) {	
 	$get = mysqli_query($conn, "SELECT * FROM "._table('servers')."");
 	if(num_rows($get) > 0) {
 		
-		$content	= str_replace($cText, '', $content);
-		$list		= "";
-		$comment = comment('GET SERVERS', $content);
+		$array = array();
 		
 		while($row = fetch_assoc($get)) {
 			
@@ -62,18 +56,20 @@ function template_show_servers($conn, $content) {
 			$replace	= ['{SERVER}', '{SERVER_NAME}'];
 			$with		= [$row['shortname'], $csbans['hostname']];
 			
-			$list .= str_replace($replace, $with, $comment);
+			$arr = array();
+			
+			$arr['csbans_hostname'] = $csbans['hostname'];
+			$arr['sms_hostname'] = $row['shortname'];
+			
+			$array[] = $arr;
 			
 		}
 		
-		$content = str_replace($comment, $list, $content);
+		return $array;
 		
 	} else {
 		
-		$content = str_replace($cServers, '', $content);
+		return '';
 		
 	}
-	
-	return $content;
-	
 }

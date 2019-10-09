@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>{{ SITE_TITLE }} &bull; Admin Panel</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/abootstrap.min.css" />
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/font-awesome.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/astyle.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('.navbar-toggle-sidebar').click(function() {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+        $('#search').removeClass('in').addClass('collapse').slideUp(200);
+      });
+
+      $('#search-trigger').click(function() {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
+        $('.search-input').focus();
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
+
+        </button>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container-fluid main-container">
+    <div class="col-md-2 sidebar">
+      <div class="row">
+        <!-- uncomment code for absolute positioning tweek see top comment in css -->
+        <div class="absolute-wrapper"> </div>
+        <!-- Menu -->
+        <div class="side-menu">
+          <nav class="navbar navbar-default" role="navigation">
+            <!-- Main Menu -->
+            <div class="side-menu-container">
+              <ul class="nav navbar-nav">
+                <li><a href="{{ SITE_URL }}!admin/home"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'HOME') }}</a></li>
+
+                <li class="panel panel-default" id="dropdown">
+                  <a data-toggle="collapse" href="#flags">
+                    <i class="fa fa-plus fa-fw" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'FLAGS') }} <span class="caret"></span>
+                  </a>
+
+                  <!-- Dropdown level 1 -->
+                  <div id="flags" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <ul class="nav navbar-nav">
+                        <li><a href="{{ SITE_URL }}!admin/addFlag/">{{ translate('menu', 'ADD_FLAG') }}</a></li>
+                        <li><a href="{{ SITE_URL }}!admin/allFlags/">{{ translate('menu', 'VIEW_ALL_FLAGS') }}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </li>
+
+                <li class="panel panel-default" id="dropdown">
+                  <a data-toggle="collapse" href="#users">
+                    <i class="fa fa-user fa-fw" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'MEMBERS') }} <span class="caret"></span>
+                  </a>
+
+                  <!-- Dropdown level 1 -->
+                  <div id="users" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <ul class="nav navbar-nav">
+                        <li><a href="{{ SITE_URL }}!admin/searchUser/">{{ translate('menu', 'SEARCH_USER') }}</a></li>
+                        <li><a href="{{ SITE_URL }}!admin/allUsers/cPage/1">{{ translate('menu', 'ALL_USERS') }}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="panel panel-default" id="dropdown">
+                  <a data-toggle="collapse" href="#sms">
+                    <i class="fa fa-plus fa-fw" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'SMS') }} <span class="caret"></span>
+                  </a>
+
+                  <!-- Dropdown level 1 -->
+                  <div id="sms" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <ul class="nav navbar-nav">
+                        <li><a href="{{ SITE_URL }}!admin/addCode">{{ translate('menu', 'SMS_ADD_CODE') }}</a></li>
+                        <li><a href="{{ SITE_URL }}!admin/allCodes/cPage/1">{{ translate('menu', 'SMS_ALL_CODES') }}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </li>
+
+                <li class="panel panel-default" id="dropdown">
+                  <a data-toggle="collapse" href="#text">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'TEXT_PAGES') }} <span class="caret"></span>
+                  </a>
+
+                  <!-- Dropdown level 1 -->
+                  <div id="text" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <ul class="nav navbar-nav">
+                        <li><a href="{{ SITE_URL }}!admin/homeText">{{ translate('menu', 'TEXT_HOME') }}</a></li>
+                        <li><a href="{{ SITE_URL }}!admin/smsText">{{ translate('menu', 'TEXT_SMS') }}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </li>
+
+                <li><a href="{{ SITE_URL }}!admin/servers/home/"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'SERVERS') }}</a></li>
+                <li><a href="{{ SITE_URL }}!admin/logs/cPage/1"><i class="fa fa-database" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'LOGS') }}</a></li>
+                <li><a href="{{ SITE_URL }}!admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'SITE_SETTINGS') }}</a></li>
+                <li><a href="{{ SITE_URL }}"><i class="fa fa-home fa-fw" aria-hidden="true"></i> &nbsp; {{ translate('menu', 'TO_THE_SITE') }}</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </nav>
+
+        </div>
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <footer class="pull-left footer">
+      <p class="col-md-12">
+        <hr class="divider" />
+        System by: <a href="http://www.steamcommunity.com/id/JustyleRbAbY">JustyleR</a> &bull;
+        <a href="https://github.com/JustyleR/smsCMS/">Report bugs</a>
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>

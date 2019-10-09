@@ -11,105 +11,80 @@ function main_info() {
 function main($conn) {
 	// Check if we are logged in
     core_check_logged('user', 'logged');
-	
+
 	// Pages
     $page = core_page();
 
 	// Check if we have the servername set
     if ($page[1] != NULL) {
-        $serverName  = core_POSTP($conn, $page[1]);
-        $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
-        if (num_rows($checkServer) > 0) {
-			
-			$content = template($conn, 'buyFlags');
-			if(csbans_userBanned($conn) > 0) {
-				
-				$content = ifBanned($conn, $content);
-				
-			} else {
-				
-				$content = show_flags($conn, $content);
-				$content = submit_flags($conn, $content);
-				
-			}
-			
-			echo $content;
-			
-        } else { core_header('buyFlags/'); }
+      $serverName  = core_POSTP($conn, $page[1]);
+      $checkServer = query($conn, "SELECT * FROM "._table('servers')." WHERE shortname='". $serverName ."'");
+      if (num_rows($checkServer) > 0) {
+
+        // Load the template
+        $template = template($conn, 'buyFlags');
+        // Load the default template variables
+        $vars = template_vars($conn);
+
+      	$vars['user_banned'] = csbans_userBanned($conn);
+        $vars['flags'] = get_flags($conn);
+      	$vars['message'] = submit_flags($conn);
+
+      	echo $template->render($vars);
+
+      } else { core_header('buyFlags/'); }
     } else {
-		$content = template($conn, 'chooseServer');
-		$content = template_show_servers($conn, $content);
-		
-		if(isset($_POST['choose'])) {
-			$page = core_page();
-			
-			core_header($page[0] . '/' . $_POST['server']);
-		}
-		
-		echo $content;
+      // Load the template
+      $template = template($conn, 'chooseServer');
+      // Load the default template variables
+      $vars = template_vars($conn);
+
+    	$vars['servers'] = get_all_servers($conn);
+
+    	echo $template->render($vars);
+
+      if(isset($_POST['choose'])) { core_header($page[0] . '/' . $_POST['server']); }
     }
 }
 
-function show_flags($conn, $content) {
-	
-	$cBanned	= comment('SHOW BANNED MESSAGE', $content);
-	$cFlags		= comment('SHOW ALL FLAGS', $content);
-	$cText		= comment('SHOW NO FLAGS TEXT', $content);
+function get_flags($conn) {
+
 	$server		= core_page()[1];
-	$content	= str_replace($cBanned, '', $content);
-	
+
 	$getFlags = query($conn, "SELECT * FROM "._table('flags')." WHERE server='". $server ."'");
 	if(mysqli_num_rows($getFlags) > 0) {
-		
+
 		$adminID = csbans_getadminID($conn, $server);
-		
+
 		$getAdminInfo = query($conn, "SELECT * FROM ". prefix ."amxadmins WHERE id='$adminID'");
 		$row = fetch_assoc($getAdminInfo);
-		
-		$comment	= comment('SHOW FLAGS', $content);
-		$list		= "";
-		
+
+		$flags = array();
+
 		while($row2 = fetch_assoc($getFlags)) {
-			
+
 			if (strpos($row['access'], $row2['flag']) === FALSE) {
-				
-				$replace	= ['{FLAG_VALUE}', '{FLAG_PRICE}', '{FLAG_DESCRIPTION}'];
-				$with		= [$row2['flag'], $row2['price'], $row2['flagDesc']];
-				
-				$list .= str_replace($replace, $with, $comment);
-				
-				$_SESSION['has_flag'] = TRUE;
-				
+        $arr = array();
+        $arr['flag'] = $row2['flag'];
+        $arr['price'] = $row2['price'];
+        $arr['desc'] = $row2['flagDesc'];
+        $flags[] = $arr;
 			}
-			
 		}
-		
-		if (isset($_SESSION['has_flag'])) {
-			$content = str_replace($cText, '', $content);
-			$content = str_replace($comment, $list, $content);
-			unset($_SESSION['has_flag']);
-		} else {
-			$content = str_replace($cFlags, '', $content);
-			$content = str_replace('{NO_FLAGS_TEXT}', language($conn, 'messages', 'NO_MORE_FLAGS_TO_BUY'), $content);
-		}
-		
+
+    return $flags;
 	} else {
-		
-		$content = str_replace($cFlags, '', $content);
-		$content = str_replace('{NO_FLAGS_TEXT}', language($conn, 'messages', 'NO_FLAGS_ADDED'), $content);
-		
+    return 'EMPTY';
 	}
-	
-	return $content;
 }
 
-function submit_flags($conn, $content) {
+function submit_flags($conn) {
 	$message = core_message('buy');
-	
+
 	if (isset($_POST['buy'])) {
-		
+
 		$server = core_page()[1];
-		
+
         if (isset($_POST['flag'])) {
             $flag = core_POSTP($conn, $_POST['flag']);
         } else {
@@ -118,7 +93,7 @@ function submit_flags($conn, $content) {
         }
 
         $user   = user_info($conn, $_SESSION['user_logged']);
-		
+
         $checkFlag = query($conn, "SELECT * FROM "._table('flags')." WHERE flag='". $flag ."' AND server='". $server ."'");
         if (num_rows($checkFlag) > 0) {
 
@@ -126,19 +101,19 @@ function submit_flags($conn, $content) {
             if ($row['price'] > $user['balance']) {
                 $message = language($conn, 'messages', 'NO_MONEY_TO_BUY_FLAG');
             } else {
-				
+
 				// Get the Admin ID from the database
 				$adminID = csbans_getadminID($conn, $server);
-				
+        
 				if($adminID == NULL) {
 					csbans_createAdmin($conn, $server);
 					$adminID = csbans_getadminID($conn, $server);
 				}
-				
-                $getUserFlags = query($conn, "SELECT access FROM " . prefix . "amxadmins WHERE id='$adminID'");
-				
+
+        $getUserFlags = query($conn, "SELECT access FROM " . prefix . "amxadmins WHERE id='$adminID'");
+
 				$row2 = fetch_assoc($getUserFlags);
-				
+
 				// Check if we have the flag in our access field in the table (amxadmins)
 				if (strpos($row2['access'], $flag) === FALSE) {
 					$hasFlag = 0;
@@ -177,32 +152,11 @@ function submit_flags($conn, $content) {
         } else {
             $message = language($conn, 'messages', 'FLAG_DOESNT_EXISTS');
         }
-		
+
 		core_message_set('buy', $message);
 		core_header(core_page()[0] . '/' . $server);
     }
-	
-	return $content = str_replace('{BUY_FLAGS_MESSAGE}', $message, $content);
-	
-}
 
-function ifBanned($conn, $content) {
-	
-	$cBanned	= comment('SHOW BANNED MESSAGE', $content);
-	$cFlags		= comment('SHOW ALL FLAGS', $content);
-	$cMessage	= comment('SHOW NO FLAGS TEXT', $content);
-	
-	if(csbans_userBanned($conn) > 0) {
-		
-		$content = str_replace($cFlags, '', $content);
-		$content = str_replace($cMessage, '', $content);
-		
-	} else {
-		
-		$content = str_replace($cBanned, '', $content);
-		
-	}
-	
-	return $content;
-	
+	return $message;
+
 }

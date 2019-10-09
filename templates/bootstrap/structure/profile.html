@@ -1,43 +1,43 @@
-{TEMPLATE_REQUIRE}header{/TEMPLATE_REQUIRE}
-	<!--IF USER IS LOGGED-->
+{% extends "body.html" %}
+	{% block content %}
 	<div class="col-lg-9">
 		<div class="card card-outline-secondary my-4">
-			<div class="card-header">View profile</div>
+			<div class="card-header">{{ translate('titles', 'VIEW_PROFILE') }}</div>
 			<div class="card-body">
 				<div class="row">
-					<div class=" col-md-9 col-lg-9 "> 
+					<div class=" col-md-9 col-lg-9 ">
 						<table class="table table-user-information">
 							<tbody>
 								<tr>
-									<td>{TRANSLATE}profile,NICKNAME{/TRANSLATE}:</td>
-									<td>{NICKNAME}</td>
+									<td>{{ translate('profile','NICKNAME') }}:</td>
+									<td>{{ profile.nickname }}</td>
 								</tr>
 								<tr>
-									<td>{TRANSLATE}profile,BALANCE{/TRANSLATE}:</td>
-									<td>{BALANCE}$</td>
+									<td>{{ translate('profile','BALANCE') }}:</td>
+									<td>{{ profile.balance }}</td>
 								</tr>
 								<tr>
-									<td>{TRANSLATE}profile,REGISTER_DATE{/TRANSLATE}:</td>
-									<td>{REGISTER_DATE}</td>
+									<td>{{ translate('profile','REGISTER_DATE') }}:</td>
+									<td>{{ profile.register_date }}</td>
 								</tr>
 								<tr>
-									<td>{TRANSLATE}profile,GROUP{/TRANSLATE}:</td>
-									<td>{GROUP}</td>
+									<td>{{ translate('profile','GROUP') }}:</td>
+									<td>{{ profile_group }}</td>
 								</tr>
 								<tr>
-									<td>{TRANSLATE}profile,LANGUAGE{/TRANSLATE}:</td>
-									<td>{LANG}</td>
+									<td>{{ translate('profile','LANGUAGE') }}:</td>
+									<td>{{ profile.language }}</td>
 								</tr>
-								<!--IF USER IS AN ADMIN-->
+								{% if user_info.type > 1 %}
 								<tr>
-									<td>{TRANSLATE}profile,EMAIL{/TRANSLATE}</td>
-									<td>{EMAIL}</td>
+									<td>{{ translate('profile','EMAIL') }}:</td>
+									<td>{{ profile.email }}</td>
 								</tr>
 								<tr>
-									<td>{TRANSLATE}profile,IP_ADRESS{/TRANSLATE}</td>
-									<td>{IP}</td>
+									<td>{{ translate('profile','IP_ADRESS') }}:</td>
+									<td>{{ profile.ip }}</td>
 								</tr>
-								<!--END IF USER IS AN ADMIN-->
+									{% endif %}
 							</tbody>
 						</table>
 					</div>
@@ -45,6 +45,4 @@
 			</div>
 		</div>
 	</div>
-
-	<!--END IF USER IS LOGGED-->
-{TEMPLATE_REQUIRE}footer{/TEMPLATE_REQUIRE}
+	{% endblock %}

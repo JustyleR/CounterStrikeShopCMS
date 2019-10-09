@@ -1,64 +1,70 @@
-{TEMPLATE_REQUIRE}admin/header{/TEMPLATE_REQUIRE}
+{% extends "admin/body.html" %}
+{% block content %}
+
 <div class="col-md-4 col-md-offset-3 content">
-    <div class="panel panel-default">
-        <div class="panel-heading">{TRANSLATE}titles,VIEW_PROFILE{/TRANSLATE}</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ translate('titles', 'VIEW_PROFILE') }}</div>
+    <div class="panel-body">
+      <form action="" method="POST">
         <div class="panel-body">
-			<form action="" method="POST">
-				<div class="panel-body">
-					<label for="email">{TRANSLATE}profile,EMAIL{/TRANSLATE}</label>
-					<div class="input-group">
-						<input size="35" type="email" class="form-control" name="email" placeholder="{TRANSLATE}profile,EMAIL{/TRANSLATE}" value="{INFO_EMAIL}">
-					</div>
-				</div>
-				
-				<div class="panel-body">
-					<label for="password">{TRANSLATE}profile,NEW_PASSWORD{/TRANSLATE}</label>
-					<div class="input-group">
-						<input size="35" type="password" class="form-control" name="password" placeholder="{TRANSLATE}profile,NEW_PASSWORD{/TRANSLATE}">
-					</div>
-				</div>
-				
-				<div class="panel-body">
-					<label for="nickname">{TRANSLATE}profile,NICKNAME{/TRANSLATE}</label>
-					<div class="input-group">
-						<input size="35" type="text" class="form-control" name="nickname" placeholder="{TRANSLATE}profile,NICKNAME{/TRANSLATE}" value="{INFO_NICKNAME}">
-					</div>
-					<label for="nickname-password">{TRANSLATE}profile,PASSWORD_INGAME{/TRANSLATE}</label>
-					<div class="input-group">
-						<input size="35" type="text" class="form-control" name="nickname_pass" placeholder="{TRANSLATE}profile,PASSWORD_INGAME{/TRANSLATE}" value="{INFO_INGAME_PASSWORD}">
-					</div>
-				</div>
-				
-				<div class="panel-body">
-					<label for="balance">{TRANSLATE}profile,BALANCE{/TRANSLATE}</label>
-					<div class="input-group">
-						<input size="5" type="text" class="form-control" name="balance" placeholder="{TRANSLATE}profile,BALANCE{/TRANSLATE}" value="{INFO_BALANCE}">
-					</div>
-				</div>
-				
-				<div class="panel-body">
-					<label for="inputPassword4">{TRANSLATE}profile,GROUP{/TRANSLATE}</label>
-					<div class="input-group">
-						<select name="type" class="form-control">
-							<!--SHOW GROUPS-->
-							<option value="{GROUP_ID}" {SELECTED}>{GROUP_NAME}</option>
-							<!--END SHOW GROUPS-->
-						</select>
-					</div>
-				</div>
-				
-				<div class="panel-body">
-					<div class="input-group">
-						<input type="submit" class="btn btn-primary" name="edit" value="{TRANSLATE}buttons,EDIT{/TRANSLATE}">
-					</div>
-					&nbsp;
-					<div class="input-group">
-						<input type="submit" class="btn btn-danger" name="delete" value="{TRANSLATE}buttons,DELETE{/TRANSLATE}">
-					</div>
-				</div>
-			</form>
-			<p>{SHOW_MESSAGE}</p>
-		</div>
+          <label for="email">{{ translate('profile', 'EMAIL') }}</label>
+          <div class="input-group">
+            <input size="35" type="email" class="form-control" name="email" placeholder="{{ translate('profile', 'EMAIL') }}" value="{{ user.email }}">
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <label for="password">{{ translate('profile', 'NEW_PASSWORD') }}</label>
+          <div class="input-group">
+            <input size="35" type="password" class="form-control" name="password" placeholder="{{ translate('profile', 'NEW_PASSWORD') }}">
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <label for="nickname">{{ translate('profile', 'NICKNAME') }}</label>
+          <div class="input-group">
+            <input size="35" type="text" class="form-control" name="nickname" placeholder="{{ translate('profile', 'NICKNAME') }}" value="{{ user.nickname }}">
+          </div>
+          <label for="nickname-password">{{ translate('profile', 'PASSWORD_INGAME') }}</label>
+          <div class="input-group">
+            <input size="35" type="password" class="form-control" name="nickname_pass" placeholder="{{ translate('profile', 'PASSWORD_INGAME') }}" value="{{ user.nicknamePass }}">
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <label for="balance">{{ translate('profile', 'BALANCE') }}</label>
+          <div class="input-group">
+            <input size="5" type="text" class="form-control" name="balance" placeholder="{{ translate('profile', 'BALANCE') }}" value="{{ user.balance }}">
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <label for="inputPassword4">{{ translate('profile', 'GROUP') }}</label>
+          <div class="input-group">
+            <select name="type" class="form-control">
+              {% for id,group in groups %}
+              <option {% if id==user.type %} SELECTED{% endif %} value="{{ id }}">{{ group }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div class="input-group">
+            <input type="submit" class="btn btn-primary" name="edit" value="{{ translate('buttons', 'EDIT') }}">
+          </div>
+          &nbsp;
+          <div class="input-group">
+            <input type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');" name="delete" value="{{ translate('buttons', 'DELETE') }}">
+          </div>
+        </div>
+      </form>
+      <p>
+        {% if message is not empty %}
+        {{ message }}
+        {% endif %}
+      </p>
     </div>
+  </div>
 </div>
-{TEMPLATE_REQUIRE}admin/footer{/TEMPLATE_REQUIRE}
+{% endblock %}
