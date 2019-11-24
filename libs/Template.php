@@ -9,7 +9,7 @@ if (!defined('file_access')) {
 }
 
 function template($conn, $template) {
-	$loader = new Twig_Loader_Filesystem('templates/' . default_template . '/structure/');
+	$loader = new Twig_Loader_Filesystem('templates/' . template . '/structure/');
 	$twig = new Twig_Environment($loader, array(
 	'debug' => true
 	));
@@ -30,7 +30,7 @@ function template($conn, $template) {
 
 function template_vars($conn) {
   $vars['SITE_TITLE'] = site_title;
-  $vars['SITE_TEMPLATE'] = default_template;
+  $vars['SITE_TEMPLATE'] = template;
   $vars['SITE_URL'] = url;
   $vars['SITE_PAGE'] = core_page();
   $vars['USER_BANNED'] = csbans_checkBan($conn);
