@@ -79,11 +79,13 @@ function _table($table) {
 
 function db_array($conn, $sql) {
   $query = query($conn, $sql);
-  if(num_rows($query) > 0) {
-    $array = array();
-    while($row = fetch_assoc($query)) {
-      $array[] = $row;
-    }
-    return $array;
+  if($query !== FALSE) {
+	if(num_rows($query) > 0) {
+		$array = array();
+		while($row = fetch_assoc($query)) {
+			$array[] = $row;
+		}
+		return $array;
+	} else { return ''; }
   } else { return ''; }
 }
