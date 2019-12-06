@@ -16,12 +16,12 @@
 					{% if flags is not empty %}
 					<form action="" method="POST">
 						{% for flag in flags %}
-						<div class="controls-row">
-							<input type="radio" class="form-check-input" name="flag" value="{{ flag.flag }}" />
-							<label class="form-check-label">
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="{{ flag.flag }}" name="flag" value="{{ flag.flag }}" />
+							<label class="custom-control-label" for="{{ flag.flag }}">
 								<small><strong>{{ flag.price }}$</strong></small>
 							</label>
-							<label class="form-check-label">{{ flag.desc }}</label>
+							<label class="custom-control-label" for="{{ flag.flag }}">{{ flag.desc }}</label>
 						</div>
 						{% endfor %}
 						<input type="submit" name="buy" class="btn btn-primary" value="{{ translate('buttons', 'BUY_FLAG') }}" />
