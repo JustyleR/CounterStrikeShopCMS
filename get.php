@@ -13,7 +13,7 @@ $email = isset($_GET['email']) ? core_POSTP($conn, trim($_GET['email'])) : "";
 switch($type)
 {
 	case 'user': {			
-			$query = query($conn, "SELECT nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE email='$email'");
+			$query = query($conn, "SELECT email,nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE email='$email'");
 			if(num_rows($query) > 0) {
 				print json_encode(fetch_assoc($query));
 			}
@@ -27,7 +27,7 @@ switch($type)
 			if($num == 0) {
 				// Вадене на всички потребители
 			} else {
-				$query = query($conn, "SELECT nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE `email` LIKE '%$email%' LIMIT ". $num ."");
+				$query = query($conn, "SELECT email,nickname,lang,balance,type,registerDate FROM "._table('users')." WHERE `email` LIKE '%$email%' LIMIT ". $num ."");
 				if($query && num_rows($query) > 0) {
 					$array = array();
 					
