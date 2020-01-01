@@ -245,8 +245,7 @@ define('url', '". $url ."'); // Site URL
 ";						
 						if($paypal_enable == 1) { $paypal_type = 'online'; } else { $paypal_type = 'test'; }
 						
-						$config .= "define('paypal_enabled', ". $paypal_enable ."); // Enable PayPal ?
-define('unban_price', 5.00); // How much it will cost to remove a ban
+						$config .= "define('unban_price', 5.00); // How much it will cost to remove a ban
 ";						
 						$config .= "define('paypal_type', '". $paypal_type ."'); // Paypal type - (test/online)
 ";
@@ -267,7 +266,10 @@ define(\'servID600\', 		$settings[\'servID4\']);
 define(\'money120\', 			$settings[\'balance1\']);
 define(\'money240\', 			$settings[\'balance2\']);
 define(\'money480\', 			$settings[\'balance3\']);
-define(\'money600\', 			$settings[\'balance4\']);';
+define(\'money600\', 			$settings[\'balance4\']);
+define(\'paypal_enabled\', 			$settings[\'allow_paypal\']);
+define(\'sms_enabled\', 			$settings[\'allow_sms\']);
+';
 						
 						fwrite($open, $config);
 						fclose($open);

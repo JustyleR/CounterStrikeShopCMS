@@ -118,6 +118,42 @@
           <input type="text" name="b600" class="form-control" value="{{ settings.balance4 }}" placeholder="{{ translate('mobio', 'balance600') }}">
         </div>
       </div>
+	  
+	  <div class="panel-body">
+        <div class="input-group">
+          <div class="form-group">
+            <label>{{ translate('admin', 'SITE_SETTINGS_ALLOW_SMS') }}</label>
+            <select name="allow_sms" class="form-control">
+              {% set options = {
+                0: translate('others', 'NO_'),
+                1: translate('others', 'YES_')
+              } %}
+
+              {% for key, option in options %}
+              <option {% if settings.allow_sms == key %}selected{%endif%} value="{{ key }}">{{ option }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+	  
+	  <div class="panel-body">
+        <div class="input-group">
+          <div class="form-group">
+            <label>{{ translate('admin', 'SITE_SETTINGS_ALLOW_PAYPAL') }}</label>
+            <select name="allow_pp" class="form-control">
+              {% set options = {
+                0: translate('others', 'NO_'),
+                1: translate('others', 'YES_')
+              } %}
+
+              {% for key, option in options %}
+              <option {% if settings.allow_paypal == key %}selected{%endif%} value="{{ key }}">{{ option }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
 
       <div class="panel-body">
         <div class="input-group">

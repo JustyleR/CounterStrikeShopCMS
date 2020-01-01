@@ -52,11 +52,13 @@ function settings_submit($conn) {
 		$b2			= core_POSTP($conn, $_POST['b240']);
 		$b3			= core_POSTP($conn, $_POST['b480']);
 		$b4			= core_POSTP($conn, $_POST['b600']);
+		$allow_sms	= core_POSTP($conn, $_POST['allow_sms']);
+		$allow_pp	= core_POSTP($conn, $_POST['allow_pp']);
 
 
 		query($conn, "UPDATE "._table('settings')." SET site_title='". $title ."', template='". $temp ."', language='". $lang ."', md5_enc='". $md5 ."', reloadadmins='". $radmins ."', servID1='". $id1 ."',
 		servID2='". $id2 ."', servID3='". $id3 ."', servID4='". $id4 ."',
-		balance1='". $b1 ."', balance2='". $b2 ."', balance3='". $b3 ."', balance4='". $b4 ."'");
+		balance1='". $b1 ."', balance2='". $b2 ."', balance3='". $b3 ."', balance4='". $b4 ."', allow_sms='". $allow_sms ."', allow_paypal='". $allow_pp ."'");
 
 		$message = language($conn, 'messages', 'CHANGES_SAVED');
 

@@ -67,6 +67,8 @@ function get_site_settings() {
 			"balance2" => $row['balance2'],
 			"balance3" => $row['balance3'],
 			"balance4" => $row['balance4'],
+			"allow_sms" => $row['allow_sms'],
+			"allow_paypal" => $row['allow_paypal'],
 		);
 		
 	} else { die("The settings table is empty! Please reinstall the system!"); }
