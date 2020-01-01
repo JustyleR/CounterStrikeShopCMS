@@ -40,7 +40,8 @@ function pagination($conn, $sql, $limit = 5) {
             $npage[$page['page']] = 1;
             core_header(printPage($npage));
         }
-
+		
+		
         $startResult = $cpage * $limit - $limit;
 
         $query = query($conn, $sql . " LIMIT $startResult,$limit");
@@ -55,7 +56,7 @@ function pagination($conn, $sql, $limit = 5) {
 		if($prev < 1) { $prev = 1; }
 		if($next > $result) { $next = $result; }
 
-        $pagination = array('prev' => $prev, 'next' => $next, 'max' => $result, 'current' => $cpage);
+        $pagination = array('prev' => $prev, 'next' => $next, 'max' => $result, 'current' => $cpage, 'link' => $npage);
 
         return array($pagination, $array);
     } else {

@@ -1,15 +1,37 @@
 {% extends "admin/body.html" %}
 {% block content %}
+{% set links = logs.0.link %}
 <div class="col-md-10 content">
   <div class="panel panel-default">
-    <div class="panel-heading">{{ translate('titles', 'ALL_EXISTING_LOGS') }}</div>
+    <div class="panel-heading"><a href="
+			
+			
+			{% if logs.0.link.6 == 'desc' %}
+			{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/log_id/asc
+			{% else %}
+			{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/log_id/desc
+			{% endif %}
+			
+			
+			">{{ translate('titles', 'ALL_EXISTING_LOGS') }}</a></div>
     <div class="panel-body">
       {% if logs is not empty %}
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th>{{ translate('logs', 'DATE_CREATED') }}</th>
-            <th>{{ translate('logs', 'CREATED_BY') }}</th>
+            <th><a href="{% if logs.0.link.6 == 'desc' %}{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/date/asc{% else %}{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/date/desc{% endif %}">{{ translate('logs', 'DATE_CREATED') }}</a></th>
+            <th><a href="
+			
+			
+			{% if logs.0.link.6 == 'desc' %}
+			{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/user/asc
+			{% else %}
+			{{ SITE_URL }}!admin/logs/cPage/{{ links.3 }}/{{ links.4 }}/user/desc
+			{% endif %}
+			
+			
+			">{{ translate('logs', 'CREATED_BY') }}</a></th>
+            
             <th>{{ translate('logs', 'LOG') }}</th>
           </tr>
         </thead>
@@ -23,14 +45,13 @@
           {% endfor %}
         </tbody>
       </table>
-
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
-            <a class="page-link" href="{{ SITE_URL }}!admin/logs/cPage/{{ logs.0.prev }}">{{ translate('others', 'PAGINATION_PREVIOUS') }}</a>
+            <a class="page-link" href="{{ SITE_URL }}!admin/logs/cPage/{{ logs.0.prev }}/{{ links.4 }}/{{ links.5 }}/{{ links.6 }}">{{ translate('others', 'PAGINATION_PREVIOUS') }}</a>
           </li>
           <li class="page-item">
-            <a class="page-link" href="{{ SITE_URL }}!admin/logs/cPage/{{ logs.0.next }}">{{ translate('others', 'PAGINATION_NEXT') }}</a>
+            <a class="page-link" href="{{ SITE_URL }}!admin/logs/cPage/{{ logs.0.next }}/{{ links.4 }}/{{ links.5 }}/{{ links.6 }}">{{ translate('others', 'PAGINATION_NEXT') }}</a>
           </li>
         </ul>
       </nav>
