@@ -40,13 +40,15 @@ function unban($conn) {
         $user = user_info($conn, $_SESSION['user_logged']);
 
         if ($user['balance'] >= unban_price) {
+			$nBalance = $user['balance'] - unban_price;
             csbans_removeBan($conn, $_SERVER['REMOTE_ADDR']);
+			query($conn, "UPDATE "._table('users')." SET balance='".$nBalance."' WHERE email='".$user['email']."'");
             addLog($conn, $_SESSION['user_logged'], language($conn, 'amxbans', 'SUCCESSFULLY_REMOVE_BAN_LOG'));
-
+			
             $message = language($conn, 'amxbans', 'SUCCESSFULLY_REMOVE_BAN');
             core_message_set('settings', $message);
         } else {
-            $message = language($conn, 'amxbans', 'NO_ENOUGH_MONEY');
+			$message = language($conn, 'amxbans', 'NO_ENOUGH_MONEY');
         }
     }
 

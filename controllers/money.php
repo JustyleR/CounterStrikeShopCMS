@@ -41,25 +41,28 @@ function money($conn) {
 
         $code = core_POSTP($conn, $_POST['code']);
         $pay  = 0.00;
-
-	      // Check if the code is valid and set the money for the correct servID
-        if (mobio_check(servID120, $code) === 1) {
-            $pay = money120;
-        } else if (mobio_check(servID240, $code)) {
-            $pay = money240;
-        } else if (mobio_check(servID480, $code)) {
-            $pay = money480;
-        } else if (mobio_check(servID600, $code)) {
-            $pay = money600;
-        } else {
-          $query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
-    			if(num_rows($query) > 0) {
-    				$pay = fetch_assoc($query)['balance'];
-    				$db = 1;
-    			} else {
-    				$message = language($conn, 'messages', 'THE_CODE_IS_NOT_VALID');
-    			}
-        }
+		
+		if(sms_enabled == 1) {
+			if (mobio_check(servID120, $code) === 1) {
+				$pay = money120;
+			} else if (mobio_check(servID240, $code)) {
+				$pay = money240;
+			} else if (mobio_check(servID480, $code)) {
+				$pay = money480;
+			} else if (mobio_check(servID600, $code)) {
+				$pay = money600;
+			}
+		}
+		
+		if($pay == 0) {
+			$query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
+			if(num_rows($query) > 0) {
+				$pay = fetch_assoc($query)['balance'];
+				$db = 1;
+			} else {
+				$message = language($conn, 'messages', 'THE_CODE_IS_NOT_VALID');
+			}
+		}
 
         if ($pay > 0) {
 			// Get the user information

@@ -59,7 +59,9 @@ CREATE TABLE `settings` (
   `balance1` float(11,2) NOT NULL,
   `balance2` float(11,2) NOT NULL,
   `balance3` float(11,2) NOT NULL,
-  `balance4` float(11,2) NOT NULL
+  `balance4` float(11,2) NOT NULL,
+   `allow_sms` int(11) NOT NULL DEFAULT 1,
+  `allow_paypal` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES

@@ -67,6 +67,8 @@ function get_site_settings() {
 			"balance2" => $row['balance2'],
 			"balance3" => $row['balance3'],
 			"balance4" => $row['balance4'],
+			"allow_sms" => $row['allow_sms'],
+			"allow_paypal" => $row['allow_paypal'],
 		);
 		
 	} else { die("The settings table is empty! Please reinstall the system!"); }
@@ -79,11 +81,13 @@ function _table($table) {
 
 function db_array($conn, $sql) {
   $query = query($conn, $sql);
-  if(num_rows($query) > 0) {
-    $array = array();
-    while($row = fetch_assoc($query)) {
-      $array[] = $row;
-    }
-    return $array;
+  if($query !== FALSE) {
+	if(num_rows($query) > 0) {
+		$array = array();
+		while($row = fetch_assoc($query)) {
+			$array[] = $row;
+		}
+		return $array;
+	} else { return ''; }
   } else { return ''; }
 }

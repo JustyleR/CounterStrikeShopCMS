@@ -35,6 +35,7 @@ function template_vars($conn) {
   $vars['SITE_PAGE'] = core_page();
   $vars['USER_BANNED'] = csbans_checkBan($conn);
   $vars['SITE_PAYPAL'] = paypal_enabled;
+  $vars['SITE_SMS'] = sms_enabled;
   
   if(isset($_SESSION['user_logged'])) {
 	$vars['user_info'] = user_info($conn, $_SESSION['user_logged']);

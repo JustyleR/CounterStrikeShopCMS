@@ -1,6 +1,7 @@
 {% extends "admin/body.html" %}
 {% block content %}
 <div class="col-md-10 content">
+
   <div class="panel panel-default">
     <div class="panel-heading">{{ translate('titles', 'ALL_EXISTING_SERVERS') }}</div>
     <div class="panel-body">
@@ -34,6 +35,7 @@
       {% endif %}
     </div>
   </div>
+  
   <div class="panel panel-default">
     <div class="panel-body">
       {% if servers.1 is not empty %}
@@ -61,8 +63,8 @@
       </table>
       {% endif %}
 
-      {% if servers.0 is empty %}
-      {{ translate('messages', 'NO_AMXBANS_SERVERS_TEXT') }}
+      {% if servers.1 is empty %}
+      {{ translate('messages', 'NO_SERVERS_TEXT') }}
       {% endif %}
     </div>
   </div>

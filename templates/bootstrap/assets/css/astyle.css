@@ -364,3 +364,7 @@ h1.page-header {
     padding: 15px;
     width: 100px;
 }
+
+.inline-padding {
+    margin:15px 15px 
+}

@@ -83,13 +83,15 @@ function csbans_createAdmin($conn, $servername) {
 function csbans_checkBan($conn) {
 	
 	$checkBan = query($conn, "SELECT player_ip FROM ". prefix ."bans WHERE player_ip='". $_SERVER['REMOTE_ADDR'] ."' AND expired='0'");
-	if(num_rows($checkBan) == 0) {
-		$ban = 0;
-	} else {
-		$ban = 1;
+	if($checkBan !== FALSE) {
+		if(num_rows($checkBan) == 0) {
+			$ban = 0;
+		} else {
+			$ban = 1;
+		}
+		
+		return $ban;
 	}
-	
-	return $ban;
 }
 
 function csbans_userBanned($conn) {

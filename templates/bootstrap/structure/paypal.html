@@ -12,7 +12,9 @@
 					<input type="hidden" name="cmd" value="_xclick" />
 					<input type="hidden" name="business" value="{{ paypal_email }}" />
 					<input type="hidden" name="item_name" value="User Balance" />
-					<input type="text" name="amount" value="2.00" />
+					<div class="form-group">
+						<input class="form-control" placeholder="{{ translate('others', 'BALANCE') }}" name="amount" value="2.00" type="text" autofocus required />
+					</div>
 					<input type="hidden" name="currency_code" value="USD" />
 					<input type="hidden" name="no_shipping" value="1">
 					<input type="hidden" name="notify_url" value="{{ SITE_URL }}paypal.php">
@@ -21,7 +23,9 @@
 
 					<input type="hidden" name="cancel_return" value="{{ SITE_URL }}" />
 					<input type="hidden" name="return" value="{{ SITE_URL }}" />
-					<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
+					<div class="form-group">
+						<input type="image"  src="https://www.paypal.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
+					</div>
 					<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 				</form>
 				</p>
