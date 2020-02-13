@@ -1,0 +1,11 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="container">
+	{{ translate('titles','TEXT_HOME_TITLE') }}
+	
+	{% autoescape false %}
+	{{ site_index }}
+	{% endautoescape %}
+	
+</div>
+{% endblock %}

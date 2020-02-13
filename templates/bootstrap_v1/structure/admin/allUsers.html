@@ -1,0 +1,35 @@
+{% extends "admin/body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('titles', 'ALL_EXISTING_USERS') }}</h1>
+    <hr />
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>{{ translate('profile', 'EMAIL') }}</th>
+            <th>{{ translate('profile', 'REGISTER_DATE') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users.1 %}
+          <tr>
+            <td><a href="{{ SITE_URL }}!admin/searchUser/{{ user.email }}">{{ user.email }}</a></td>
+            <td>{{ user.registerDate }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!--SHOW PAGES-->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="{{ SITE_URL }}!admin/allUsers/cPage/{{ users.0.prev }}">{{ translate('others', 'PAGINATION_PREVIOUS') }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="{{ SITE_URL }}!admin/allUsers/cPage/{{ users.0.next }}">{{ translate('others', 'PAGINATION_NEXT') }}</a>
+          </li>
+        </ul>
+      </nav>
+      <!--END SHOW PAGES-->
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('titles', 'BUY_FLAGS') }}</h1>
+	<hr />
+	{% if user_banned > 0 %}
+	<div class="alert alert-danger text-center" role="alert">
+		{TRANSLATE}amxbans,YOU_ARE_BANNED{/TRANSLATE}
+	</div>
+	{% endif %}
+	
+	{% if user_banned == 0 %}
+	{% if flags is not empty %}
+	<form action="" method="POST">
+		{% for flag in flags %}
+		<div class="custom-control custom-radio">
+			<input type="radio" class="custom-control-input" id="{{ flag.flag }}" name="flag" value="{{ flag.flag }}" />
+			<label class="custom-control-label" for="{{ flag.flag }}">
+				<small><strong>{{ flag.price }}$</strong></small>
+			</label>
+			<label class="custom-control-label" for="{{ flag.flag }}">{{ flag.desc }}</label>
+		</div>
+		{% endfor %}
+		<input type="submit" name="buy" class="btn btn-primary" value="{{ translate('buttons', 'BUY_FLAG') }}" />
+	</form>
+	<p>
+		{% if message is not empty%}
+		{{ message }}
+		{% endif %}
+	</p>
+	{% if flags == 'EMPTY' %}
+	<div class="alert alert-info text-center" role="alert">{{ translate('messages', 'NO_FLAGS_ADDED') }}</div>
+	{% endif %}
+	{% endif %}
+	
+	{% if flags is empty %}
+	<p>
+		<div class="alert alert-info text-center" role="alert">{{ translate('messages', 'NO_MORE_FLAGS_TO_BUY') }}</div>
+	</p>
+	{% endif %}
+	{% endif %}
+	
+</div>
+{% endblock %}

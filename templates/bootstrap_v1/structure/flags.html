@@ -1,0 +1,31 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('titles', 'CURRENT_FLAGS') }}</h1>
+	<hr />
+	{% if flags is not empty %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{ translate('others', 'FLAG') }}</th>
+				<th>{{ translate('others', 'FLAG_DESCRIPTION') }}</th>
+				<th>{{ translate('others', 'DATE_EXPIRE') }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for flag in flags %}
+			<tr>
+				<td>{{ flag.flag }}</td>
+				<td>{{ flag.desc }}</td>
+				<td>{{ flag.expire_date }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+	
+	{% if flags is empty %}
+	<div class="alert alert-danger text-center" role="alert">{{ translate('messages', 'NO_BOUGHT_FLAGS') }}</div>
+	{% endif %}
+</div>
+{% endblock %}

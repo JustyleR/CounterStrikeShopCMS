@@ -16,7 +16,7 @@ function confirmAction() {
 	
     <div class="panel-body">
       <form action="" method="POST">
-	  <a class="btn btn-success inline-padding" href="http://127.0.0.1/sms/!admin/logs/cPage/1/{{ user.email }}/id/desc">{{ translate('buttons', 'LOGS') }}</a>  
+	  <a class="btn btn-success inline-padding" href="{{ SITE_URL }}!admin/logs/cPage/1/{{ user.email }}/id/desc">{{ translate('buttons', 'LOGS') }}</a>  
         <div class="panel-body">
           <label for="email">{{ translate('profile', 'EMAIL') }}</label>
           <div class="input-group">

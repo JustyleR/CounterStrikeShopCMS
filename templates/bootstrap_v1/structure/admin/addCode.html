@@ -1,0 +1,26 @@
+{% extends "admin/body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('titles', 'CREATE_CODE') }}</h1>
+	<hr />
+		<form action="" method="POST">
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="text" size="4" class="form-control" name="code" placeholder="{{ translate('others', 'BALANCE') }}" />
+				</div>
+			</div><br />
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="submit" class="btn btn-primary" name="add" value="{{ translate('buttons', 'CREATE') }}" />
+				</div>
+			</div>
+		</form>
+		<p>
+			{% if message is not empty %}
+			<div class="alert alert-info" role="alert">{{ code }}</div>
+			<br />
+			<div class="alert alert-info" role="alert">{{ message }}</div>
+			{% endif %}
+		</p>
+	</div>
+{% endblock %}
