@@ -1,0 +1,14 @@
+{% extends "body.html" %}
+	{% block content %}
+	<div class="col-lg-9">
+		<div class="card card-outline-secondary my-4">
+            <div class="card-body">
+				<p>
+					{% autoescape false %}
+					{{ terms }}
+					{% endautoescape %}
+				</p>
+			</div>
+		</div>
+	</div>
+	{% endblock %}

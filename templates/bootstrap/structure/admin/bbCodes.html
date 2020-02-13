@@ -1,2 +1,7 @@
-[b]<strong>BOLD</strong>[b] , [i]<i>ITALIC</i>[/i], [small]<small>SMALL</small>[/small],
-[font=color]<font color="green">COLOR TEXT</font>[/font], [url=URL]<a href="">LINK</a>[/url]
+<script src="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/js/editor.js"></script>
+
+<button id="[b]%text%[/b]" onclick="doTag(this.id)">BOLD</button>
+<button id="[i]%text%[/i]" onclick="doTag(this.id)">ITALIC</button>
+<button id="[small]%text%[/small]" onclick="doTag(this.id)">SMALL</button>
+<button id="[color=]%text%[/color]" onclick="doTag(this.id)">COLOR</button>
+<button id="[url=]%text%[/url]" onclick="doTag(this.id)">LINK</button><br />

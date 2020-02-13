@@ -69,6 +69,10 @@ function get_site_settings() {
 			"balance4" => $row['balance4'],
 			"allow_sms" => $row['allow_sms'],
 			"allow_paypal" => $row['allow_paypal'],
+			"unban_price" => $row['unban_price'],
+			"paypal_type" => $row['paypal_type'],
+			"paypal_logs" => $row['paypal_logs'],
+			"paypal_email" => $row['paypal_email'],
 		);
 		
 	} else { die("The settings table is empty! Please reinstall the system!"); }

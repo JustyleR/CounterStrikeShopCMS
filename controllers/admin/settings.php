@@ -54,11 +54,16 @@ function settings_submit($conn) {
 		$b4			= core_POSTP($conn, $_POST['b600']);
 		$allow_sms	= core_POSTP($conn, $_POST['allow_sms']);
 		$allow_pp	= core_POSTP($conn, $_POST['allow_pp']);
+		$unban_price	= core_POSTP($conn, $_POST['unban_price']);
+		$paypal_email	= core_POSTP($conn, $_POST['paypal_email']);
+		$paypal_type	= core_POSTP($conn, $_POST['paypal_type']);
+		$paypal_logs	= core_POSTP($conn, $_POST['paypal_logs']);
 
 
 		query($conn, "UPDATE "._table('settings')." SET site_title='". $title ."', template='". $temp ."', language='". $lang ."', md5_enc='". $md5 ."', reloadadmins='". $radmins ."', servID1='". $id1 ."',
 		servID2='". $id2 ."', servID3='". $id3 ."', servID4='". $id4 ."',
-		balance1='". $b1 ."', balance2='". $b2 ."', balance3='". $b3 ."', balance4='". $b4 ."', allow_sms='". $allow_sms ."', allow_paypal='". $allow_pp ."'");
+		balance1='". $b1 ."', balance2='". $b2 ."', balance3='". $b3 ."', balance4='". $b4 ."', allow_sms='". $allow_sms ."', allow_paypal='". $allow_pp ."', unban_price='". $unban_price ."', paypal_email='". $paypal_email ."', 
+		paypal_type='". $paypal_type ."', paypal_logs='". $paypal_logs ."'");
 
 		$message = language($conn, 'messages', 'CHANGES_SAVED');
 
