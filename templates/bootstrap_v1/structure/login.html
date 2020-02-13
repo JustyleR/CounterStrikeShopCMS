@@ -1,0 +1,45 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center" style="padding-top: 100px;">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title text-center">{{ translate('titles', 'LOGIN') }}</h5>
+				<div class="card-text">
+					
+					<form action="" method="POST">
+						<fieldset>
+							<div class="form-group input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+								</div>
+								<input class="form-control" placeholder="{{ translate('others', 'EMAIL') }}" name="email" type="email" autofocus required />
+							</div>
+							<div class="form-group input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
+								</div>
+								<input class="form-control" placeholder="{{ translate('others', 'PASSWORD') }}" name="password" type="password" required />
+							</div>
+							
+							<div class="form-group">
+								<input type="submit" name="login" class="btn btn-lg btn-dark btn-block" value="{{ translate('buttons', 'LOGIN') }}" />
+							</div>
+						</fieldset>
+						<p>
+							{% if message is not empty%}
+							<div class="alert alert-info" role="alert">{{ message }}</div>
+							{% endif %}
+						</p>
+					</form>
+					{% if user_logged is empty %}
+					<a class="btn btn btn-success" href="{{ SITE_URL }}login" role="button">{{ translate('menu','LOGIN') }}</a>
+					<a class="btn btn btn-success" href="{{ SITE_URL }}register"" role="button">{{ translate('menu','MAKE_REGISTRATION') }}</a>
+					<a class="btn btn btn-danger" href="{{ SITE_URL }}lostPassword/" role="button">{{ translate('menu','LOST_PASSWORD') }}</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

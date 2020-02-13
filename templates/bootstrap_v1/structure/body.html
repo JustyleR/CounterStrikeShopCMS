@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		
+		<title>{{ SITE_TITLE }}</title>
+		
+		<!-- Bootstrap core CSS -->
+		<link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/bootstrap.min.css" />
+		
+		<!-- Custom styles for this template -->
+		<link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/shop-item.css" />
+		
+		<!-- Font Awesome CSS -->
+		<link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/font-awesome.min.css" />
+		
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/css/style.css" />
+		
+	</head>
+	
+	<body>
+		{% if user_logged is not empty %}
+		
+		<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ translate('others','CPANEL') }}</a>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item"><a class="nav-link" href="{{ SITE_URL }}logout">{{ translate('menu','LOGOUT') }}</a></li>
+			</ul>
+		</nav>
+		
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+					<div class="sidebar-sticky">
+						<ul class="nav flex-column">
+							<li class="nav-item"><a class="nav-link" href="{{ SITE_URL }}profile/{{ user_info.id }}">{{ user_info.email }} [ {{ user_info.balance }}$ ]</a></li>
+							<li class="nav-item"><a href="{{ SITE_URL }}" class="nav-link"><i class="fa fa-home fa-fw" aria-hidden="true"></i> {{ translate('menu','HOME') }}</a></li>
+							<li class="nav-item"><a href="{{ SITE_URL }}money" class="nav-link"><i class="fa fa-dollar fa-fw" aria-hidden="true"></i> {{ translate('menu','ADD_BALANCE') }}</a></li>
+							{% if SITE_PAYPAL == 1 %}
+							<li class="nav-item"><a href="{{ SITE_URL }}paypal" class="nav-link"><i class="fa fa-dollar fa-fw" aria-hidden="true"></i> {{ translate('menu','ADD_BALANCE_PAYPAL') }}</a></li>
+							{% endif %}
+							<li class="nav-item"><a href="{{ SITE_URL }}buyFlags/" class="nav-link"><i class="fa fa-money fa-fw" aria-hidden="true"></i> {{ translate('menu','BUY_FLAGS') }}</a></li>
+							<li class="nav-item"><a href="{{ SITE_URL }}flags/" class="nav-link"><i class="fa fa-cloud fa-fw" aria-hidden="true"></i> {{ translate('menu','CURRENT_FLAGS') }}</a></li>
+							<li class="nav-item"><a href="{{ SITE_URL }}logs/cPage/1" class="nav-link"><i class="fa fa-history fa-fw" aria-hidden="true"></i> {{ translate('menu','LOGS') }}</a></li>
+							<li class="nav-item"><a class="nav-link" href="{{ SITE_URL }}settings"><i class="fa fa-bars fa-fw" aria-hidden="true"></i>  {{ translate('menu','SETTINGS') }}</a></li>
+							{% if admin_logged is not empty %}
+							<li class="nav-item"><a href="{{ SITE_URL }}!admin/home" class="nav-link"><i class="fa fa-mail-forward fa-fw" aria-hidden="true"></i> {{ translate('menu','TO_ADMIN_PANEL') }}</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</nav>
+				
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+					{% if USER_BANNED == 1 %}
+					<div class="container">
+						<div class="alert alert-danger text-center" role="alert">
+							{{ translate('amxbans','YOU_ARE_BANNED') }} - <a href="{{ SITE_URL }}unban">{{ translate('amxbans','REMOVE_BAN_LINK') }}</a>
+						</div>
+					</div>
+					{% endif %}	
+				</main>
+			</div>
+		</div>
+		{% endif %}
+		<!-- /.container -->
+		{% block content %}{% endblock %}
+		<footer class="footer text-center">
+			<div class="container">
+				<span class="text-muted">Всички права запазени &copy; {{ SITE_TITLE }} Система: <a href="http://www.steamcommunity.com/id/JustyleRbAbY">JustyleR</a> Дизайн: <b>Rick</b></span>
+			</div>
+		</footer>
+		<!-- Bootstrap core JavaScript -->
+		<script src="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/js/jquery.min.js"></script>
+		<script src="{{ SITE_URL }}templates/{{ SITE_TEMPLATE }}/assets/js/bootstrap.bundle.min.js"></script>
+		
+	</body>
+	
+</html>

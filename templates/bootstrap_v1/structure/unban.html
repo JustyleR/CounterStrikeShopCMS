@@ -1,0 +1,15 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="col-lg-9">
+	<h1>{{ translate('amxbans', 'REMOVE_BAN_TITLE') }}</h1>
+	<hr />
+	<div class="alert alert-info" role="alert">{{ translate('amxbans', 'REMOVE_BAN_INFO') }}<</div>
+	
+		<form action="" method="POST">
+			<input type="submit" name="unban" value="{{ translate('amxbans', 'UNBAN_BUTTON') }}" />
+		</form>
+	{% if message is not empty %}
+	<div class="alert alert-info" role="alert">{{ message }}</div>
+	{% endif %}
+</div>
+{% endblock %}

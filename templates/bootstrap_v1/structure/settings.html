@@ -1,0 +1,58 @@
+{% extends "body.html" %}
+	{% block content %}
+	<div class="container">
+		<h1>{{ translate('titles', 'PROFILE_SETTNGS') }}</h1>
+		<hr />
+			{% if user_info.nickname is empty or user_info.nick_pass is empty%}
+			<div class="alert alert-warning" role="alert">{{ translate('messages', 'ADD_NICKNAME_AND_PASSWORD') }}</div>
+			{% endif %}
+				<form action="" method="POST">
+					<div class="row">
+						<div class="col">
+							<label>{{ translate('profile', 'CURRENT_PASSWORD') }}</label>
+							<input type="password" name="cpassword" class="form-control" placeholder="{{ translate('profile', 'CURRENT_PASSWORD') }}" maxlength="50" />
+						</div>
+						<div class="col">
+							<label for="exampleInputEmail1">{{ translate('profile', 'NEW_PASSWORD') }}</label>
+							<input type="text" name="npassword" class="form-control" placeholder="{{ translate('profile', 'NEW_PASSWORD') }}" maxlength="40" />
+						</div>
+					</div>
+
+						<br />
+
+					<div class="row">
+						<div class="col">
+							<label for="exampleInputEmail1">{{ translate('settings', 'NICKNAME') }}</label>
+							<input type="text" name="nickname" class="form-control" placeholder="{{ translate('settings', 'NICKNAME') }}"
+							value="{{ user_info.nickname }}" maxlength="40" required />
+						</div>
+						<div class="col">
+							<label for="exampleInputEmail1">{{ translate('settings', 'PASSWORD_INGAME') }}</label>
+							<input type="password" name="nick_password" class="form-control" placeholder="{{ translate('settings', 'PASSWORD_INGAME') }}"
+							maxlength="40" />
+						</div>
+					</div>
+
+						<br />
+
+					<div class="form-group">
+						<label for="exampleInputEmail1">{{ translate('settings', 'LANGUAGE') }}</label>
+						<select name="lang" class="form-control">
+							{% for lang in languages %}
+							<option{% if user_info.language == lang %} selected{% endif %} value="{{ lang }}">{{ lang }}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+						<br />
+
+					<div class="form-group">
+						<input type="submit" name="save" class="btn btn-primary" value="{{ translate('buttons', 'SAVE') }}" />
+					</div>
+
+							{% if message is not empty%}
+							<div class="alert alert-info" role="alert">{{ message }}</div>
+							{% endif %}
+				</form>
+			</div>
+	{% endblock %}

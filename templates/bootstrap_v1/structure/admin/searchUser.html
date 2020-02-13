@@ -1,0 +1,52 @@
+{% extends "admin/body.html" %}
+{% block content %}
+<script>
+	function showResult(str) {
+	if (str.length==0) {
+		document.getElementById("livesearch").innerHTML = "";
+		document.getElementById("livesearch").style.border = "0px";
+		return;
+	}
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+            if(this.responseText != '') {
+				var myArr = JSON.parse(this.responseText);
+				myFunction(myArr);
+			}
+		}
+	};
+	xmlhttp.open("GET", "{{ SITE_URL }}get.php?type=users&num=1&email=" + str, true);
+	xmlhttp.send();
+	function myFunction(arr) {
+		var out = "";
+		var i;
+		for(i = 0; i < arr.length; i++) {
+			if(i >= 15) { break; }
+			out += '<a href="'+ arr[i].email + '">' +
+			arr[i].email + '</a><br>';
+		}
+		document.getElementById("livesearch").innerHTML = out;
+		document.getElementById("livesearch").style.border = "1px solid #A5ACB2";
+	}
+}
+</script>
+<div class="container">
+	<h1>{{ translate('titles', 'SEARCH_USER') }}</h1>
+	<hr />
+	<form action="" method="POST">
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="text" class="form-control" name="email" onkeyup="showResult(this.value)"
+					placeholder="{{ translate('others', 'EMAIL') }}">
+					<div id="livesearch"></div>
+				</div>
+			</div><br />
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="submit" class="btn btn-primary" name="search" value="{{ translate('buttons', 'SEARCH') }}" />
+				</div>
+			</div>
+	</form>
+</div>
+{% endblock %}

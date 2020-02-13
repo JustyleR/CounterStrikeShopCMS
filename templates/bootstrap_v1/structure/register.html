@@ -1,0 +1,63 @@
+{% extends "body.html" %}
+{% block content %}
+<script>
+	function showName(str) {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.responseType = 'text';
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				if(xmlhttp.responseText != '') {
+					document.getElementById("eemail").classList.remove('is-valid');
+					document.getElementById("eemail").classList.add('is-invalid');
+					} else {
+					document.getElementById("eemail").classList.remove('is-invalid');
+					document.getElementById("eemail").classList.add('is-valid');
+				}
+			}
+		};
+		xmlhttp.open("GET", "get.php?type=user&email=" + str, true);
+		xmlhttp.send();
+	}
+</script>
+
+<div class="container">
+	<div class="row justify-content-center" style="padding-top: 100px;">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title text-center">{{ translate('titles', 'REGISTRATION') }}</h5>
+				<div class="card-text">
+					<form action="" method="POST">
+						<fieldset>
+							<div class="form-group">
+								<input id="eemail" class="form-control" placeholder="{{ translate('others', 'EMAIL') }}" name="email"
+								type="email" onkeyup="showName(this.value)" autofocus required>
+								<div id="txtHint"></div>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="{{ translate('others', 'PASSWORD') }}" name="password" type="password" required>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="{{ translate('profile', 'CONFIRM_PASSWORD') }}" name="cpassword" type="password" required>
+							</div>
+							
+							<div class="form-group">
+								<input type="submit" name="register" class="btn btn-outline btn-success btn-block" value="{{ translate('buttons', 'REGISTER') }}" />
+							</div>
+						</fieldset>
+						<p>
+							{% if message is not empty%}
+							<div class="alert alert-info" role="alert">{{ message }}</div>
+							{% endif %}
+						</p>
+					</form>
+					{% if user_logged is empty %}
+					<a class="btn btn btn-success" href="{{ SITE_URL }}login" role="button">{{ translate('menu','LOGIN') }}</a>
+					<a class="btn btn btn-danger" href="{{ SITE_URL }}lostPassword/" role="button">{{ translate('menu','LOST_PASSWORD') }}</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

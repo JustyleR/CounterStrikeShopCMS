@@ -1,0 +1,39 @@
+{% extends "body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('titles', 'LOGS') }}</h1>
+	<hr />
+	{% if logs is not empty %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{ translate('logs', 'DATE_CREATED') }}</th>
+				<th>{{ translate('logs', 'LOG') }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for log in logs.1 %}
+			<tr>
+				<td>{{ log.date }}</td>
+				<td>{{ log.log }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<nav aria-label="Page navigation example">
+		<ul class="pagination">
+			<li class="page-item">
+				<a class="page-link" href="{{ SITE_URL }}/logs/cPage/{{ logs.0.prev }}">{{ translate('others', 'PAGINATION_PREVIOUS') }}</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="{{ SITE_URL }}/logs/cPage/{{ logs.0.next }}">{{ translate('others', 'PAGINATION_NEXT') }}</a>
+			</li>
+		</ul>
+	</nav>
+	{% endif %}
+	
+	{% if logs is empty %}
+	<div class="alert alert-danger text-center" role="alert">{{ translate('messages', 'NO_LOGS') }}</div>
+	{% endif %}
+</div>
+{% endblock %}

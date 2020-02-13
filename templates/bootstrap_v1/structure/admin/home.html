@@ -1,0 +1,15 @@
+{% extends "admin/body.html" %}
+{% block content %}
+<div class="container">
+	<h1>{{ translate('admin', 'DASHBOARD') }}</h1>
+	<hr />
+	<h4>{{ translate('admin', 'USERS') }}
+	<span class="badge badge-secondary">{{ count_users }}</span></h4>
+	<h4>{{ translate('admin', 'SERVERS') }}
+	<span class="badge badge-secondary">{{ count_servers }}</span></h4>
+	<h4>{{ translate('admin', 'FLAGS') }}
+	<span class="badge badge-secondary">{{ count_flags }}</span></h4>
+	<h4>{{ translate('admin', 'CODES') }}
+	<span class="badge badge-secondary">{{ count_codes }}</span></h4>
+</div>
+{% endblock %}
