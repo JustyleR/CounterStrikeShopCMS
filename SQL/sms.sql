@@ -46,7 +46,7 @@ CREATE TABLE `servers` (
   `shortname` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `sms_settings` (
+CREATE TABLE `settings` (
   `template` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `site_title` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
@@ -71,18 +71,19 @@ CREATE TABLE `sms_settings` (
 INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES
 ('bootstrap', 'en', 'Testing', 0, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00);
 
-CREATE TABLE `sms_codes` (
+CREATE TABLE `codes` (
   `sms_code_id` int(11) NOT NULL,
   `code` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `balance` float(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `sms_text` (
+CREATE TABLE `text` (
   `text` text COLLATE utf8_unicode_ci NOT NULL,
-  `home` text COLLATE utf8_unicode_ci NOT NULL
+  `home` text COLLATE utf8_unicode_ci NOT NULL,
+  `terms` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `sms_settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`, `allow_sms`, `allow_paypal`, `unban_price`, `paypal_type`, `paypal_logs`, `paypal_email`) VALUES
+INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`, `allow_sms`, `allow_paypal`, `unban_price`, `paypal_type`, `paypal_logs`, `paypal_email`) VALUES
 ('bootstrap', 'en', 'Counter-Strike SMS CMS by JustyleR', 1, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00, 1, 0, 5.00, 0, 0, '');
 
 CREATE TABLE `users` (
