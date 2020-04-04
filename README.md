@@ -54,8 +54,11 @@ Want to help with the system? The easiest way is to add me on discord and discus
 The file for the cronjobs is: cron/deleteFlags.php. Set the time like everyday at 12pm. Because the date used for the flags doesn't have hours, only days. So it's pointless to check every minutes if the flag is expired.
 
 Frequently Asked Questions:
-[C] Is the system going to run on a free host? [O] If AMXBans is working, then the system will too.
-[Q] I have a problem with AMXBans, is there any alternative? [O] Yes, you can use CSBans.
-[Q] I found a problem with the system, what should I do? [O] Contact me here, Discord or Steam.
+
+[Q] Is the system going to run on a free host? [A] If AMXBans is working, then the system will too.
+
+[Q] I have a problem with AMXBans, is there any alternative? [A] Yes, you can use CSBans.
+
+[Q] I found a problem with the system, what should I do? [A] Contact me here, Discord or Steam.
 
 The system is currently on a stable 1.0 version. There may be a change for a little bugs but I'll try to fix them ASAP
