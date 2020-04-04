@@ -11,7 +11,7 @@ function main_info() {
 function main($conn) {
 	// Check if we are logged in
     core_check_logged('user', 'logged');
-
+	
 	// Pages
     $page = core_page();
 
@@ -141,6 +141,7 @@ function submit_flags($conn) {
 							$rcon->Connect();
 							$rcon->Command('amx_reloadadmins');
 							$rcon->Disconnect();
+							echo 'test';
 						}
 					}
 					$message = language($conn, 'messages', 'SUCCESSFULLY_BOUGHT_FLAG');

@@ -46,7 +46,7 @@ CREATE TABLE `servers` (
   `shortname` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `settings` (
+CREATE TABLE `sms_settings` (
   `template` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `site_title` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
@@ -60,8 +60,12 @@ CREATE TABLE `settings` (
   `balance2` float(11,2) NOT NULL,
   `balance3` float(11,2) NOT NULL,
   `balance4` float(11,2) NOT NULL,
-   `allow_sms` int(11) NOT NULL DEFAULT 1,
-  `allow_paypal` int(11) NOT NULL DEFAULT 0
+  `allow_sms` int(11) NOT NULL DEFAULT 1,
+  `allow_paypal` int(11) NOT NULL DEFAULT 0,
+  `unban_price` float(11,2) NOT NULL,
+  `paypal_type` int(11) NOT NULL,
+  `paypal_logs` int(11) NOT NULL,
+  `paypal_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES
@@ -78,8 +82,8 @@ CREATE TABLE `sms_text` (
   `home` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `sms_text` (`text`, `home`) VALUES
-('[b]Hello, world![/b]<br /><br />This is the BALANCE page!<br />You can edit this page from the [b]Admin panel[/b].<br /><br />Thanks for using the system and have fun!<br /><br />[small]System by [url=https://github.com/JustyleR]JustyleR[/url][/small]', '[b]Hello, world![/b]<br /><br />This is the HOME page!<br />You can edit this page from the [b]Admin panel[/b].<br /><br />Thanks for using the system and have fun!<br /><br />[small]System by [url=https://github.com/JustyleR]JustyleR[/url][/small]');
+INSERT INTO `sms_settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`, `allow_sms`, `allow_paypal`, `unban_price`, `paypal_type`, `paypal_logs`, `paypal_email`) VALUES
+('bootstrap', 'en', 'Counter-Strike SMS CMS by JustyleR', 1, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00, 1, 0, 5.00, 0, 0, '');
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,

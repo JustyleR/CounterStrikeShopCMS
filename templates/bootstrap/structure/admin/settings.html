@@ -61,14 +61,14 @@
         <div class="input-group">
           <div class="form-group">
             <label>{{ translate('admin', 'SITE_SETTINGS_RELOADADMINS') }}</label>
-            <select name="reloadadmins" class="form-control">
+            <select name="radmin" class="form-control">
               {% set radmins = {
                 0: translate('others', 'NO_'),
                 1: translate('others', 'YES_')
               } %}
 
-              {% for key, radmin in radmins %}
-              <option {% if settings.reloadadmins == key %}selected{%endif%} value="{{ key }}">{{ radmin }}</option>
+              {% for rakey, radmin in radmins %}
+              <option {% if settings.reloadadmins == rakey %}selected{%endif%} value="{{ rakey }}">{{ radmin }}</option>
               {% endfor %}
             </select>
           </div>

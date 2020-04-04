@@ -43,7 +43,7 @@ function settings_submit($conn) {
         $lang		= core_POSTP($conn, $_POST['lang']);
 		$temp		= core_POSTP($conn, $_POST['template']);
 		$md5		= core_POSTP($conn, $_POST['md5']);
-		$radmins	= core_POSTP($conn, $_POST['reloadadmins']);
+		$radmins	= core_POSTP($conn, $_POST['radmin']);
 		$id1		= core_POSTP($conn, $_POST['id120']);
 		$id2		= core_POSTP($conn, $_POST['id240']);
 		$id3		= core_POSTP($conn, $_POST['id480']);

@@ -9,7 +9,6 @@
 define('file_access', TRUE);
 
 // Core files
-require('libs/Database.php');
 require('config/config.php');
 require('libs/Bootstrap.php');
 require('libs/Users.php');
