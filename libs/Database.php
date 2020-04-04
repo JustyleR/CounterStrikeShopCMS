@@ -9,14 +9,16 @@ if (!defined('file_access')) {
 }
 
 // Function to connect to the database
-function connect() {
-    $conn = mysqli_connect(db_host, db_user, db_pass, db_name);
-    if(mysqli_error($conn)) {
-        template_error('Cant connect to MySQL!', 1);
-    }
-    mysqli_set_charset($conn, 'utf8');
-    
-    return $conn;
+if (!function_exists('connect')) { 
+	function connect() {
+		$conn = mysqli_connect(db_host, db_user, db_pass, db_name);
+		if(mysqli_error($conn)) {
+			template_error('Cant connect to MySQL!', 1);
+		}
+		mysqli_set_charset($conn, 'utf8');
+
+		return $conn;
+	}
 }
 
 // Query function
@@ -69,6 +71,10 @@ function get_site_settings() {
 			"balance4" => $row['balance4'],
 			"allow_sms" => $row['allow_sms'],
 			"allow_paypal" => $row['allow_paypal'],
+			"unban_price" => $row['unban_price'],
+			"paypal_type" => $row['paypal_type'],
+			"paypal_logs" => $row['paypal_logs'],
+			"paypal_email" => $row['paypal_email'],
 		);
 		
 	} else { die("The settings table is empty! Please reinstall the system!"); }

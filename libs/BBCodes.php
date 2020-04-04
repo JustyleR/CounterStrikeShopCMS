@@ -8,7 +8,7 @@ function bbcode_preview($text) {
 		'/\[b\](.+?)\[\/b\]/is',
 		'/\[i\](.+?)\[\/i\]/is',
 		'/\[small\](.+?)\[\/small\]/is',
-		'/\[font\=(.+?)\](.+?)\[\/font\]/is',
+		'/\[color\=(.+?)\](.+?)\[\/color\]/is',
 		'/\[url\=(.+?)\](.+?)\[\/url\]/is',
 		'/\\\\n/',
 		'/\\\\r/'

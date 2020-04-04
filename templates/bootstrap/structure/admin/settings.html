@@ -61,14 +61,14 @@
         <div class="input-group">
           <div class="form-group">
             <label>{{ translate('admin', 'SITE_SETTINGS_RELOADADMINS') }}</label>
-            <select name="reloadadmins" class="form-control">
+            <select name="radmin" class="form-control">
               {% set radmins = {
                 0: translate('others', 'NO_'),
                 1: translate('others', 'YES_')
               } %}
 
-              {% for key, radmin in radmins %}
-              <option {% if settings.reloadadmins == key %}selected{%endif%} value="{{ key }}">{{ radmin }}</option>
+              {% for rakey, radmin in radmins %}
+              <option {% if settings.reloadadmins == rakey %}selected{%endif%} value="{{ rakey }}">{{ radmin }}</option>
               {% endfor %}
             </select>
           </div>
@@ -152,6 +152,49 @@
               {% endfor %}
             </select>
           </div>
+        </div>
+      </div>
+	  
+	  <div class="panel-body">
+        <div class="input-group">
+          <label>{{ translate('admin', 'SITE_SETTINGS_UNBAN_PRICE') }}</label>
+          <input type="text" name="unban_price" class="form-control" value="{{ settings.unban_price }}" placeholder="{{ translate('admin', 'SITE_SETTINGS_UNBAN_PRICE') }}">
+        </div>
+      </div>
+	  
+	  <div class="panel-body">
+        <div class="input-group">
+          <label>{{ translate('admin', 'SITE_SETTINGS_PAYPAL_EMAIL') }}</label>
+          <input type="text" name="paypal_email" class="form-control" value="{{ settings.paypal_email }}" placeholder="{{ translate('admin', 'SITE_SETTINGS_PAYPAL_EMAIL') }}">
+        </div>
+      </div>
+	  
+	  <div class="form-row">
+		<div class="form-group col-md-6">
+			<label>{{ translate('admin', 'SITE_SETTINGS_PAYPAL_LOGS') }}</label>
+			<select name="reloadadmins" class="form-control">
+				{% set logs = {
+				0: translate('others', 'NO_'),
+				1: translate('others', 'YES_')
+				} %}
+
+				{% for key, log in logs %}
+				<option {% if settings.paypal_logs == key %}selected{%endif%} value="{{ key }}">{{ log }}</option>
+				{% endfor %}
+			</select>
+		</div>
+        <div class="form-group col-md-6">
+          <label>{{ translate('admin', 'SITE_SETTINGS_PAYPAL_TYPE') }}</label>
+			<select name="reloadadmins" class="form-control">
+				{% set ppTypes = {
+				0: translate('paypal', 'TYPE_DEMO'),
+				1: translate('paypal', 'TYPE_ONLINE')
+				} %}
+
+				{% for key, ppType in ppTypes %}
+				<option {% if settings.paypal_type == key %}selected{%endif%} value="{{ key }}">{{ ppType }}</option>
+				{% endfor %}
+			</select>
         </div>
       </div>
 

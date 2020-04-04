@@ -37,7 +37,7 @@ function user_info($conn, $user, $type = 'email') {
 function checkUser($conn) {
     if(isset($_SESSION['user_logged'])) {
 		$user = user_info($conn, $_SESSION['user_logged']);
-		
+		if($user == FALSE) { unset($_SESSION['user_logged']); header('Location: ' . url . 'logout'); }
         $checkUser = query($conn, "SELECT user_id FROM "._table('users')." WHERE email='" . $_SESSION['user_logged'] . "'");
         if (num_rows($checkUser) > 0) {
 
@@ -52,7 +52,7 @@ function checkUser($conn) {
                     $_SESSION['admin_logged'] = TRUE;
                 }
             }
-        } else { core_header('logout'); }
+        } else { header('Location: ' . url . 'logout'); }
 		
 		if(core_page()[0] != 'settings' && $user['type'] != 2) {
 			if($user['nickname'] == NULL || $user['nick_pass'] == NULL) {

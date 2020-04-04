@@ -11,7 +11,7 @@ function main_info() {
 function main($conn) {
 	// Check if we are logged in
     core_check_logged('user', 'logged');
-
+	
 	// Pages
     $page = core_page();
 
@@ -64,11 +64,11 @@ function get_flags($conn) {
 		while($row2 = fetch_assoc($getFlags)) {
 
 			if (strpos($row['access'], $row2['flag']) === FALSE) {
-        $arr = array();
-        $arr['flag'] = $row2['flag'];
-        $arr['price'] = $row2['price'];
-        $arr['desc'] = $row2['flagDesc'];
-        $flags[] = $arr;
+				$arr = array();
+				$arr['flag'] = $row2['flag'];
+				$arr['price'] = $row2['price'];
+				$arr['desc'] = $row2['flagDesc'];
+				$flags[] = $arr;
 			}
 		}
 
@@ -110,7 +110,7 @@ function submit_flags($conn) {
 					$adminID = csbans_getadminID($conn, $server);
 				}
 
-        $getUserFlags = query($conn, "SELECT access FROM " . prefix . "amxadmins WHERE id='$adminID'");
+				$getUserFlags = query($conn, "SELECT access FROM " . prefix . "amxadmins WHERE id='$adminID'");
 
 				$row2 = fetch_assoc($getUserFlags);
 
@@ -122,8 +122,8 @@ function submit_flags($conn) {
 				}
 
                 if ($hasFlag == 0) {
-                    $dateBought = core_date();
-                    $dateExpire = core_date('all', '30 days');
+                    $dateBought = core_date('date');
+                    $dateExpire = core_date('date', '30 days');
                     $money      = $user['balance'] - $row['price'];
                     $flags      = $row2['access'] . $flag;
 
@@ -141,6 +141,7 @@ function submit_flags($conn) {
 							$rcon->Connect();
 							$rcon->Command('amx_reloadadmins');
 							$rcon->Disconnect();
+							echo 'test';
 						}
 					}
 					$message = language($conn, 'messages', 'SUCCESSFULLY_BOUGHT_FLAG');

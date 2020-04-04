@@ -19,6 +19,18 @@
 		xmlhttp.send();
 	}
 	</script>
+	
+	<script>
+	function checkForm(form)
+	{
+	if(!form.terms.checked) {
+	  alert("{{ translate('messages', 'PLEASE_ACCEPT_TERMS') }}");
+	  form.terms.focus();
+	  return false;
+	}
+	return true;
+	}
+	</script>
 
 	<div class="col-lg-9">
 		<div class="card card-outline-secondary my-4">
@@ -31,7 +43,7 @@
 						<div class="col-md-4 col-md-offset-5">
 							<div class="login-panel panel panel-default">
 								<div class="panel-body">
-									<form action="" method="POST">
+									<form action="" method="POST" onsubmit="return checkForm(this);">
 										<fieldset>
 											<div class="form-group">
 												<input id="eemail" class="form-control" placeholder="{{ translate('others', 'EMAIL') }}" name="email"
@@ -44,7 +56,9 @@
 											<div class="form-group">
 												<input class="form-control" placeholder="{{ translate('profile', 'CONFIRM_PASSWORD') }}" name="cpassword" type="password" required>
 											</div>
-
+											<div class="form-group">
+												<input type="checkbox" name="terms" required>  <small>{{ translate('messages', 'PLEASE_READ_THE_TERMS') }} <a href="{{ SITE_URL }}terms" target="_blank">{{ translate('others', 'READ_THE_TERMS_TEXT') }}</a></small>
+											</div>
 											<div class="form-group">
 												<input type="submit" name="register" class="btn btn-outline btn-success btn-block" value="{{ translate('buttons', 'REGISTER') }}" />
 											</div>
