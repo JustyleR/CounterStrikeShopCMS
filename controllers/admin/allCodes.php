@@ -16,7 +16,7 @@ function main($conn) {
     // Load the default template variables
     $vars = template_vars($conn);
 
-    $getCodes = pagination($conn, "SELECT * FROM " . _table('sms_codes') . "", 10);
+    $getCodes = pagination($conn, "SELECT * FROM " . _table('codes') . "", 10);
 
     $vars['codes'] = $getCodes;
 

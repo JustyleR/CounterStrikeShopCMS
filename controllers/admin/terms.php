@@ -21,7 +21,7 @@ function main($conn) {
 }
 
 function getTerms($conn) {
-    $query = query($conn, "SELECT terms FROM " . _table('sms_text') . "");
+    $query = query($conn, "SELECT terms FROM " . _table('text') . "");
     if (num_rows($query) > 0) {
         $text = bbcode_brFix(fetch_assoc($query)['terms']);
     } else {
@@ -37,14 +37,14 @@ function terms($conn) {
 
 		$text = bbcode_save(core_POSTP($conn, $_POST['terms']));
 
-		$get = query($conn, "SELECT terms FROM "._table('sms_text')."");
+		$get = query($conn, "SELECT terms FROM "._table('text')."");
 		if(num_rows($get) > 0) {
 
-			query($conn, "UPDATE "._table('sms_text')." SET terms='". $text ."'");
+			query($conn, "UPDATE "._table('text')." SET terms='". $text ."'");
 
 		} else {
 
-			query($conn, "INSERT INTO "._table('sms_text')." (terms) VALUES ('". $text ."')");
+			query($conn, "INSERT INTO "._table('text')." (terms) VALUES ('". $text ."')");
 
 		}
 

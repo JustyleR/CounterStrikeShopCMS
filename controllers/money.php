@@ -25,7 +25,7 @@ function main($conn) {
 
 function money_text($conn) {
 
-	$query = query($conn, "SELECT * FROM "._table('sms_text')."");
+	$query = query($conn, "SELECT * FROM "._table('text')."");
 	if(num_rows($query) > 0) {
 
 		$text = bbcode_preview(fetch_assoc($query)['text']);
@@ -55,7 +55,7 @@ function money($conn) {
 		}
 		
 		if($pay == 0) {
-			$query = query($conn, "SELECT * FROM "._table('sms_codes')." WHERE code='". $code ."'");
+			$query = query($conn, "SELECT * FROM "._table('codes')." WHERE code='". $code ."'");
 			if(num_rows($query) > 0) {
 				$pay = fetch_assoc($query)['balance'];
 				$db = 1;
@@ -70,7 +70,7 @@ function money($conn) {
             $balance = $user['balance'] + $pay;
 
 			if(isset($db)) {
-				query($conn, "DELETE FROM "._table('sms_codes')." WHERE code='". $code ."'");
+				query($conn, "DELETE FROM "._table('codes')." WHERE code='". $code ."'");
 			}
             query($conn, "UPDATE "._table('users')." SET balance='". $balance ."' WHERE email='". $user['email'] ."'");
 			addLog($conn, $user['email'], language($conn, 'logs', 'SUCCESSFULLY_ADDED_BALANCE') .' - '. $pay);

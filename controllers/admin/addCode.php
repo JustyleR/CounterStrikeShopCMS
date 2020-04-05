@@ -43,7 +43,7 @@ function addCode($conn) {
         if (empty($balance)) {
             $message = language($conn, 'messages', 'FILL_THE_FIELDS');
         } else {
-            query($conn, "INSERT INTO " . _table('sms_codes') . " (code, balance) VALUES ('$code','$balance')");
+            query($conn, "INSERT INTO " . _table('codes') . " (code, balance) VALUES ('$code','$balance')");
 
             $_SESSION['code'] = $code;
 

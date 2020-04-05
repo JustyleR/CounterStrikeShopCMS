@@ -21,7 +21,7 @@ function main($conn) {
   // Load the default template variables
   $vars = template_vars($conn);
 
-  $query	= query($conn, "SELECT * FROM "._table('sms_text')."");
+  $query	= query($conn, "SELECT * FROM "._table('text')."");
 	$text	= bbcode_preview(fetch_assoc($query)['home']);
   
   $vars['site_index'] = $text;

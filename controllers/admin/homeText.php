@@ -23,7 +23,7 @@ function main($conn) {
 }
 
 function homeGetText($conn) {
-    $query = query($conn, "SELECT home FROM " . _table('sms_text') . "");
+    $query = query($conn, "SELECT home FROM " . _table('text') . "");
     if (num_rows($query) > 0) {
         $text = bbcode_brFix(fetch_assoc($query)['home']);
     } else {
@@ -38,11 +38,11 @@ function homeText($conn) {
     if (isset($_POST['edit'])) {
         $text = bbcode_save(core_POSTP($conn, $_POST['homeText']));
 
-        $get = query($conn, "SELECT home FROM " . _table('sms_text') . "");
+        $get = query($conn, "SELECT home FROM " . _table('text') . "");
         if (num_rows($get) > 0) {
-            query($conn, "UPDATE " . _table('sms_text') . " SET home='" . $text . "'");
+            query($conn, "UPDATE " . _table('text') . " SET home='" . $text . "'");
         } else {
-            query($conn, "INSERT INTO " . _table('sms_text') . " (home) VALUES ('" . $text . "')");
+            query($conn, "INSERT INTO " . _table('text') . " (home) VALUES ('" . $text . "')");
         }
 
         core_message_set('text', language($conn, 'messages', 'CHANGES_SAVED'));

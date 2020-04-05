@@ -23,7 +23,13 @@ if (!function_exists('connect')) {
 
 // Query function
 function query($conn, $query) {
-    return $conn = mysqli_query($conn, $query);
+
+	if(!mysqli_query($conn, $query)) {
+		printf("Errormessage: %s\n", mysqli_error($conn));
+	} else {
+		return $conn = mysqli_query($conn, $query);
+	}
+	
 }
 
 // Get the number of rows

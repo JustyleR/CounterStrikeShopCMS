@@ -24,7 +24,7 @@ function main($conn) {
 
 function getTerms($conn) {
 
-	$query = query($conn, "SELECT terms FROM "._table('sms_text')."");
+	$query = query($conn, "SELECT terms FROM "._table('text')."");
 	if(num_rows($query) > 0) {
 
 		$text = bbcode_preview(fetch_assoc($query)['terms']);
