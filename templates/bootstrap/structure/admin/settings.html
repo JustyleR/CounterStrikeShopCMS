@@ -172,7 +172,7 @@
 	  <div class="form-row">
 		<div class="form-group col-md-6">
 			<label>{{ translate('admin', 'SITE_SETTINGS_PAYPAL_LOGS') }}</label>
-			<select name="reloadadmins" class="form-control">
+			<select name="paypal_logs" class="form-control">
 				{% set logs = {
 				0: translate('others', 'NO_'),
 				1: translate('others', 'YES_')
@@ -185,7 +185,7 @@
 		</div>
         <div class="form-group col-md-6">
           <label>{{ translate('admin', 'SITE_SETTINGS_PAYPAL_TYPE') }}</label>
-			<select name="reloadadmins" class="form-control">
+			<select name="paypal_type" class="form-control">
 				{% set ppTypes = {
 				0: translate('paypal', 'TYPE_DEMO'),
 				1: translate('paypal', 'TYPE_ONLINE')
