@@ -20,7 +20,7 @@ function main($conn) {
     $flags		= query($conn, "SELECT flag_id FROM " . _table('flags') . "");
     $flags		= num_rows($flags);
 
-    $codes		= query($conn, "SELECT sms_code_id FROM " . _table('sms_codes') . "");
+    $codes		= query($conn, "SELECT sms_code_id FROM " . _table('codes') . "");
     $codes		= num_rows($codes);
 
     // Load the template
