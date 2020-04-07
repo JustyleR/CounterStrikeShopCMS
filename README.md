@@ -61,4 +61,6 @@ Frequently Asked Questions:
 
 [Q] I found a problem with the system, what should I do? [A] Contact me here, Discord or Steam.
 
+[Q] I installed the system and now when I go to the home page it shows nothing.. [A] Check if you have mod_rewrite enabled and if the .htaccess file is in the core directory of the system.
+
 The system is currently on a stable 1.0 version. There may be a change for a little bugs but I'll try to fix them ASAP
