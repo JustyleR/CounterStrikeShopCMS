@@ -68,8 +68,9 @@ CREATE TABLE `settings` (
   `paypal_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`) VALUES
-('bootstrap', 'en', 'Testing', 0, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00);
+INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`, `allow_sms`, `allow_paypal`, `unban_price`, `paypal_type`, `paypal_logs`, `paypal_email`) VALUES
+('bootstrap', 'en', 'Counter-Strike SMS CMS by JustyleR', 1, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00, 1, 0, 5.00, 0, 0, '');
+
 
 CREATE TABLE `codes` (
   `sms_code_id` int(11) NOT NULL,
@@ -83,8 +84,8 @@ CREATE TABLE `text` (
   `terms` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `settings` (`template`, `language`, `site_title`, `md5_enc`, `reloadadmins`, `servID1`, `servID2`, `servID3`, `servID4`, `balance1`, `balance2`, `balance3`, `balance4`, `allow_sms`, `allow_paypal`, `unban_price`, `paypal_type`, `paypal_logs`, `paypal_email`) VALUES
-('bootstrap', 'en', 'Counter-Strike SMS CMS by JustyleR', 1, 1, 29, 0, 0, 0, 1.20, 0.00, 0.00, 0.00, 1, 0, 5.00, 0, 0, '');
+INSERT INTO `sms_text` (`text`, `home`, `terms`) VALUES
+('Here you can add a balance if you have a code.', 'Hello and Welcome to the [b]Home[/b] page!<br /><br />If you have any problems or questions keep free to add me on:<br />[url=http://discord.gg/KsTDeev]Discord[/url]<br />[url=https://steamcommunity.com/id/JustyleRbAbY/]Steam[/url]<br />Or you can make an issue in the [url=https://github.com/JustyleR/smsCMS]Github[/url] page.<br /><br />Have Fun using the system!', 'Write your terms here so people can agree to them before registering.');
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
