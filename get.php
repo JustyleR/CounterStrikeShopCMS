@@ -1,7 +1,6 @@
 <?php
 define('file_access', TRUE);
 
-require('libs/Database.php');
 require('config/config.php');
 require('libs/Core.php');
 require('libs/Language.php');

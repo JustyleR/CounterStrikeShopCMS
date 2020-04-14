@@ -19,7 +19,7 @@
             <label>{{ translate('admin', 'SITE_SETTINGS_LANGUAGE') }}</label>
             <select name="lang" class="form-control">
               {% for lang in languages %}
-              <option {% if settings.language==lang %}selected{%endif%} value="{{ lang }}">{{ lang }}</option>
+              <option {% if settings.language==lang %} selected{%endif%} value="{{ lang }}">{{ lang }}</option>
               {% endfor %}
             </select>
           </div>
@@ -32,7 +32,7 @@
             <label>{{ translate('admin', 'SITE_SETTINGS_TEMPLATE') }}</label>
             <select name="template" class="form-control">
               {% for template in templates %}
-              <option {% if settings.template==template %}selected{%endif%} value="{{ template }}">{{ template }}</option>
+              <option {% if settings.template==template %} selected{%endif%} value="{{ template }}">{{ template }}</option>
               {% endfor %}
             </select>
           </div>
