@@ -168,8 +168,14 @@ function editUser($conn) {
         core_header('!admin/searchUser/' . $email);
     } else {
         if (isset($_POST['delete'])) {
-            query($conn, "DELETE FROM " . _table('users') . " WHERE email='" . core_page()[2] . "'");
-            core_header('!admin/allUsers/cPage/1');
+			$userEmail = core_page()[2];
+			$getUser = user_info($conn, $userEmail);
+			if($getUser['type']  <= 1) {
+				query($conn, "DELETE FROM " . _table('users') . " WHERE email='" . core_page()[2] . "'");
+				core_header('!admin/allUsers/cPage/1');
+			} else {
+				// Print message which says u cannot delete another admin account
+			}
         }
     }
 

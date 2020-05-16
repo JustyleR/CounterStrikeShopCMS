@@ -10,7 +10,6 @@ if (!defined('file_access')) {
     header('Location: ' . url . ' home');
 }
 
-require('../libs/Database.php');
 require('../config/config.php');
 require('../libs/Core.php');
 require('../libs/CSbans.php');

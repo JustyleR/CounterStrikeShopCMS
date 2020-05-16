@@ -230,7 +230,7 @@ date_default_timezone_set('Europe/Sofia');
 						
 						$config .= '
 // Include the Database library and get the site settings from the table
-require(\'libs/Database.php\');
+require __DIR__ .  \'/../libs/Database.php\';
 $settings = get_site_settings();
 
 ';
