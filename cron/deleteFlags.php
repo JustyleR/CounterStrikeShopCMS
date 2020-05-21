@@ -12,7 +12,7 @@ if (!defined('file_access')) {
 
 require('../config/config.php');
 require('../libs/Core.php');
-require('../libs/CSbans.php');
+require('../libs/CSBans.php');
 
 $conn = connect();
 
