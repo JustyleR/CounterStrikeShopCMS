@@ -20,9 +20,12 @@ function main($conn) {
   $template = template($conn, 'home');
   // Load the default template variables
   $vars = template_vars($conn);
+  $text = '';
 
-  $query	= query($conn, "SELECT * FROM "._table('text')."");
-	$text	= bbcode_preview(fetch_assoc($query)['home']);
+  $query	= query($conn, "SELECT home FROM "._table('text')."");
+	if(num_rows($query) > 0) {
+		$text	= bbcode_preview($query['home']);
+	}
   
   $vars['site_index'] = $text;
 
