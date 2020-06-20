@@ -100,7 +100,7 @@ function lostPassword($conn) {
 
 function lostPasswordChange($conn) {
 	$message = '';
-	$key = core_page()[1];
+	$key = core_POSTP($conn, core_page()[1]);
 	$query = query($conn, "SELECT * FROM "._table('password_keys')." WHERE password_key='". $key ."'");
 	if(num_rows($query) > 0) {
 		if(isset($_POST['changePassword'])) {
