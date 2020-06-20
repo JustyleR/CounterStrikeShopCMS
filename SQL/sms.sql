@@ -116,7 +116,7 @@ ALTER TABLE `password_keys`
 ALTER TABLE `servers`
   ADD PRIMARY KEY (`server_id`);
 
-ALTER TABLE `sms_codes`
+ALTER TABLE `codes`
   ADD PRIMARY KEY (`sms_code_id`);
 
 ALTER TABLE `users`
@@ -138,7 +138,7 @@ ALTER TABLE `password_keys`
 ALTER TABLE `servers`
   MODIFY `server_id` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `sms_codes`
+ALTER TABLE `codes`
   MODIFY `sms_code_id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `users`
