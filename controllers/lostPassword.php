@@ -57,7 +57,7 @@ function lostPassword($conn) {
               if(num_rows($keyQ) > 0) {
               	$r = fetch_assoc($keyQ);
               	if($r['expireDate'] <= core_date()) {
-              		query("DELETE FROM "._table('password_keys')." WHERE email='". $email ."'");
+              		query($conn, "DELETE FROM "._table('password_keys')." WHERE email='". $email ."'");
               		$iQuery = 1;
               		$iEmail = 1;
               	} else {
