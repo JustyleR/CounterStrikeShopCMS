@@ -39,9 +39,6 @@ function template_vars($conn) {
   
   if(isset($_SESSION['user_logged'])) {
 	$vars['user_info'] = user_info($conn, $_SESSION['user_logged']);
-  }
-
-  if(isset($_SESSION['user_logged'])) {
     $vars['user_logged'] = TRUE;
   }
   
