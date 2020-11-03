@@ -46,7 +46,7 @@ Want to help with the system? The easiest way is to add me on discord and discus
 ##### Installation:
 1. Download the system from here.
 2. Find the config / config.php file and set it to 777.
-3. Open the install.php file through your browser (Example: www.site.com/sms/install.php)
+3. Open the install.php file through your browser (Example: www.site.com/install.php)
 4. Follow the installation steps and then delete the install.php file
 5. Reopen the config folder and change the file permissions.
 6. The system is already installed and ready for use, however, remember that you need to install AMXBans for it to work.
