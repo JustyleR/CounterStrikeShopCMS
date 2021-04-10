@@ -19,6 +19,6 @@ require('libs/Custom.php');
 require('libs/CSBans.php');
 require('libs/Pagination.php');
 require('libs/Rcon.php');
-require('libs/vendor/autoload.php');
+require('libs/composer/vendor/autoload.php');
 require('libs/Template.php');
 Bootstrap();

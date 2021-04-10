@@ -9,18 +9,19 @@ if (!defined('file_access')) {
 }
 
 function template($conn, $template) {
-	$loader = new Twig_Loader_Filesystem('templates/' . template . '/structure/');
-	$twig = new Twig_Environment($loader, array(
-	'debug' => true
+	$loader = new \Twig\Loader\FilesystemLoader('templates/' . template . '/structure/');
+	$twig = new \Twig\Environment($loader, array(
+	'debug' => false
 	));
-	
+
 	$lang = get_language($conn);
-	
-	$translate = new Twig_SimpleFunction('translate', function($cat, $string) {
+
+	$translate = new \Twig\TwigFunction('translate', function($cat, $string) {
 		$lang = user_language;
 		$ini = parse_ini_file('language/' . $lang . '/' . $lang . '.ini', TRUE);
 		return $lang = $ini[$cat][$string];
 	});
+  
 	$twig->addFunction($translate);
 
 	$template = $twig->load($template . '.html');
@@ -36,12 +37,12 @@ function template_vars($conn) {
   $vars['USER_BANNED'] = csbans_checkBan($conn);
   $vars['SITE_PAYPAL'] = paypal_enabled;
   $vars['SITE_SMS'] = sms_enabled;
-  
+
   if(isset($_SESSION['user_logged'])) {
 	$vars['user_info'] = user_info($conn, $_SESSION['user_logged']);
     $vars['user_logged'] = TRUE;
   }
-  
+
   if(isset($_SESSION['admin_logged'])) {
     $vars['admin_logged'] = TRUE;
   }
@@ -65,16 +66,16 @@ function get_templates() {
 	$results 	= scandir($path);
 	$list		= array();
 	foreach ($results as $result) {
-		
+
 		if ($result === '.' or $result === '..')
 			continue;
-		
+
 		if (is_dir($path . '/' . $result)) {
-			
+
 			$list[] = $result;
-			
+
 		}
 	}
-	
+
 	return $list;
 }
