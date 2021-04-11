@@ -5,11 +5,11 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: home');
+    die();
 }
 
 // Function to connect to the database
-if (!function_exists('connect')) { 
+if (!function_exists('connect')) {
 	function connect() {
 		$conn = mysqli_connect(db_host, db_user, db_pass, db_name);
 		if(mysqli_error($conn)) {
@@ -33,7 +33,7 @@ function num_rows($query) {
     } else {
         $return = 0;
     }
-    
+
     return $return;
 }
 
@@ -52,9 +52,9 @@ function get_site_settings() {
 	$conn = connect();
 	$get = query($conn, "SELECT * FROM "._table('settings')."");
 	if(num_rows($get) > 0) {
-		
+
 		$row = fetch_assoc($get);
-		
+
 		return array(
 			"template" => $row['template'],
 			"language" => $row['language'],
@@ -76,7 +76,7 @@ function get_site_settings() {
 			"paypal_logs" => $row['paypal_logs'],
 			"paypal_email" => $row['paypal_email'],
 		);
-		
+
 	} else { die("The settings table is empty! Please reinstall the system!"); }
 }
 

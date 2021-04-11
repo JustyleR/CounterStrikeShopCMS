@@ -5,7 +5,7 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: ' . url . ' home');
+    die();
 }
 
 // Check if file exists and if it does it will include it
@@ -106,22 +106,22 @@ function core_check_logged($type, $status = 0) {
 // A function that will get the POST data and prevent any exploits
 function core_POSTP($conn, $string) {
     $string = mysqli_real_escape_string($conn, $string);
-    
+
     return $string;
 }
 
 function random($lenght, $upper = 0) {
-	
+
 	$array = array('q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m',1,2,3,4,5,6,7,8,9,0);
-	
+
 	$string = '';
-	
+
 	for($i = 0; $i < $lenght; $i++) {
-		
+
 		$string = $string . $array[rand(0, count($array) - 1)];
-		
+
 	}
-	
+
 	if($upper == 1) {
 		return strtoupper($string);
 	} else {

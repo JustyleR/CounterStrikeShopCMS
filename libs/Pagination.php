@@ -5,7 +5,7 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: ' . url . ' home');
+    die();
 }
 
 function pagination($conn, $sql, $limit = 5) {
@@ -40,8 +40,8 @@ function pagination($conn, $sql, $limit = 5) {
             $npage[$page['page']] = 1;
             core_header(printPage($npage));
         }
-		
-		
+
+
         $startResult = $cpage * $limit - $limit;
 
         $query = query($conn, $sql . " LIMIT $startResult,$limit");
@@ -49,10 +49,10 @@ function pagination($conn, $sql, $limit = 5) {
         while ($row = fetch_assoc($query)) {
             $array[] = $row;
         }
-		
+
 		$prev = $cpage - 1;
 		$next = $cpage + 1;
-		
+
 		if($prev < 1) { $prev = 1; }
 		if($next > $result) { $next = $result; }
 

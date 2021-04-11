@@ -2,8 +2,12 @@
 
 // Simple library for some bbcodes
 
+if (!defined('file_access')) {
+    die();
+}
+
 function bbcode_preview($text) {
-	
+
 	$find = array(
 		'/\[b\](.+?)\[\/b\]/is',
 		'/\[i\](.+?)\[\/i\]/is',
@@ -13,7 +17,7 @@ function bbcode_preview($text) {
 		'/\\\\n/',
 		'/\\\\r/'
 	);
-	
+
 	$replace = array(
 		'<strong>$1</strong>',
 		'<i>$1</i>',
@@ -23,7 +27,7 @@ function bbcode_preview($text) {
 		'<br />',
 		''
 	);
-	
+
 	$text = preg_replace($find, $replace, $text);
 	return $text;
 }

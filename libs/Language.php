@@ -5,7 +5,7 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: home');
+    die();
 }
 
 // Check if the language file exists
@@ -30,7 +30,7 @@ function get_language($conn) {
 	} else {
 		$lang = default_language;
 	}
-    
+
 	return define('user_language', $lang);
 }
 
@@ -53,16 +53,16 @@ function get_languages() {
 	$results 	= scandir($path);
 	$list		= array();
 	foreach ($results as $result) {
-		
+
 		if ($result === '.' or $result === '..')
 			continue;
-		
+
 		if (is_dir($path . '/' . $result)) {
-			
+
 			$list[] = $result;
-			
+
 		}
 	}
-	
+
 	return $list;
 }

@@ -5,17 +5,17 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: home');
+    die();
 }
 
 // Get user info from the database
 function user_info($conn, $user, $type = 'email') {
 	if($type === 'email') { $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE email='". $user ."'"); }
 	else if($type === 'id') { $checkUser = query($conn, "SELECT * FROM "._table('users')." WHERE user_id='". $user ."'"); }
-    
+
     if (num_rows($checkUser) > 0) {
         $row   = fetch_assoc($checkUser);
-		
+
         return array(
             "id"            => $row['user_id'],
             "nickname"      => $row['nickname'],
@@ -53,7 +53,7 @@ function checkUser($conn) {
                 }
             }
         } else { header('Location: ' . url . 'logout'); }
-		
+
 		if(core_page()[0] != 'settings' && $user['type'] != 2) {
 			if($user['nickname'] == NULL || $user['nick_pass'] == NULL) {
 				core_header('settings');
@@ -89,6 +89,6 @@ function user_group($conn, $type) {
 
 function user_get_groups($conn) {
 	$array = array('0' => language($conn, 'groups', 'banned'), '1' => language($conn, 'groups', 'member'), '2' => language($conn, 'groups', 'admin'));
-	
+
 	return $array;
 }

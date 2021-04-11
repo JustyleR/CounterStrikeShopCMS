@@ -5,7 +5,7 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: ' . url . ' home');
+    die();
 }
 
 function template($conn, $template) {
@@ -21,7 +21,7 @@ function template($conn, $template) {
 		$ini = parse_ini_file('language/' . $lang . '/' . $lang . '.ini', TRUE);
 		return $lang = $ini[$cat][$string];
 	});
-  
+
 	$twig->addFunction($translate);
 
 	$template = $twig->load($template . '.html');

@@ -5,15 +5,17 @@
 */
 
 if (!defined('file_access')) {
-    header('Location: ' . url . ' home');
+    die();
 }
 
 // Check the link file
 function Bootstrap() {
+  if(!defined('url')) { die('The system is probably not installed!'); }
+
     if (isset($_GET['p'])) {
 		// Get the pages into an array
         $page = explode('/', $_GET['p']);
-		
+
         if (isset($page[0])) {
 			// Check if we can include the file without any folders
 			if (file_exists('controllers/' . $page[0] . '.php')) {
@@ -47,10 +49,10 @@ function Bootstrap() {
 
 // Check the link file content
 function checkFile($page, $dir, $type) {
-	
+
 	// Include the file
     require($dir);
-	
+
 	// Check if the main function exists
     if (function_exists('main_info') && (function_exists('main'))) {
 		$conn 		= connect();
@@ -61,7 +63,7 @@ function checkFile($page, $dir, $type) {
         }
         $countp = count($page);
         $array  = array();
-		
+
         for ($i = 0; $i < $countp; $i++) {
             if ($main_info[$i] == $page[$i]) {
                 $status = 1;
