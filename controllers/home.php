@@ -24,7 +24,8 @@ function main($conn) {
 
   $query	= query($conn, "SELECT home FROM "._table('text')."");
 	if(num_rows($query) > 0) {
-		$text	= bbcode_preview($query['home']);
+		$home 	= fetch_assoc($query);
+		$text	= bbcode_preview($home);
 	}
   
   $vars['site_index'] = $text;
